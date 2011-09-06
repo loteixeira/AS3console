@@ -1,0 +1,12 @@
+##############
+# AS3CONSOLE #
+##############
+
+by Lucas Teixeira
+
+
+AS3Console is a small and non-intrusive logging component for Actionscript3 language (Flash, Flex and AIR).
+The component is a singleton that inherits from EventDispatcher class where you can listen for data input and output.
+It has a customizable behavior and is easy to remove from release versions (avoiding overhead when it isn't used).
+Using this component you don't need to install any plugin for your browser or any application on your computer.
+It's embedded to the SWF/SWC file and can be accessed from any computer using shortcut keys.
