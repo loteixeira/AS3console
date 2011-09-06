@@ -1,5 +1,5 @@
 // AS3Console Copyright 2011 Lucas Teixeira (aka Disturbed Coder)
-// Project page: http://code.google.com/p/as3console/
+// Project page: https://github.com/loteixeira/as3console
 //
 // This software is distribuited under the terms of the GNU Lesser Public License.
 // See license.txt for more information.
@@ -23,15 +23,18 @@ package br.dcoder.console
 		
 		private function addedToStage(event:Event):void
 		{
+			removeEventListener(Event.ADDED_TO_STAGE, addedToStage);
+			
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
+
+
 			
 			Console.create(stage);
 			Console.getInstance().addEventListener(ConsoleEvent.INPUT, consoleInput);
 			Console.getInstance().area = new Rectangle(50, 50, 500, 400);
-			//Console.getInstance().alpha = 1;
 			cpln("Starting Console Demo by Lucas Teixeira (Disturbed Coder)");
-			cpln("Project page: http://code.google.com/p/as3console/");
+			cpln("Project page: https://github.com/loteixeira/as3console");
 			cpln("Type 'help' for commands.");
 			cpln("Press Ctrl+M to show/hide console component.");
 			cpln("Press up/down arrow to navigate through input history.");

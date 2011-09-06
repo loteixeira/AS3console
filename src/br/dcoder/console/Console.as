@@ -1,12 +1,11 @@
 // AS3Console Copyright 2011 Lucas Teixeira (aka Disturbed Coder)
-// Project page: http://code.google.com/p/as3console/
+// Project page: https://github.com/loteixeira/as3console
 //
 // This software is distribuited under the terms of the GNU Lesser Public License.
 // See license.txt for more information.
 
 package br.dcoder.console
 {
-	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
@@ -23,12 +22,16 @@ package br.dcoder.console
 	import flash.text.TextFormatAlign;
 	import flash.utils.getTimer;
 
+	/**
+	 * Console class is a singleton used to access all functionalities of AS3Console.
+	 * You shouldn't create it using regular constructor, instead use create static method.
+	 */
 	public class Console extends EventDispatcher
 	{
 		/**
 		 * Console version.
 		 */
-		public static const VERSION:String = "0.2.2";
+		public static const VERSION:String = "0.2.3";
 		
 		/**
 		 * Max characters stored in console text area. Can be modified at runtime.
@@ -61,9 +64,7 @@ package br.dcoder.console
 		//
 		// internal data
 		//
-		private static const FONT_SIZE:uint = 12;
 		private static const CAPTION_TEXT:String = "AS3Console";
-		private static const CAPTION_BAR_HEIGHT:uint = 20;
 		private static const MARKER_FIELD_WIDTH:uint = 12;
 		private static const DEFAULT_ALPHA:Number = 0.75;
 		
@@ -72,11 +73,11 @@ package br.dcoder.console
 		
 		private var stage:Stage;
 		private var assetFactory:AssetFactory;
-		private var rect:Rectangle;		
+		private var rect:Rectangle;
+		
 		private var container:Sprite;
 		private var captionBar:Sprite;
 		private var captionTextField:TextField;
-		private var minimizeButton:Button;
 		private var content:Sprite;
 		private var textArea:TextField;
 		private var markerField:TextField;
@@ -106,14 +107,17 @@ package br.dcoder.console
 		 * @param release Use to create release versions and remove console overhead.
 		 * @return Console singleton instance.
 		 */
-		public static function create(stage:Stage, assetFactory:AssetFactory = null, release:Boolean = false):Console
+		public static function create(stage:Stage, release:Boolean = false):Console
 		{
+			if (instance)
+				throw new Error("One console instance allowed at time");
+			
 			Console.release = release;
 			
 			if (release)
 				instance = new DummyConsole(stage);
 			else
-				instance = new Console(stage, !assetFactory ? new AssetFactory() : assetFactory);
+				instance = new Console(stage, new AssetFactory());
 			
 			return instance;
 		}
@@ -152,16 +156,14 @@ package br.dcoder.console
 		 * @private
 		 */
 		public function Console(stage:Stage, assetFactory:AssetFactory)
-		{
+		{	
 			super();
-			
+
 			if (release)
 				return;
 				
 			this.stage = stage;
 			this.assetFactory = assetFactory;
-			
-			var tFormat:TextFormat;
 			
 			rect = new Rectangle(50, 50, 250, 250);
 			container = new Sprite();
@@ -176,40 +178,15 @@ package br.dcoder.console
 			
 			captionTextField = new TextField();
 			captionTextField.text = CAPTION_TEXT + " " + VERSION;
-			captionTextField.height = CAPTION_BAR_HEIGHT;
+			captionTextField.height = assetFactory.getButtonContainerSize();
 			captionTextField.mouseEnabled = false;
 			captionTextField.selectable = false;
 			captionTextField.y = 2;
 			captionBar.addChild(captionTextField);
-			
-			tFormat = new TextFormat();
-			tFormat.align = TextFormatAlign.CENTER;
-			tFormat.bold = true;
-			tFormat.color = assetFactory.getButtonForegroundColor();
-			tFormat.font = "_typewriter";
-			tFormat.size = 14;
-			captionTextField.setTextFormat(tFormat);
-			captionTextField.defaultTextFormat = tFormat;
-			
-			minimizeButton = new Button(Button.ARROW_ICON, assetFactory);
-			minimizeButton.draw(CAPTION_BAR_HEIGHT - CAPTION_BAR_HEIGHT * 0.3, CAPTION_BAR_HEIGHT - CAPTION_BAR_HEIGHT * 0.3);
-			minimizeButton.addEventListener(MouseEvent.CLICK, function(event:MouseEvent):void
-			{
-				if (isMaximized())
-				{
-					minimize();
-				}
-				else
-				{
-					maximize();
-					focusInputField();
-				}
-			});
-			captionBar.addChild(minimizeButton);
-			
+
 			// content
 			content = new Sprite();
-			content.y = CAPTION_BAR_HEIGHT;
+			content.y = assetFactory.getButtonContainerSize();
 			container.addChild(content);
 			
 			// text area
@@ -217,12 +194,6 @@ package br.dcoder.console
 			textArea.multiline = true;
 			textArea.addEventListener(MouseEvent.MOUSE_WHEEL, onTextAreaMouseWheel);
 			content.addChild(textArea);
-			
-			tFormat = new TextFormat();
-			tFormat.color = assetFactory.getButtonForegroundColor();
-			tFormat.font = "_typewriter";
-			tFormat.size = FONT_SIZE;
-			textArea.defaultTextFormat = tFormat;
 			
 			// marker field
 			markerField = new TextField();
@@ -232,12 +203,6 @@ package br.dcoder.console
 			markerField.text = ">";
 			content.addChild(markerField);
 			
-			tFormat = new TextFormat();
-			tFormat.color = assetFactory.getButtonForegroundColor();
-			tFormat.font = "_typewriter";
-			tFormat.size = FONT_SIZE;
-			markerField.setTextFormat(tFormat);
-			
 			// input field
 			inputField = new TextField();
 			inputField.background = true;
@@ -245,12 +210,6 @@ package br.dcoder.console
 			inputField.type = TextFieldType.INPUT;
 			inputField.addEventListener(KeyboardEvent.KEY_DOWN, onInputFieldKeyDown);
 			content.addChild(inputField);
-			
-			tFormat = new TextFormat();
-			tFormat.color = assetFactory.getButtonForegroundColor();
-			tFormat.font = "_typewriter";
-			tFormat.size = FONT_SIZE;
-			inputField.defaultTextFormat = tFormat;
 			
 			// scroll bars
 			hScrollBar = new ScrollBar(assetFactory, ScrollBar.HORIZONTAL, 250);
@@ -293,6 +252,7 @@ package br.dcoder.console
 			// update component
 			alpha = DEFAULT_ALPHA;
 			update();
+			updateTextFormats();
 		}
 		
 		//
@@ -339,34 +299,59 @@ package br.dcoder.console
 		}
 		
 		/**
+		 * Set asset factory instance.
+		 * @param assetFactory New asset factory instance.
+		 */
+		public function setAssetFactory(assetFactory:AssetFactory):void
+		{
+			this.assetFactory = assetFactory;
+			update();
+			updateTextFormats();
+		}
+		
+		/**
+		 * Get current asset factory instance.
+		 * @return Current asset factory instance.
+		 */
+		public function getAssetFactory():AssetFactory
+		{
+			return assetFactory;
+		}
+		
+		/**
 		 * Update console gaphical interface.
-		 * It's automatically called when console area has changed.
+		 * It's automatically called when console area has changed or a new AssetFactory instance was set.
 		 */
 		public function update():void
 		{
+			// container
 			container.x = rect.left;
 			container.y = rect.top;
-
+			
+			// input text field
 			inputField.width = rect.width - assetFactory.getButtonContainerSize() - MARKER_FIELD_WIDTH;
 			inputField.height = 20;			
 			inputField.x = MARKER_FIELD_WIDTH + 1;
-			inputField.y = rect.height - CAPTION_BAR_HEIGHT - assetFactory.getButtonContainerSize() - inputField.height;
+			inputField.y = rect.height - assetFactory.getButtonContainerSize() * 2 - inputField.height;
 			
+			// marker text field
 			markerField.x = 1;
 			markerField.y = inputField.y;
 			markerField.width = MARKER_FIELD_WIDTH;
 			markerField.height = 20;
 			
+			// caption text field
 			captionTextField.width = rect.width;
-			minimizeButton.x = rect.width - CAPTION_BAR_HEIGHT + CAPTION_BAR_HEIGHT * 0.15;
-			minimizeButton.y = CAPTION_BAR_HEIGHT * 0.15;
-			
+			captionTextField.y = (assetFactory.getButtonContainerSize() - captionTextField.textHeight) / 2;
+
+			// text area
 			textArea.x = textArea.y = 1;
 			textArea.width = rect.width - assetFactory.getButtonContainerSize() - 1;
-			textArea.height = rect.height - CAPTION_BAR_HEIGHT - assetFactory.getButtonContainerSize() - inputField.height - 1;
+			textArea.height = rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize() - inputField.height - 1;
 			
+			// horizontal scroll bar
 			hScrollBar.x = 0;
-			hScrollBar.y = rect.height - CAPTION_BAR_HEIGHT - assetFactory.getButtonContainerSize();
+			hScrollBar.y = rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize();
 			hScrollBar.setLength(rect.width - assetFactory.getButtonContainerSize() + 1);
 			hScrollBar.setMaxValue(textArea.maxScrollH == 0 ? 0 : textArea.maxScrollH - 1);
 			hScrollBar.draw();
@@ -374,19 +359,22 @@ package br.dcoder.console
 			if (hScrollBar.getValue() > hScrollBar.getMaxValue())
 				hScrollBar.toMaxValue();
 			
+			// vertical scroll bar
 			vScrollBar.x = rect.width - assetFactory.getButtonContainerSize();
 			vScrollBar.y = 0;
-			vScrollBar.setLength(rect.height - CAPTION_BAR_HEIGHT - assetFactory.getButtonContainerSize() + 1);
+			vScrollBar.setLength(rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize() + 1);
 			vScrollBar.setMaxValue(textArea.maxScrollV == 0 ? 0 : textArea.maxScrollV - 1);
 			vScrollBar.draw();
 			
 			if (vScrollBar.getValue() > vScrollBar.getMaxValue())
 				vScrollBar.toMaxValue();
 			
+			// resize area
 			resizeArea.x = hScrollBar.x + hScrollBar.getLength();
 			resizeArea.y = vScrollBar.y + vScrollBar.getLength();
 			drawResizeArea();
 			
+			// misc stuff
 			drawBackground();
 			textArea.scrollV = textArea.maxScrollV;
 		}
@@ -465,7 +453,7 @@ package br.dcoder.console
 			
 			for (var i:uint = 0; i < this.shortcutKeys.length; i++)
 			{
-				this.shortcutKeys[i] = this.shortcutKeys[i].toLowerCase();
+				this.shortcutKeys[i] = (this.shortcutKeys[i] as String).toLowerCase();
 				shortcutStates.push(false);
 			}
 		}
@@ -548,6 +536,42 @@ package br.dcoder.console
 		//
 		// private methods
 		//
+		private function updateTextFormats():void
+		{
+			var tFormat:TextFormat;
+			
+			// caption text field
+			tFormat = new TextFormat();
+			tFormat.align = TextFormatAlign.CENTER;
+			tFormat.bold = true;
+			tFormat.color = assetFactory.getButtonForegroundColor();
+			tFormat.font = assetFactory.getFontName();
+			tFormat.size = assetFactory.getCaptionFontSize();
+			captionTextField.setTextFormat(tFormat);
+			captionTextField.defaultTextFormat = tFormat;
+			
+			// text area
+			tFormat = new TextFormat();
+			tFormat.color = assetFactory.getButtonForegroundColor();
+			tFormat.font = assetFactory.getFontName();
+			tFormat.size = assetFactory.getLogFontSize();
+			textArea.defaultTextFormat = tFormat;
+			
+			// marker text field
+			tFormat = new TextFormat();
+			tFormat.color = assetFactory.getButtonForegroundColor();
+			tFormat.font = assetFactory.getFontName();
+			tFormat.size = assetFactory.getLogFontSize();
+			markerField.setTextFormat(tFormat);
+			
+			// input text field
+			tFormat = new TextFormat();
+			tFormat.color = assetFactory.getButtonForegroundColor();
+			tFormat.font = assetFactory.getFontName();
+			tFormat.size = assetFactory.getLogFontSize();
+			inputField.defaultTextFormat = tFormat;
+		}
+		
 		private function drawResizeArea():void
 		{
 			resizeArea.graphics.clear();
@@ -568,14 +592,14 @@ package br.dcoder.console
 			captionBar.graphics.clear();
 			captionBar.graphics.lineStyle(1, assetFactory.getButtonForegroundColor());
 			captionBar.graphics.beginFill(assetFactory.getButtonBackgroundColor());
-			captionBar.graphics.drawRect(0, 0, rect.width - 1, CAPTION_BAR_HEIGHT);
+			captionBar.graphics.drawRect(0, 0, rect.width - 1, assetFactory.getButtonContainerSize());
 			captionBar.graphics.endFill();
 			
 			content.graphics.clear();
 			
 			content.graphics.lineStyle(1, assetFactory.getButtonForegroundColor());
 			content.graphics.beginFill(assetFactory.getBackgroundColor());
-			content.graphics.drawRect(0, 0, rect.width - 1, rect.height - CAPTION_BAR_HEIGHT - 1);
+			content.graphics.drawRect(0, 0, rect.width - 1, rect.height - assetFactory.getButtonContainerSize() - 1);
 			content.graphics.endFill();
 		}
 		
@@ -646,7 +670,7 @@ package br.dcoder.console
 			{
 				println("AS3Console version " + VERSION);
 				println("Created by loteixeira at gmail dot com");
-				println("Project page: http://code.google.com/p/as3console/");
+				println("Project page: https://github.com/loteixeira/as3console");
 				println("");
 				
 				return true;

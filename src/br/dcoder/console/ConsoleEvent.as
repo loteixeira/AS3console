@@ -1,5 +1,5 @@
 // AS3Console Copyright 2011 Lucas Teixeira (aka Disturbed Coder)
-// Project page: http://code.google.com/p/as3console/
+// Project page: https://github.com/loteixeira/as3console
 //
 // This software is distribuited under the terms of the GNU Lesser Public License.
 // See license.txt for more information.
