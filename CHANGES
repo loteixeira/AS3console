@@ -1,0 +1,11 @@
+######################
+# AS3CONSOLE CHANGES #
+######################
+
+Version 0.3:
+============
+* Library package changed from 'br.dcoder' to 'br.dcoder.console'
+* Free function 'br.dcoder.console.cpln' added to be an alias of 'Console.getInstance().println'
+* AssetFactory class added to manage console appearance
+* Internal class 'br.dcoder.LightScrollBar' changed to 'br.dcoder.console.ScrollBar'
+* 'FIREBUG_ECHO' property added to 'br.dcoder.console.Console' class
