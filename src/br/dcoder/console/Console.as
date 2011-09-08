@@ -31,7 +31,7 @@ package br.dcoder.console
 		/**
 		 * Console version.
 		 */
-		public static const VERSION:String = "0.2.3";
+		public static const VERSION:String = "0.3";
 		
 		/**
 		 * Max characters stored in console text area. Can be modified at runtime.

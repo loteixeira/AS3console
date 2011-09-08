@@ -27,8 +27,6 @@ package br.dcoder.console
 			
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
-
-
 			
 			Console.create(stage);
 			Console.getInstance().addEventListener(ConsoleEvent.INPUT, consoleInput);
