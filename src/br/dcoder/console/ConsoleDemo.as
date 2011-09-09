@@ -7,6 +7,7 @@
 package br.dcoder.console
 {
 	import br.dcoder.console.*;
+	import br.dcoder.console.plugin.CodeEval;
 	
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -15,7 +16,7 @@ package br.dcoder.console
 	import flash.geom.Rectangle;
 	
 	public class ConsoleDemo extends Sprite
-	{
+	{		
 		public function ConsoleDemo()
 		{
 			addEventListener(Event.ADDED_TO_STAGE, addedToStage);
@@ -29,6 +30,8 @@ package br.dcoder.console
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
 			Console.create(stage);
+			CodeEval.start(this);
+			
 			Console.getInstance().addEventListener(ConsoleEvent.INPUT, consoleInput);
 			Console.getInstance().area = new Rectangle(50, 50, 500, 400);
 			cpln("Starting Console Demo by Lucas Teixeira (Disturbed Coder)");
