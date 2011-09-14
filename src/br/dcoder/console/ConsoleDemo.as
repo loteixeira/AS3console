@@ -34,7 +34,6 @@ package br.dcoder.console
 			
 			Console.getInstance().addEventListener(ConsoleEvent.INPUT, consoleInput);
 			Console.getInstance().area = new Rectangle(50, 50, 500, 400);
-			Console.FIREBUG_ECHO = true;
 			cpln("Starting Console Demo by Lucas Teixeira (Disturbed Coder)");
 			cpln("Project page: https://github.com/loteixeira/as3console");
 			cpln("Type 'help' for commands.");

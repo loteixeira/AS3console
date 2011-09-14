@@ -1,0 +1,1 @@
+asdoc -doc-sources src/ -main-title AS3Console -output ./doc/ -warnings=false -library-path ./lib/EvalES4.swc -exclude-classes br.dcoder.console.ConsoleDemo br.dcoder.console.ScrollBar br.dcoder.console.DummyConsole --

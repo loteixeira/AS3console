@@ -16,11 +16,12 @@ package br.dcoder.console
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.system.System;
-	import flash.text.TextField;
-	import flash.text.TextFieldType;
-	import flash.text.TextFormat;
-	import flash.text.TextFormatAlign;
 	import flash.utils.getTimer;
+	
+	import br.dcoder.console.gui.CaptionBar;
+	import br.dcoder.console.gui.InputField;
+	import br.dcoder.console.gui.TextArea;
+	import br.dcoder.console.util.StringUtil;
 
 	/**
 	 * Console class is a singleton used to access all functionalities of AS3Console.
@@ -31,7 +32,7 @@ package br.dcoder.console
 		/**
 		 * Console version.
 		 */
-		public static const VERSION:String = "0.3";
+		public static const VERSION:String = "0.3.1";
 		
 		/**
 		 * Max characters stored in console text area. Can be modified at runtime.
@@ -64,8 +65,6 @@ package br.dcoder.console
 		//
 		// internal data
 		//
-		private static const CAPTION_TEXT:String = "AS3Console";
-		private static const MARKER_FIELD_WIDTH:uint = 12;
 		private static const DEFAULT_ALPHA:Number = 0.75;
 		
 		private static var release:Boolean;
@@ -76,12 +75,10 @@ package br.dcoder.console
 		private var rect:Rectangle;
 		
 		private var container:Sprite;
-		private var captionBar:Sprite;
-		private var captionTextField:TextField;
+		private var captionBar:CaptionBar;
 		private var content:Sprite;
-		private var textArea:TextField;
-		private var markerField:TextField;
-		private var inputField:TextField;
+		private var textArea:TextArea;
+		private var inputField:InputField;
 		private var hScrollBar:ScrollBar;
 		private var vScrollBar:ScrollBar;
 		private var resizeArea:Sprite;
@@ -91,9 +88,6 @@ package br.dcoder.console
 		
 		private var shortcutKeys:Array, shortcutStates:Array;
 		private var shortcutUseAlt:Boolean, shortcutUseCtrl:Boolean, shortcutUseShift:Boolean;
-		
-		private var inputHistory:Array;
-		private var historyIndex:int;
 		
 		//
 		// static methods
@@ -139,15 +133,7 @@ package br.dcoder.console
 		{
 			return instance;
 		}
-		
-		private static function getString(info:Object):String {
-			if (info == null)
-				return "(null)";
-			else if (info is String)
-				return info as String;
-			
-			return info.toString();
-		}
+
 		
 		//
 		// constructor
@@ -170,19 +156,23 @@ package br.dcoder.console
 			stage.addChild(container);
 			
 			// caption bar
-			captionBar = new Sprite();
-			captionBar.addEventListener(MouseEvent.MOUSE_UP, onCaptionBarMouseUp);
-			captionBar.addEventListener(MouseEvent.MOUSE_DOWN, onCaptionBarMouseDown);
-			captionBar.buttonMode = true;
-			container.addChild(captionBar);
+			captionBar = new CaptionBar(assetFactory);
+			captionBar.text = "AS3Console " + VERSION;
+			container.addChild(captionBar.getContent());
 			
-			captionTextField = new TextField();
-			captionTextField.text = CAPTION_TEXT + " " + VERSION;
-			captionTextField.height = assetFactory.getButtonContainerSize();
-			captionTextField.mouseEnabled = false;
-			captionTextField.selectable = false;
-			captionTextField.y = 2;
-			captionBar.addChild(captionTextField);
+			captionBar.addEventListener(CaptionBar.START_DRAG_EVENT, function(event:Event):void
+			{
+				toFront();
+				container.startDrag();
+			});
+			
+			captionBar.addEventListener(CaptionBar.STOP_DRAG_EVENT, function(event:Event):void
+			{
+				container.stopDrag();
+				rect.x = container.x;
+				rect.y = container.y;
+				inputField.getFocus();
+			});
 
 			// content
 			content = new Sprite();
@@ -190,26 +180,25 @@ package br.dcoder.console
 			container.addChild(content);
 			
 			// text area
-			textArea = new TextField();
-			textArea.multiline = true;
-			textArea.addEventListener(MouseEvent.MOUSE_WHEEL, onTextAreaMouseWheel);
-			content.addChild(textArea);
+			textArea = new TextArea(assetFactory);
+			content.addChild(textArea.getContent());
 			
-			// marker field
-			markerField = new TextField();
-			markerField.background = true;
-			markerField.backgroundColor = assetFactory.getButtonBackgroundColor();
-			markerField.selectable = false;
-			markerField.text = ">";
-			content.addChild(markerField);
+			textArea.addEventListener(TextArea.SCROLL_EVENT, function(event:Event):void
+			{
+				vScrollBar.setValue(textArea.scrollV - 1);
+			});
 			
 			// input field
-			inputField = new TextField();
-			inputField.background = true;
-			inputField.backgroundColor = assetFactory.getButtonBackgroundColor();
-			inputField.type = TextFieldType.INPUT;
-			inputField.addEventListener(KeyboardEvent.KEY_DOWN, onInputFieldKeyDown);
-			content.addChild(inputField);
+			inputField = new InputField(assetFactory);
+			content.addChild(inputField.getContent());
+			
+			inputField.addEventListener(InputField.INPUT_EVENT, function(event:Event):void
+			{
+				println("> " + inputField.getText());
+				
+				if (!handleEmbedCommands(inputField.getText().split(" ")))
+					dispatchEvent(new ConsoleEvent(ConsoleEvent.INPUT, inputField.getText()));
+			});
 			
 			// scroll bars
 			hScrollBar = new ScrollBar(assetFactory, ScrollBar.HORIZONTAL, 250);
@@ -238,10 +227,6 @@ package br.dcoder.console
 			shortcutUseCtrl = true;
 			shortcutUseShift = false;
 			
-			// input history
-			inputHistory = new Array();
-			historyIndex = -1; 
-			
 			// stage events
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
@@ -252,7 +237,6 @@ package br.dcoder.console
 			// update component
 			alpha = DEFAULT_ALPHA;
 			update();
-			updateTextFormats();
 		}
 		
 		//
@@ -290,12 +274,12 @@ package br.dcoder.console
 		 */
 		public function get caption():String
 		{
-			return captionTextField.text;
+			return captionBar.text;
 		}
 		
 		public function set caption(text:String):void
 		{
-			captionTextField.text = getString(text);
+			captionBar.text = text;
 		}
 		
 		/**
@@ -306,7 +290,6 @@ package br.dcoder.console
 		{
 			this.assetFactory = assetFactory;
 			update();
-			updateTextFormats();
 		}
 		
 		/**
@@ -328,26 +311,17 @@ package br.dcoder.console
 			container.x = rect.left;
 			container.y = rect.top;
 			
-			// input text field
-			inputField.width = rect.width - assetFactory.getButtonContainerSize() - MARKER_FIELD_WIDTH;
-			inputField.height = 20;			
-			inputField.x = MARKER_FIELD_WIDTH + 1;
-			inputField.y = rect.height - assetFactory.getButtonContainerSize() * 2 - inputField.height;
+			// caption bar
+			captionBar.rect = new Rectangle(0, 0, rect.width, assetFactory.getButtonContainerSize());
+			captionBar.update();
 			
-			// marker text field
-			markerField.x = 1;
-			markerField.y = inputField.y;
-			markerField.width = MARKER_FIELD_WIDTH;
-			markerField.height = 20;
-			
-			// caption text field
-			captionTextField.width = rect.width;
-			captionTextField.y = (assetFactory.getButtonContainerSize() - captionTextField.textHeight) / 2;
-
 			// text area
-			textArea.x = textArea.y = 1;
-			textArea.width = rect.width - assetFactory.getButtonContainerSize() - 1;
-			textArea.height = rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize() - inputField.height - 1;
+			textArea.rect = new Rectangle(1, 1, rect.width - assetFactory.getButtonContainerSize() - 1, rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize() - inputField.getMinimumHeight() - 1);
+			textArea.update();
+			
+			// input field
+			inputField.rect = new Rectangle(1, rect.height - assetFactory.getButtonContainerSize() * 2 - inputField.getMinimumHeight(), rect.width - assetFactory.getButtonContainerSize(), inputField.getMinimumHeight());
+			inputField.update();
 			
 			// horizontal scroll bar
 			hScrollBar.x = 0;
@@ -388,7 +362,7 @@ package br.dcoder.console
 			
 			toFront();
 			container.visible = true;
-			focusInputField();
+			inputField.getFocus();
 		}
 		
 		/**
@@ -472,7 +446,7 @@ package br.dcoder.console
 		 */
 		public function clear():void
 		{
-			textArea.text = "";
+			textArea.clear();
 			hScrollBar.setMaxValue(0);
 			hScrollBar.toMaxValue();
 			vScrollBar.setMaxValue(0);
@@ -486,7 +460,7 @@ package br.dcoder.console
 		public function println(info:Object):void
 		{
 			// build string
-			var str:String = getString(info);
+			var str:String = StringUtil.check(info);
 
 			if (PRINT_TIMER)
 				str = "[" + getTimer() + "] " + str;
@@ -510,19 +484,8 @@ package br.dcoder.console
 			dispatchEvent(new ConsoleEvent(ConsoleEvent.OUTPUT, str));
 			
 			// write text
-			while (str.length > MAX_LINE_LENGTH)
-			{
-				var tmp:String = str.substr(0, MAX_LINE_LENGTH);
-				textArea.appendText(tmp + "\n");
-				str = str.substr(MAX_LINE_LENGTH);
-			}
+			textArea.writeln(str);
 
-			textArea.appendText(str);
-			textArea.appendText("\n");
-			
-			if (textArea.length > MAX_CHARACTERS)
-				textArea.replaceText(0, textArea.length - MAX_CHARACTERS, "");
-						
 			// scroll bar
 			hScrollBar.setMaxValue(textArea.maxScrollH == 0 ? 0 : textArea.maxScrollH - 1);
 			vScrollBar.setMaxValue(textArea.maxScrollV == 0 ? 0 : textArea.maxScrollV - 1);
@@ -536,42 +499,6 @@ package br.dcoder.console
 		//
 		// private methods
 		//
-		private function updateTextFormats():void
-		{
-			var tFormat:TextFormat;
-			
-			// caption text field
-			tFormat = new TextFormat();
-			tFormat.align = TextFormatAlign.CENTER;
-			tFormat.bold = true;
-			tFormat.color = assetFactory.getButtonForegroundColor();
-			tFormat.font = assetFactory.getFontName();
-			tFormat.size = assetFactory.getCaptionFontSize();
-			captionTextField.setTextFormat(tFormat);
-			captionTextField.defaultTextFormat = tFormat;
-			
-			// text area
-			tFormat = new TextFormat();
-			tFormat.color = assetFactory.getButtonForegroundColor();
-			tFormat.font = assetFactory.getFontName();
-			tFormat.size = assetFactory.getLogFontSize();
-			textArea.defaultTextFormat = tFormat;
-			
-			// marker text field
-			tFormat = new TextFormat();
-			tFormat.color = assetFactory.getButtonForegroundColor();
-			tFormat.font = assetFactory.getFontName();
-			tFormat.size = assetFactory.getLogFontSize();
-			markerField.setTextFormat(tFormat);
-			
-			// input text field
-			tFormat = new TextFormat();
-			tFormat.color = assetFactory.getButtonForegroundColor();
-			tFormat.font = assetFactory.getFontName();
-			tFormat.size = assetFactory.getLogFontSize();
-			inputField.defaultTextFormat = tFormat;
-		}
-		
 		private function drawResizeArea():void
 		{
 			resizeArea.graphics.clear();
@@ -589,23 +516,12 @@ package br.dcoder.console
 		
 		private function drawBackground():void
 		{
-			captionBar.graphics.clear();
-			captionBar.graphics.lineStyle(1, assetFactory.getButtonForegroundColor());
-			captionBar.graphics.beginFill(assetFactory.getButtonBackgroundColor());
-			captionBar.graphics.drawRect(0, 0, rect.width - 1, assetFactory.getButtonContainerSize());
-			captionBar.graphics.endFill();
-			
 			content.graphics.clear();
 			
 			content.graphics.lineStyle(1, assetFactory.getButtonForegroundColor());
 			content.graphics.beginFill(assetFactory.getBackgroundColor());
 			content.graphics.drawRect(0, 0, rect.width - 1, rect.height - assetFactory.getButtonContainerSize() - 1);
 			content.graphics.endFill();
-		}
-		
-		private function focusInputField():void {
-			stage.focus = inputField;
-			inputField.setSelection(inputField.text.length, inputField.text.length);
 		}
 		
 		private function handleEmbedCommands(params:Array):Boolean {
@@ -733,65 +649,11 @@ package br.dcoder.console
 				}
 			}
 		}
-		
-		private function onInputFieldKeyDown(event:KeyboardEvent):void
-		{
-			// enter key pressed
-			if (event.charCode == 13)
-			{
-				println("> " + inputField.text);
-				
-				if (!handleEmbedCommands(inputField.text.split(" ")))
-					dispatchEvent(new ConsoleEvent(ConsoleEvent.INPUT, inputField.text));
 
-				// input history
-				inputHistory.splice(0, 0, inputField.text);
-					
-				while (inputHistory.length > MAX_INPUT_HISTORY)
-					inputHistory.pop();
-				
-				inputField.text = "";
-				historyIndex = -1;
-			// up key pressed
-			} else if (event.keyCode == 38) {
-				if (historyIndex < inputHistory.length - 1)
-					historyIndex++;
-					
-				inputField.text = inputHistory[historyIndex];
-			// down key pressed
-			} else if (event.keyCode == 40) {
-				if (historyIndex >= 0)
-					historyIndex--;
-				
-				if (historyIndex == -1)
-					inputField.text = "";
-				else
-					inputField.text = inputHistory[historyIndex];
-			}
-		}
 		
 		//
 		// mouse events
 		//
-		private function onCaptionBarMouseUp(event:MouseEvent):void
-		{
-			container.stopDrag();
-			rect.x = container.x;
-			rect.y = container.y;
-			focusInputField();
-		}
-		
-		private function onCaptionBarMouseDown(event:MouseEvent):void
-		{
-			toFront();
-			container.startDrag();
-		}
-
-		private function onTextAreaMouseWheel(event:MouseEvent):void
-		{
-			vScrollBar.setValue(textArea.scrollV - 1);
-		}
-		
 		private function stageMouseMove(event:MouseEvent):void
 		{
 			hScrollBar.onStageMouseMove(event);
@@ -815,7 +677,7 @@ package br.dcoder.console
 			if (resizing)
 			{
 				resizing = false;
-				focusInputField();
+				inputField.getFocus();
 			}
 		}
 		
