@@ -9,12 +9,9 @@ Pending:
 * even when running release mode, output events must be thrown and TRACE_ECHO and FIREBUG_ECHO must still work.
 * improve documentation.
 * create a "how to" tutorial.
-* create a simple components set (to remove all components from Console class).
-* create ConsoleProgram concept (to work different from input events).
-* adapt ScrollBar class to be child o GUIBaseElement class.
-* create ResizeArea class, child of GUIBaseElement class.
-* create Button class, child of GUIBaseElement class.
+* create ConsoleProgram concept (to work differently from input events).
 * create ConsoleConfig class to manage all public static variables used for runtime configuration.
+* improve console gui api.
 
 Resolved - version 0.4:
 * [14/09/2011] create GUIBaseElement class.
@@ -22,3 +19,7 @@ Resolved - version 0.4:
 * [14/09/2011] create CaptionBar class, child of GUIBaseElement class.
 * [14/09/2011] create TextArea class, child of GUIBaseElement class.
 * [14/09/2011] create InputField class, child of GUIBaseElement class.
+* [15/09/2011] adapt ScrollBar class to be child o GUIBaseElement class.
+* [15/09/2011] create ResizeArea class, child of GUIBaseElement class.
+* [15/09/2011] create a simple components set (to remove all components from Console class).
+* [15/09/2011] use anonymous function to handle console internal events.

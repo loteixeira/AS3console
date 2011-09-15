@@ -11,15 +11,15 @@ package br.dcoder.console
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.KeyboardEvent;
-	import flash.events.MouseEvent;
 	import flash.external.ExternalInterface;
-	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.system.System;
 	import flash.utils.getTimer;
 	
 	import br.dcoder.console.gui.CaptionBar;
 	import br.dcoder.console.gui.InputField;
+	import br.dcoder.console.gui.ResizeArea;
+	import br.dcoder.console.gui.ScrollBar;
 	import br.dcoder.console.gui.TextArea;
 	import br.dcoder.console.util.StringUtil;
 
@@ -32,7 +32,7 @@ package br.dcoder.console
 		/**
 		 * Console version.
 		 */
-		public static const VERSION:String = "0.3.1";
+		public static const VERSION:String = "0.3.2";
 		
 		/**
 		 * Max characters stored in console text area. Can be modified at runtime.
@@ -81,10 +81,7 @@ package br.dcoder.console
 		private var inputField:InputField;
 		private var hScrollBar:ScrollBar;
 		private var vScrollBar:ScrollBar;
-		private var resizeArea:Sprite;
-		
-		private var resizeOffset:Point;
-		private var resizing:Boolean;
+		private var resizeArea:ResizeArea;
 		
 		private var shortcutKeys:Array, shortcutStates:Array;
 		private var shortcutUseAlt:Boolean, shortcutUseCtrl:Boolean, shortcutUseShift:Boolean;
@@ -202,23 +199,38 @@ package br.dcoder.console
 			
 			// scroll bars
 			hScrollBar = new ScrollBar(assetFactory, ScrollBar.HORIZONTAL, 250);
-			hScrollBar.addEventListener(Event.CHANGE, scrollBarChange);
 			hScrollBar.setMaxValue(0);
-			content.addChild(hScrollBar);
+			content.addChild(hScrollBar.getContent());
+			
+			hScrollBar.addEventListener(Event.CHANGE, function(event:Event):void
+			{
+				textArea.scrollH = hScrollBar.getValue() + 1;
+			});
 			
 			vScrollBar = new ScrollBar(assetFactory, ScrollBar.VERTICAL, 250);
-			vScrollBar.addEventListener(Event.CHANGE, scrollBarChange);
 			vScrollBar.setMaxValue(0);
-			content.addChild(vScrollBar);
+			content.addChild(vScrollBar.getContent());
+			
+			vScrollBar.addEventListener(Event.CHANGE, function(event:Event):void
+			{
+				textArea.scrollV = vScrollBar.getValue() + 1;
+			});
 			
 			// resize area
-			resizeArea = new Sprite();
-			resizeArea.buttonMode = true;
-			resizeArea.addEventListener(MouseEvent.MOUSE_DOWN, onResizeAreaMouseDown);
-			content.addChild(resizeArea);
-
-			resizeOffset = new Point();
-			resizing = false;
+			resizeArea = new ResizeArea(assetFactory);
+			content.addChild(resizeArea.getContent());
+			
+			resizeArea.addEventListener(ResizeArea.RESIZE_EVENT, function(event:Event):void
+			{
+				rect.width += resizeArea.widthOffset;
+				rect.height += resizeArea.heightOffset;
+				update();
+			});
+			
+			resizeArea.addEventListener(ResizeArea.RESIZE_STOP_EVENT, function(event:Event):void
+			{
+				inputField.getFocus();
+			});
 			
 			// shortcut
 			shortcutKeys = [ "m" ];
@@ -230,9 +242,6 @@ package br.dcoder.console
 			// stage events
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
-			
-			stage.addEventListener(MouseEvent.MOUSE_MOVE, stageMouseMove);
-			stage.addEventListener(MouseEvent.MOUSE_UP, stageMouseUp);
 			
 			// update component
 			alpha = DEFAULT_ALPHA;
@@ -307,6 +316,13 @@ package br.dcoder.console
 		 */
 		public function update():void
 		{
+			// draw background
+			content.graphics.clear();
+			content.graphics.lineStyle(1, assetFactory.getButtonForegroundColor());
+			content.graphics.beginFill(assetFactory.getBackgroundColor());
+			content.graphics.drawRect(0, 0, rect.width - 1, rect.height - assetFactory.getButtonContainerSize() - 1);
+			content.graphics.endFill();
+			
 			// container
 			container.x = rect.left;
 			container.y = rect.top;
@@ -317,6 +333,7 @@ package br.dcoder.console
 			
 			// text area
 			textArea.rect = new Rectangle(1, 1, rect.width - assetFactory.getButtonContainerSize() - 1, rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize() - inputField.getMinimumHeight() - 1);
+			textArea.scrollV = textArea.maxScrollV;
 			textArea.update();
 			
 			// input field
@@ -324,33 +341,26 @@ package br.dcoder.console
 			inputField.update();
 			
 			// horizontal scroll bar
-			hScrollBar.x = 0;
-			hScrollBar.y = rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize();
+			hScrollBar.rect = new Rectangle(0, rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize(), 0, 0);
 			hScrollBar.setLength(rect.width - assetFactory.getButtonContainerSize() + 1);
 			hScrollBar.setMaxValue(textArea.maxScrollH == 0 ? 0 : textArea.maxScrollH - 1);
-			hScrollBar.draw();
+			hScrollBar.update();
 			
 			if (hScrollBar.getValue() > hScrollBar.getMaxValue())
 				hScrollBar.toMaxValue();
 			
 			// vertical scroll bar
-			vScrollBar.x = rect.width - assetFactory.getButtonContainerSize();
-			vScrollBar.y = 0;
+			vScrollBar.rect = new Rectangle(rect.width - assetFactory.getButtonContainerSize(), 0);
 			vScrollBar.setLength(rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize() + 1);
 			vScrollBar.setMaxValue(textArea.maxScrollV == 0 ? 0 : textArea.maxScrollV - 1);
-			vScrollBar.draw();
+			vScrollBar.update();
 			
 			if (vScrollBar.getValue() > vScrollBar.getMaxValue())
 				vScrollBar.toMaxValue();
 			
 			// resize area
-			resizeArea.x = hScrollBar.x + hScrollBar.getLength();
-			resizeArea.y = vScrollBar.y + vScrollBar.getLength();
-			drawResizeArea();
-			
-			// misc stuff
-			drawBackground();
-			textArea.scrollV = textArea.maxScrollV;
+			resizeArea.rect = new Rectangle(hScrollBar.rect.left + hScrollBar.getLength(), vScrollBar.rect.top + vScrollBar.getLength(), 0, 0);
+			resizeArea.update();
 		}
 		
 		/**
@@ -499,31 +509,6 @@ package br.dcoder.console
 		//
 		// private methods
 		//
-		private function drawResizeArea():void
-		{
-			resizeArea.graphics.clear();
-			resizeArea.graphics.beginFill(assetFactory.getBackgroundColor());
-			resizeArea.graphics.drawRect(0, 0, assetFactory.getButtonContainerSize() - 2, assetFactory.getButtonContainerSize() - 2);
-			resizeArea.graphics.endFill();
-
-			resizeArea.graphics.lineStyle(1, assetFactory.getButtonForegroundColor());			
-			resizeArea.graphics.beginFill(assetFactory.getButtonBackgroundColor());
-			resizeArea.graphics.moveTo(assetFactory.getButtonContainerSize() - 4, 3);
-			resizeArea.graphics.lineTo(assetFactory.getButtonContainerSize() - 4, assetFactory.getButtonContainerSize() - 4);
-			resizeArea.graphics.lineTo(3, assetFactory.getButtonContainerSize() - 4);
-			resizeArea.graphics.endFill();
-		}
-		
-		private function drawBackground():void
-		{
-			content.graphics.clear();
-			
-			content.graphics.lineStyle(1, assetFactory.getButtonForegroundColor());
-			content.graphics.beginFill(assetFactory.getBackgroundColor());
-			content.graphics.drawRect(0, 0, rect.width - 1, rect.height - assetFactory.getButtonContainerSize() - 1);
-			content.graphics.endFill();
-		}
-		
 		private function handleEmbedCommands(params:Array):Boolean {
 			if (params[0] == "alpha")
 			{
@@ -604,7 +589,7 @@ package br.dcoder.console
 			
 			for (i = 0; i < shortcutKeys.length; i++)
 			{
-				if (event.charCode == shortcutKeys[i].charCodeAt(0) || event.charCode == shortcutKeys[i].toUpperCase().charCodeAt(0)) {
+				if (event.charCode == (shortcutKeys[i] as String).charCodeAt(0) || event.charCode == (shortcutKeys[i] as String).toUpperCase().charCodeAt(0)) {
 					shortcutStates[i] = true;
 					break;
 				}
@@ -642,62 +627,12 @@ package br.dcoder.console
 		{
 			for (var i:uint = 0; i < shortcutKeys.length; i++)
 			{
-				if (event.charCode == shortcutKeys[i].charCodeAt(0) || event.charCode == shortcutKeys[i].toUpperCase().charCodeAt(0))
+				if (event.charCode == (shortcutKeys[i] as String).charCodeAt(0) || event.charCode == (shortcutKeys[i] as String).toUpperCase().charCodeAt(0))
 				{
 					shortcutStates[i] = false;
 					break;
 				}
 			}
 		}
-
-		
-		//
-		// mouse events
-		//
-		private function stageMouseMove(event:MouseEvent):void
-		{
-			hScrollBar.onStageMouseMove(event);
-			vScrollBar.onStageMouseMove(event);
-			
-			if (resizing)
-			{
-				rect.width += event.stageX - resizeOffset.x;
-				rect.height += event.stageY - resizeOffset.y;
-				resizeOffset.x = event.stageX;
-				resizeOffset.y = event.stageY;
-				update();
-			}
-		}
-		
-		private function stageMouseUp(event:MouseEvent):void
-		{
-			hScrollBar.onStageMouseUp(event);
-			vScrollBar.onStageMouseUp(event);
-			
-			if (resizing)
-			{
-				resizing = false;
-				inputField.getFocus();
-			}
-		}
-		
-		private function onResizeAreaMouseDown(event:MouseEvent):void
-		{
-			resizeOffset.x = event.stageX;
-			resizeOffset.y = event.stageY;
-			resizing = true;
-		}
-		
-		//
-		// scroll bar events
-		//
-		private function scrollBarChange(event:Event):void
-		{
-			if (event.target == hScrollBar)
-				textArea.scrollH = hScrollBar.getValue() + 1;
-			else if (event.target == vScrollBar)
-				textArea.scrollV = vScrollBar.getValue() + 1;
-		}
 	}
-
 }
