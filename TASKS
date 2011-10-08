@@ -12,14 +12,20 @@ Pending:
 * create ConsoleProgram concept (to work differently from input events).
 * create ConsoleConfig class to manage all public static variables used for runtime configuration.
 * improve console gui api.
+* fix missing of ScrollBar class.
+* commit git repository as an eclipse fdt project.
+* create fdt launch as common files.
+* close version 0.4;
 
 Resolved - version 0.4:
-* [14/09/2011] create GUIBaseElement class.
-* [14/09/2011] add StringUtil class.
-* [14/09/2011] create CaptionBar class, child of GUIBaseElement class.
-* [14/09/2011] create TextArea class, child of GUIBaseElement class.
-* [14/09/2011] create InputField class, child of GUIBaseElement class.
-* [15/09/2011] adapt ScrollBar class to be child o GUIBaseElement class.
-* [15/09/2011] create ResizeArea class, child of GUIBaseElement class.
-* [15/09/2011] create a simple components set (to remove all components from Console class).
+* [08/10/2011] create ConsoleLocalServer and TestLocalClient applications.
+* [08/10/2011] create LocalServer and LocalClient plugins (to manage connections between differents SWFs through LocalConnection class).
 * [15/09/2011] use anonymous function to handle console internal events.
+* [15/09/2011] create a simple components set (to remove all components from Console class).
+* [15/09/2011] create ResizeArea class, child of GUIBaseElement class.
+* [15/09/2011] adapt ScrollBar class to be child o GUIBaseElement class.
+* [14/09/2011] create InputField class, child of GUIBaseElement class.
+* [14/09/2011] create TextArea class, child of GUIBaseElement class.
+* [14/09/2011] create CaptionBar class, child of GUIBaseElement class.
+* [14/09/2011] add StringUtil class.
+* [14/09/2011] create GUIBaseElement class.
