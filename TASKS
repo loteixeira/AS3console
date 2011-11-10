@@ -13,11 +13,13 @@ Pending:
 * create ConsoleConfig class to manage all public static variables used for runtime configuration.
 * improve console gui api.
 * fix bug when pressing up key in input text field that throws an exception when history is empty.
-* add to project LocalServer and LocalClient plugins.
-* build a LocalServer swf.
+* add custom channel name for LocalClient and LocalServer plugins (each client or server can open different channels).
 * close version 0.4;
 
 Resolved - version 0.4:
+* [10/11/2011] use LocalClient plugin in ConsoleDemo.
+* [10/11/2011] build ConsoleLocalServer.swf.
+* [10/11/2011] add to project LocalServer and LocalClient plugins.
 * [10/11/2011] commit git repository as an eclipse fdt project.
 * [10/11/2011] create fdt launch as common files.
 * [10/11/2011] fix missing of ScrollBar class.

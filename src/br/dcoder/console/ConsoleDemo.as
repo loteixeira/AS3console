@@ -8,6 +8,7 @@ package br.dcoder.console
 {
 	import br.dcoder.console.*;
 	import br.dcoder.console.plugin.CodeEval;
+	import br.dcoder.console.plugin.LocalClient;
 	
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -31,6 +32,7 @@ package br.dcoder.console
 			
 			Console.create(stage);
 			CodeEval.start(this);
+			LocalClient.start();
 			
 			Console.getInstance().addEventListener(ConsoleEvent.INPUT, consoleInput);
 			Console.getInstance().area = new Rectangle(50, 50, 500, 400);
