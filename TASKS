@@ -12,12 +12,15 @@ Pending:
 * create ConsoleProgram concept (to work differently from input events).
 * create ConsoleConfig class to manage all public static variables used for runtime configuration.
 * improve console gui api.
-* fix missing of ScrollBar class.
-* commit git repository as an eclipse fdt project.
-* create fdt launch as common files.
+* fix bug when pressing up key in input text field that throws an exception when history is empty.
+* add to project LocalServer and LocalClient plugins.
+* build a LocalServer swf.
 * close version 0.4;
 
 Resolved - version 0.4:
+* [10/11/2011] commit git repository as an eclipse fdt project.
+* [10/11/2011] create fdt launch as common files.
+* [10/11/2011] fix missing of ScrollBar class.
 * [08/10/2011] create ConsoleLocalServer and TestLocalClient applications.
 * [08/10/2011] create LocalServer and LocalClient plugins (to manage connections between differents SWFs through LocalConnection class).
 * [15/09/2011] use anonymous function to handle console internal events.

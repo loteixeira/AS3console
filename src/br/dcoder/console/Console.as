@@ -4,8 +4,7 @@
 // This software is distribuited under the terms of the GNU Lesser Public License.
 // See license.txt for more information.
 
-package br.dcoder.console
-{
+package br.dcoder.console {
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
@@ -32,7 +31,7 @@ package br.dcoder.console
 		/**
 		 * Console version.
 		 */
-		public static const VERSION:String = "0.3.2";
+		public static const VERSION:String = "0.3.3";
 		
 		/**
 		 * Max characters stored in console text area. Can be modified at runtime.
