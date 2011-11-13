@@ -23,7 +23,7 @@ package br.dcoder.console
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStage);
 			
 			Console.create(stage);
-			Console.getInstance().caption = "Console Local Server";
+			Console.instance.caption = "Console Local Server";
 			
 			LocalServer.start();
 			
@@ -34,7 +34,7 @@ package br.dcoder.console
 		
 		private function resize(event:Event):void
 		{
-			Console.getInstance().area = new Rectangle(0, 0, stage.stageWidth, stage.stageHeight);
+			Console.instance.area = new Rectangle(0, 0, stage.stageWidth, stage.stageHeight);
 		}
 	}
 }

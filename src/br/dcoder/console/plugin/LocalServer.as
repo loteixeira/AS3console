@@ -16,7 +16,7 @@ package br.dcoder.console.plugin
 		
 		public static function start():void
 		{
-			Console.getInstance().addEventListener(ConsoleEvent.INPUT, input);
+			Console.instance.addEventListener(ConsoleEvent.INPUT, input);
 			
 			var client:Object =
 			{

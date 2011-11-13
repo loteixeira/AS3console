@@ -32,7 +32,7 @@ package br.dcoder.console.plugin
 		public static function start(_context:Object = null):void
 		{
 			CodeEval._context = _context;
-			Console.getInstance().addEventListener(ConsoleEvent.INPUT, input);
+			Console.instance.addEventListener(ConsoleEvent.INPUT, input);
 		}
 		
 		/**

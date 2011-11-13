@@ -16,13 +16,13 @@ package br.dcoder.console.plugin
 		
 		public static function start():void
 		{
-			Console.getInstance().addEventListener(ConsoleEvent.OUTPUT, output);
+			Console.instance.addEventListener(ConsoleEvent.OUTPUT, output);
 			
 			var client:Object = 
 			{
 				input: function(text:String):void
 				{
-					Console.getInstance().dispatchEvent(new ConsoleEvent(ConsoleEvent.INPUT, text));
+					Console.instance.dispatchEvent(new ConsoleEvent(ConsoleEvent.INPUT, text));
 				}
 			};
 			

@@ -34,8 +34,8 @@ package br.dcoder.console
 			CodeEval.start(this);
 			LocalClient.start();
 			
-			Console.getInstance().addEventListener(ConsoleEvent.INPUT, consoleInput);
-			Console.getInstance().area = new Rectangle(50, 50, 500, 400);
+			Console.instance.addEventListener(ConsoleEvent.INPUT, consoleInput);
+			Console.instance.area = new Rectangle(50, 50, 500, 400);
 			cpln("Starting Console Demo by Lucas Teixeira (Disturbed Coder)");
 			cpln("Project page: https://github.com/loteixeira/as3console");
 			cpln("Type 'help' for commands.");

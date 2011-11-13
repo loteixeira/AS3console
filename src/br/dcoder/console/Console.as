@@ -31,7 +31,7 @@ package br.dcoder.console {
 		/**
 		 * Console version.
 		 */
-		public static const VERSION:String = "0.3.3";
+		public static const VERSION:String = "0.3.4";
 		
 		/**
 		 * Max characters stored in console text area. Can be modified at runtime.
@@ -66,12 +66,13 @@ package br.dcoder.console {
 		//
 		private static const DEFAULT_ALPHA:Number = 0.75;
 		
-		private static var release:Boolean;
-		private static var instance:Console = null;
+		private static var _created:Boolean;
+		private static var _release:Boolean;
+		private static var _instance:Console = null;
 		
+		private var rect:Rectangle;
 		private var stage:Stage;
 		private var assetFactory:AssetFactory;
-		private var rect:Rectangle;
 		
 		private var container:Sprite;
 		private var captionBar:CaptionBar;
@@ -97,37 +98,43 @@ package br.dcoder.console {
 		 * @param release Use to create release versions and remove console overhead.
 		 * @return Console singleton instance.
 		 */
-		public static function create(stage:Stage, release:Boolean = false):Console
+		public static function create(stage:Stage, _release:Boolean = false):Console
 		{
-			if (instance)
+			if (_instance)
 				throw new Error("One console instance allowed at time");
 			
-			Console.release = release;
+			Console._release = _release;
+			_created = true;
+			_instance = new Console(stage);
 			
-			if (release)
-				instance = new DummyConsole(stage);
-			else
-				instance = new Console(stage, new AssetFactory());
-			
-			return instance;
+			return _instance;
 		}
 		
 		/**
 		 * Check if console is running release version.
 		 * @return Return true if is release version.
 		 */
-		public static function isRelease():Boolean
+		public static function get release():Boolean
 		{
-			return release;
+			return _release;
+		}
+		
+		/**
+		 * Check if console instance was created.
+		 * @return Return true is create method was already called.
+		 */
+		public static function get created():Boolean
+		{
+			return _created;
 		}
 		
 		/**
 		 * Return console singleton instance.
 		 * @return Console singleton instance.
 		 */
-		public static function getInstance():Console
+		public static function get instance():Console
 		{
-			return instance;
+			return _instance;
 		}
 
 		
@@ -137,114 +144,117 @@ package br.dcoder.console {
 		/**
 		 * @private
 		 */
-		public function Console(stage:Stage, assetFactory:AssetFactory)
+		public function Console(stage:Stage)
 		{	
 			super();
-
-			if (release)
-				return;
-				
-			this.stage = stage;
-			this.assetFactory = assetFactory;
 			
+			if (!created)
+				throw new Error("This class is a singleton. Use create static method.");
+
 			rect = new Rectangle(50, 50, 250, 250);
-			container = new Sprite();
-			stage.addChild(container);
-			
-			// caption bar
-			captionBar = new CaptionBar(assetFactory);
-			captionBar.text = "AS3Console " + VERSION;
-			container.addChild(captionBar.getContent());
-			
-			captionBar.addEventListener(CaptionBar.START_DRAG_EVENT, function(event:Event):void
-			{
-				toFront();
-				container.startDrag();
-			});
-			
-			captionBar.addEventListener(CaptionBar.STOP_DRAG_EVENT, function(event:Event):void
-			{
-				container.stopDrag();
-				rect.x = container.x;
-				rect.y = container.y;
-				inputField.getFocus();
-			});
-
-			// content
-			content = new Sprite();
-			content.y = assetFactory.getButtonContainerSize();
-			container.addChild(content);
-			
-			// text area
-			textArea = new TextArea(assetFactory);
-			content.addChild(textArea.getContent());
-			
-			textArea.addEventListener(TextArea.SCROLL_EVENT, function(event:Event):void
-			{
-				vScrollBar.setValue(textArea.scrollV - 1);
-			});
-			
-			// input field
-			inputField = new InputField(assetFactory);
-			content.addChild(inputField.getContent());
-			
-			inputField.addEventListener(InputField.INPUT_EVENT, function(event:Event):void
-			{
-				println("> " + inputField.getText());
 				
-				if (!handleEmbedCommands(inputField.getText().split(" ")))
-					dispatchEvent(new ConsoleEvent(ConsoleEvent.INPUT, inputField.getText()));
-			});
-			
-			// scroll bars
-			hScrollBar = new ScrollBar(assetFactory, ScrollBar.HORIZONTAL, 250);
-			hScrollBar.setMaxValue(0);
-			content.addChild(hScrollBar.getContent());
-			
-			hScrollBar.addEventListener(Event.CHANGE, function(event:Event):void
+			if (!release)
 			{
-				textArea.scrollH = hScrollBar.getValue() + 1;
-			});
+				this.stage = stage;
+				assetFactory = new AssetFactory();
+				container = new Sprite();
+				stage.addChild(container);
 			
-			vScrollBar = new ScrollBar(assetFactory, ScrollBar.VERTICAL, 250);
-			vScrollBar.setMaxValue(0);
-			content.addChild(vScrollBar.getContent());
+				// caption bar
+				captionBar = new CaptionBar(assetFactory);
+				captionBar.text = "AS3Console " + VERSION;
+				container.addChild(captionBar.getContent());
 			
-			vScrollBar.addEventListener(Event.CHANGE, function(event:Event):void
-			{
-				textArea.scrollV = vScrollBar.getValue() + 1;
-			});
+				captionBar.addEventListener(CaptionBar.START_DRAG_EVENT, function(event:Event):void
+				{
+					toFront();
+					container.startDrag();
+				});
 			
-			// resize area
-			resizeArea = new ResizeArea(assetFactory);
-			content.addChild(resizeArea.getContent());
+				captionBar.addEventListener(CaptionBar.STOP_DRAG_EVENT, function(event:Event):void
+				{
+					container.stopDrag();
+					rect.x = container.x;
+					rect.y = container.y;
+					inputField.getFocus();
+				});
+
+				// content
+				content = new Sprite();
+				content.y = assetFactory.getButtonContainerSize();
+				container.addChild(content);
 			
-			resizeArea.addEventListener(ResizeArea.RESIZE_EVENT, function(event:Event):void
-			{
-				rect.width += resizeArea.widthOffset;
-				rect.height += resizeArea.heightOffset;
+				// text area
+				textArea = new TextArea(assetFactory);
+				content.addChild(textArea.getContent());
+			
+				textArea.addEventListener(TextArea.SCROLL_EVENT, function(event:Event):void
+				{
+					vScrollBar.setValue(textArea.scrollV - 1);
+				});
+			
+				// input field
+				inputField = new InputField(assetFactory);
+				content.addChild(inputField.getContent());
+			
+				inputField.addEventListener(InputField.INPUT_EVENT, function(event:Event):void
+				{
+					println("> " + inputField.getText());
+				
+					if (!handleEmbedCommands(inputField.getText().split(" ")))
+						dispatchEvent(new ConsoleEvent(ConsoleEvent.INPUT, inputField.getText()));
+				});
+			
+				// scroll bars
+				hScrollBar = new ScrollBar(assetFactory, ScrollBar.HORIZONTAL, 250);
+				hScrollBar.setMaxValue(0);
+				content.addChild(hScrollBar.getContent());
+			
+				hScrollBar.addEventListener(Event.CHANGE, function(event:Event):void
+				{
+					textArea.scrollH = hScrollBar.getValue() + 1;
+				});
+			
+				vScrollBar = new ScrollBar(assetFactory, ScrollBar.VERTICAL, 250);
+				vScrollBar.setMaxValue(0);
+				content.addChild(vScrollBar.getContent());
+			
+				vScrollBar.addEventListener(Event.CHANGE, function(event:Event):void
+				{
+					textArea.scrollV = vScrollBar.getValue() + 1;
+				});
+			
+				// resize area
+				resizeArea = new ResizeArea(assetFactory);
+				content.addChild(resizeArea.getContent());
+			
+				resizeArea.addEventListener(ResizeArea.RESIZE_EVENT, function(event:Event):void
+				{
+					rect.width += resizeArea.widthOffset;
+					rect.height += resizeArea.heightOffset;
+					update();
+				});
+			
+				resizeArea.addEventListener(ResizeArea.RESIZE_STOP_EVENT, function(event:Event):void
+				{
+					inputField.getFocus();
+				});
+			
+				// shortcut
+				shortcutKeys = [ "m" ];
+				shortcutStates = [ false ];
+				shortcutUseAlt = false;
+				shortcutUseCtrl = true;
+				shortcutUseShift = false;
+			
+				// stage events
+				stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+				stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+				
+				// update component
+				alpha = DEFAULT_ALPHA;
 				update();
-			});
-			
-			resizeArea.addEventListener(ResizeArea.RESIZE_STOP_EVENT, function(event:Event):void
-			{
-				inputField.getFocus();
-			});
-			
-			// shortcut
-			shortcutKeys = [ "m" ];
-			shortcutStates = [ false ];
-			shortcutUseAlt = false;
-			shortcutUseCtrl = true;
-			shortcutUseShift = false;
-			
-			// stage events
-			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
-			
-			// update component
-			alpha = DEFAULT_ALPHA;
-			update();
+			}
 		}
 		
 		//
@@ -265,29 +275,31 @@ package br.dcoder.console {
 		}
 		
 		/**
-		 * Console transparecy.
+		 * Console transparecy. If is release, the value is always zero.
 		 */
 		public function get alpha():Number
 		{
-			return container.alpha;
+			return release ? 0 : container.alpha;
 		}
 		
 		public function set alpha(value:Number):void
 		{
-			container.alpha = value;
+			if (!release)
+				container.alpha = value;
 		}
 		
 		/**
-		 * Console caption text.
+		 * Console caption text. If is release, caption bar text is always "".
 		 */
 		public function get caption():String
 		{
-			return captionBar.text;
+			return release ? "" : captionBar.text;
 		}
 		
 		public function set caption(text:String):void
 		{
-			captionBar.text = text;
+			if (!release)
+				captionBar.text = text;
 		}
 		
 		/**
@@ -315,82 +327,91 @@ package br.dcoder.console {
 		 */
 		public function update():void
 		{
-			// draw background
-			content.graphics.clear();
-			content.graphics.lineStyle(1, assetFactory.getButtonForegroundColor());
-			content.graphics.beginFill(assetFactory.getBackgroundColor());
-			content.graphics.drawRect(0, 0, rect.width - 1, rect.height - assetFactory.getButtonContainerSize() - 1);
-			content.graphics.endFill();
+			if (!release)
+			{
+				// draw background
+				content.graphics.clear();
+				content.graphics.lineStyle(1, assetFactory.getButtonForegroundColor());
+				content.graphics.beginFill(assetFactory.getBackgroundColor());
+				content.graphics.drawRect(0, 0, rect.width - 1, rect.height - assetFactory.getButtonContainerSize() - 1);
+				content.graphics.endFill();
 			
-			// container
-			container.x = rect.left;
-			container.y = rect.top;
+				// container
+				container.x = rect.left;
+				container.y = rect.top;
 			
-			// caption bar
-			captionBar.rect = new Rectangle(0, 0, rect.width, assetFactory.getButtonContainerSize());
-			captionBar.update();
+				// caption bar
+				captionBar.rect = new Rectangle(0, 0, rect.width, assetFactory.getButtonContainerSize());
+				captionBar.update();
 			
-			// text area
-			textArea.rect = new Rectangle(1, 1, rect.width - assetFactory.getButtonContainerSize() - 1, rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize() - inputField.getMinimumHeight() - 1);
-			textArea.scrollV = textArea.maxScrollV;
-			textArea.update();
+				// text area
+				textArea.rect = new Rectangle(1, 1, rect.width - assetFactory.getButtonContainerSize() - 1, rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize() - inputField.getMinimumHeight() - 1);
+				textArea.scrollV = textArea.maxScrollV;
+				textArea.update();
 			
-			// input field
-			inputField.rect = new Rectangle(1, rect.height - assetFactory.getButtonContainerSize() * 2 - inputField.getMinimumHeight(), rect.width - assetFactory.getButtonContainerSize(), inputField.getMinimumHeight());
-			inputField.update();
+				// input field
+				inputField.rect = new Rectangle(1, rect.height - assetFactory.getButtonContainerSize() * 2 - inputField.getMinimumHeight(), rect.width - assetFactory.getButtonContainerSize(), inputField.getMinimumHeight());
+				inputField.update();
 			
-			// horizontal scroll bar
-			hScrollBar.rect = new Rectangle(0, rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize(), 0, 0);
-			hScrollBar.setLength(rect.width - assetFactory.getButtonContainerSize() + 1);
-			hScrollBar.setMaxValue(textArea.maxScrollH == 0 ? 0 : textArea.maxScrollH - 1);
-			hScrollBar.update();
+				// horizontal scroll bar
+				hScrollBar.rect = new Rectangle(0, rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize(), 0, 0);
+				hScrollBar.setLength(rect.width - assetFactory.getButtonContainerSize() + 1);
+				hScrollBar.setMaxValue(textArea.maxScrollH == 0 ? 0 : textArea.maxScrollH - 1);
+				hScrollBar.update();
 			
-			if (hScrollBar.getValue() > hScrollBar.getMaxValue())
-				hScrollBar.toMaxValue();
+				if (hScrollBar.getValue() > hScrollBar.getMaxValue())
+					hScrollBar.toMaxValue();
 			
-			// vertical scroll bar
-			vScrollBar.rect = new Rectangle(rect.width - assetFactory.getButtonContainerSize(), 0);
-			vScrollBar.setLength(rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize() + 1);
-			vScrollBar.setMaxValue(textArea.maxScrollV == 0 ? 0 : textArea.maxScrollV - 1);
-			vScrollBar.update();
+				// vertical scroll bar
+				vScrollBar.rect = new Rectangle(rect.width - assetFactory.getButtonContainerSize(), 0);
+				vScrollBar.setLength(rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize() + 1);
+				vScrollBar.setMaxValue(textArea.maxScrollV == 0 ? 0 : textArea.maxScrollV - 1);
+				vScrollBar.update();
 			
-			if (vScrollBar.getValue() > vScrollBar.getMaxValue())
-				vScrollBar.toMaxValue();
+				if (vScrollBar.getValue() > vScrollBar.getMaxValue())
+					vScrollBar.toMaxValue();
 			
-			// resize area
-			resizeArea.rect = new Rectangle(hScrollBar.rect.left + hScrollBar.getLength(), vScrollBar.rect.top + vScrollBar.getLength(), 0, 0);
-			resizeArea.update();
+				// resize area
+				resizeArea.rect = new Rectangle(hScrollBar.rect.left + hScrollBar.getLength(), vScrollBar.rect.top + vScrollBar.getLength(), 0, 0);
+				resizeArea.update();
+			}
 		}
 		
 		/**
-		 * Show console component.
+		 * Show console component and throws ConsoleEvent.SHOW. If running release mode, does nothing.
 		 */
 		public function show():void
 		{
-			dispatchEvent(new ConsoleEvent(ConsoleEvent.SHOW));
-			
-			toFront();
-			container.visible = true;
-			inputField.getFocus();
+			if (!release)
+			{
+				dispatchEvent(new ConsoleEvent(ConsoleEvent.SHOW));
+
+				toFront();
+				container.visible = true;
+				inputField.getFocus();
+			}
 		}
 		
 		/**
-		 * Hide console component.
+		 * Hide console component and throws ConsoleEvent.HIDE. If running release mode, does nothing.
 		 */
 		public function hide():void
 		{
-			dispatchEvent(new ConsoleEvent(ConsoleEvent.HIDE));
+			if (!release)
+			{
+				dispatchEvent(new ConsoleEvent(ConsoleEvent.HIDE));
 			
-			container.visible = false;
+				container.visible = false;
+			}
 		}
 		
 		/**
 		 * Check if console component is visible.
-		 * @return Return true if console is visible.
+		 * @return Return true if console is visible. If running release mode returns always false;
 		 */
 		public function isVisible():Boolean
 		{
-			return container.visible;
+			return release ? false : container.visible;
 		}
 		
 		/**
@@ -398,7 +419,8 @@ package br.dcoder.console {
 		 */
 		public function maximize():void
 		{
-			content.visible = true;
+			if (!release)
+				content.visible = true;
 		}
 		
 		/**
@@ -406,20 +428,21 @@ package br.dcoder.console {
 		 */
 		public function minimize():void
 		{
-			content.visible = false;
+			if (!release)
+				content.visible = false;
 		}
 		
 		/**
 		 * Check if console component is maximized.
-		 * @return Return true if console is maximized.
+		 * @return Return true if console is maximized. If is release mode, always return false.
 		 */
 		public function isMaximized():Boolean
 		{
-			return content.visible;
+			return release ? false : content.visible;
 		}
 		
 		/**
-		 * Set show/hide shortcut. If this shortcut is already used by container application (Flash IDE, Web Browser, etc) console shortcut will never be triggered.
+		 * Set show/hide shortcut. If this shortcut is already used by container application (Flash IDE, Web Browser, etc) or running release mode, console shortcut will never be triggered.
 		 * @param shortcutKeys An array with all keys that should be pressed to trigger shortcut. Each key is a one-character string. Example: [ "m" ].
 		 * @param shortcutUseAlt If true ALT key should be pressed to trigger shortcut.
 		 * @param shortcutUseCtrl If true CTRL key should be pressed to trigger shortcut.
@@ -427,17 +450,20 @@ package br.dcoder.console {
 		 */
 		public function shortcut(shortcutKeys:Array, shortcutUseAlt:Boolean = false, shortcutUseCtrl:Boolean = true, shortcutUseShift:Boolean = false):void
 		{
-			this.shortcutKeys = shortcutKeys;
-			this.shortcutUseAlt = shortcutUseAlt;
-			this.shortcutUseCtrl = shortcutUseCtrl;
-			this.shortcutUseShift = shortcutUseShift;
-			
-			shortcutStates = new Array();
-			
-			for (var i:uint = 0; i < this.shortcutKeys.length; i++)
+			if (!release)
 			{
-				this.shortcutKeys[i] = (this.shortcutKeys[i] as String).toLowerCase();
-				shortcutStates.push(false);
+				this.shortcutKeys = shortcutKeys;
+				this.shortcutUseAlt = shortcutUseAlt;
+				this.shortcutUseCtrl = shortcutUseCtrl;
+				this.shortcutUseShift = shortcutUseShift;
+			
+				shortcutStates = new Array();
+			
+				for (var i:uint = 0; i < this.shortcutKeys.length; i++)
+				{
+					this.shortcutKeys[i] = (this.shortcutKeys[i] as String).toLowerCase();
+					shortcutStates.push(false);
+				}
 			}
 		}
 		
@@ -446,8 +472,9 @@ package br.dcoder.console {
 		 */
 		public function toFront():void
 		{
-			while (container.parent.getChildIndex(container) < container.parent.numChildren - 1)
-				container.parent.swapChildren(container, container.parent.getChildAt(container.parent.getChildIndex(container) + 1));
+			if (!release)
+				while (container.parent.getChildIndex(container) < container.parent.numChildren - 1)
+					container.parent.swapChildren(container, container.parent.getChildAt(container.parent.getChildIndex(container) + 1));
 		}
 		
 		/**
@@ -455,15 +482,19 @@ package br.dcoder.console {
 		 */
 		public function clear():void
 		{
-			textArea.clear();
-			hScrollBar.setMaxValue(0);
-			hScrollBar.toMaxValue();
-			vScrollBar.setMaxValue(0);
-			vScrollBar.toMaxValue();
+			if (!release)
+			{
+				textArea.clear();
+				hScrollBar.setMaxValue(0);
+				hScrollBar.toMaxValue();
+				vScrollBar.setMaxValue(0);
+				vScrollBar.toMaxValue();
+			}
 		}
 		
 		/**
-		 * Print information to console text area plus "\n".
+		 * Print information to console text area plus "\n". This method throws ConsoleEvent.OUTPUT. If running release mode, the event is thrown and
+		 * TRACE_ECHO/FIREBUG_ECHO still works. 
 		 * @param info Any information to be printed. If is null, "(null)" string is used.
 		 */
 		public function println(info:Object):void
@@ -492,17 +523,20 @@ package br.dcoder.console {
 				
 			dispatchEvent(new ConsoleEvent(ConsoleEvent.OUTPUT, str));
 			
-			// write text
-			textArea.writeln(str);
+			if (!release)
+			{
+				// write text
+				textArea.writeln(str);
 
-			// scroll bar
-			hScrollBar.setMaxValue(textArea.maxScrollH == 0 ? 0 : textArea.maxScrollH - 1);
-			vScrollBar.setMaxValue(textArea.maxScrollV == 0 ? 0 : textArea.maxScrollV - 1);
-			vScrollBar.toMaxValue();
+				// scroll bar
+				hScrollBar.setMaxValue(textArea.maxScrollH == 0 ? 0 : textArea.maxScrollH - 1);
+				vScrollBar.setMaxValue(textArea.maxScrollV == 0 ? 0 : textArea.maxScrollV - 1);
+				vScrollBar.toMaxValue();
 			
-			// bring to front if visible
-			if (isVisible())
-				toFront();
+				// bring to front if visible
+				if (isVisible())
+					toFront();
+			}
 		}
 
 		//

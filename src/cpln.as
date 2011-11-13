@@ -14,6 +14,6 @@ package
 	 */
 	public function cpln(info:Object):void
 	{
-		Console.getInstance().println(info);
+		Console.instance.println(info);
 	}
 }
