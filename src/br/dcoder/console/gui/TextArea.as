@@ -6,7 +6,7 @@ package br.dcoder.console.gui
 	import flash.text.TextFormat;
 	
 	import br.dcoder.console.Console;
-	import br.dcoder.console.AssetFactory;
+	import br.dcoder.console.assets.AssetFactory;
 
 	/**
 	 * @author lteixeira

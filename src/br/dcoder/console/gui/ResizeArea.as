@@ -4,7 +4,7 @@ package br.dcoder.console.gui
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
-	import br.dcoder.console.AssetFactory;
+	import br.dcoder.console.assets.AssetFactory;
 
 	/**
 	 * @author lteixeira

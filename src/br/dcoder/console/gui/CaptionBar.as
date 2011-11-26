@@ -6,7 +6,7 @@ package br.dcoder.console.gui
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
-	import br.dcoder.console.AssetFactory;
+	import br.dcoder.console.assets.AssetFactory;
 	import br.dcoder.console.util.StringUtil;
 
 	/**

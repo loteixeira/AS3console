@@ -4,7 +4,7 @@ package br.dcoder.console.gui
 	import flash.events.EventDispatcher;
 	import flash.geom.Rectangle;
 	
-	import br.dcoder.console.AssetFactory;
+	import br.dcoder.console.assets.AssetFactory;
 	
 	/**
 	 * @author lteixeira

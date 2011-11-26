@@ -7,7 +7,7 @@ package br.dcoder.console.gui
 	import flash.text.TextFormat;
 	
 	import br.dcoder.console.Console;
-	import br.dcoder.console.AssetFactory;
+	import br.dcoder.console.assets.AssetFactory;
 
 	/**
 	 * @author lteixeira
@@ -94,7 +94,8 @@ package br.dcoder.console.gui
 				if (historyIndex < inputHistory.length - 1)
 					historyIndex++;
 					
-				textField.text = inputHistory[historyIndex];
+				if (inputHistory.length > 0)
+					textField.text = inputHistory[historyIndex];
 			// down key pressed
 			} else if (event.keyCode == 40) {
 				if (historyIndex >= 0)

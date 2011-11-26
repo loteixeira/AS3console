@@ -4,7 +4,8 @@
 // This software is distribuited under the terms of the GNU Lesser Public License.
 // See license.txt for more information.
 
-package br.dcoder.console {
+package br.dcoder.console
+{
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
@@ -14,7 +15,9 @@ package br.dcoder.console {
 	import flash.geom.Rectangle;
 	import flash.system.System;
 	import flash.utils.getTimer;
-	
+
+	import br.dcoder.console.assets.AssetFactory;
+	import br.dcoder.console.assets.DefaultAssetFactory;
 	import br.dcoder.console.gui.CaptionBar;
 	import br.dcoder.console.gui.InputField;
 	import br.dcoder.console.gui.ResizeArea;
@@ -31,7 +34,7 @@ package br.dcoder.console {
 		/**
 		 * Console version.
 		 */
-		public static const VERSION:String = "0.3.4";
+		public static const VERSION:String = "0.3.5";
 		
 		/**
 		 * Max characters stored in console text area. Can be modified at runtime.
@@ -56,9 +59,9 @@ package br.dcoder.console {
 		 */
 		public static var TRACE_ECHO:Boolean = false;
 		/**
-		 * Print output in firebug window. Can be modified at runtime.
+		 * Print output in javascript console window. Can be modified at runtime.
 		 */
-		public static var FIREBUG_ECHO:Boolean = false;
+		public static var JS_ECHO:Boolean = false;
 		
 		
 		//
@@ -156,13 +159,13 @@ package br.dcoder.console {
 			if (!release)
 			{
 				this.stage = stage;
-				assetFactory = new AssetFactory();
+				assetFactory = new DefaultAssetFactory();
 				container = new Sprite();
 				stage.addChild(container);
 			
 				// caption bar
 				captionBar = new CaptionBar(assetFactory);
-				captionBar.text = "AS3Console " + VERSION;
+				captionBar.text = "AS3Console" + VERSION;
 				container.addChild(captionBar.getContent());
 			
 				captionBar.addEventListener(CaptionBar.START_DRAG_EVENT, function(event:Event):void
@@ -494,7 +497,7 @@ package br.dcoder.console {
 		
 		/**
 		 * Print information to console text area plus "\n". This method throws ConsoleEvent.OUTPUT. If running release mode, the event is thrown and
-		 * TRACE_ECHO/FIREBUG_ECHO still works. 
+		 * TRACE_ECHO/JS_ECHO still works. 
 		 * @param info Any information to be printed. If is null, "(null)" string is used.
 		 */
 		public function println(info:Object):void
@@ -509,15 +512,15 @@ package br.dcoder.console {
 			if (TRACE_ECHO)
 				trace(str);
 				
-			if (FIREBUG_ECHO)
+			if (JS_ECHO)
 			{
 				try
 				{
-					ExternalInterface.call("console.log", "[AS3Console] " + str);
+					ExternalInterface.call("console.log", "[AS3Console" + VERSION + "] " + str);
 				}
 				catch (e:Error)
 				{
-					str = "[Error writing on firebug: " + e + "]\n" + str;
+					str = "[Error writing on javascript console window: " + e + "]\n" + str;
 				}
 			}
 				
@@ -603,7 +606,7 @@ package br.dcoder.console {
 			else if (params[0] == "version")
 			{
 				println("AS3Console version " + VERSION);
-				println("Created by loteixeira at gmail dot com");
+				println("Created by Disturbed Coder.");
 				println("Project page: https://github.com/loteixeira/as3console");
 				println("");
 				

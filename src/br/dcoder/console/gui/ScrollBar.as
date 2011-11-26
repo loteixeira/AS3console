@@ -12,7 +12,7 @@ package br.dcoder.console.gui
 	import flash.geom.Point;
 	import flash.utils.getTimer;
 	
-	import br.dcoder.console.AssetFactory;
+	import br.dcoder.console.assets.AssetFactory;
 	
 	public class ScrollBar extends GUIBaseElement
 	{
@@ -90,6 +90,15 @@ package br.dcoder.console.gui
 			assetFactory.drawArrow(decArrow, assetFactory.getButtonSize() / 2, assetFactory.getButtonSize() / 2);
 			
 			content.addEventListener(Event.ENTER_FRAME, onRender);
+			content.addEventListener(Event.ADDED_TO_STAGE, addedToStage);
+		}
+		
+		private function addedToStage(event:Event):void
+		{
+			content.removeEventListener(Event.ADDED_TO_STAGE, addedToStage);
+			
+			content.stage.addEventListener(MouseEvent.MOUSE_MOVE, onStageMouseMove);
+			content.stage.addEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
 		}
 		
 		
