@@ -7,23 +7,10 @@
 package br.dcoder.console
 {
 	import br.dcoder.console.assets.AssetFactory;
-	import br.dcoder.console.assets.DefaultAssetFactory;
-	import br.dcoder.console.gui.CaptionBar;
-	import br.dcoder.console.gui.InputField;
-	import br.dcoder.console.gui.ResizeArea;
-	import br.dcoder.console.gui.ScrollBar;
-	import br.dcoder.console.gui.TextArea;
-	import br.dcoder.console.util.StringUtil;
 	
-	import flash.display.Sprite;
 	import flash.display.Stage;
-	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import flash.events.KeyboardEvent;
-	import flash.external.ExternalInterface;
 	import flash.geom.Rectangle;
-	import flash.system.System;
-	import flash.utils.getTimer;
 
 	/**
 	 * Console class is a singleton used to access all functionalities of AS3Console.
