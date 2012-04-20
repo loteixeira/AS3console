@@ -3,6 +3,8 @@
 //
 // This software is distribuited under the terms of the GNU Lesser Public License.
 // See license.txt for more information.
+// Contributed:
+// - 04/20/2012, Camille Reynders, http://www.creynders.be
 
 package br.dcoder.console
 {
