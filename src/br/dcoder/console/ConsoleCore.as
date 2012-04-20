@@ -34,7 +34,7 @@ package br.dcoder.console
 		/**
 		 * Console version.
 		 */
-		public static const VERSION:String = "0.3.5";
+		public static const VERSION:String = "0.4.0";
 		
 		public static const DEFAULT_MAX_CHARACTERS:uint = 100000;
 		public static const DEFAULT_MAX_LINE_LENGTH:uint = 1000;
