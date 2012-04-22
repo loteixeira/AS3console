@@ -9,7 +9,7 @@ package
 	import br.dcoder.console.Console;
 
 	/**
-	 * Alias for Console.getInstance().println method.
+	 * Alias for Console.instance.println method.
 	 * @param info Any information to be printed. If is null, "(null)" string is used.
 	 */
 	public function cpln(info:Object):void
