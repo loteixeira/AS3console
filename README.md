@@ -5,6 +5,8 @@ It has a customizable behavior and is easy to remove from release versions (avoi
 Using this component you don't need to install any plugin for your browser or any application on your computer.
 It's embedded to the SWF/SWC file and can be accessed from any computer using shortcut keys.
 
+This software is distribuited under the terms of the GNU Lesser Public License.
+
 ## Usage example
 AS3console was created to be small and simply to use, avoiding too much effort to get it running. You can access all the functionalities through Console singleton.
 To write data you can use println method or cpln alias. Both calls have the same effect:

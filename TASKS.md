@@ -1,6 +1,7 @@
 # AS3console tasks
 
 ## Pending:
+* Console singleton static properties (TRACE_ECHO, JS_ECHO, etc) must work even before the singleton was created (via create static method). This problem happened since the last updated - splitting Console class into two classes.
 * when using up/down arrow to navigate through input history, the cursor must be placed at the end of the text.
 * add print method (which won't add '\n' character to the end of the text).
 * add 'cp' top-level shortcut function (similar to cpln).
