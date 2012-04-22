@@ -1,8 +1,6 @@
-####################
-# AS3CONSOLE TASKS #
-####################
+# AS3console tasks
 
-Pending:
+## Pending:
 * when using up/down arrow to navigate through input history, the cursor must be placed at the end of the text.
 * add print method (which won't add '\n' character to the end of the text).
 * add 'cp' top-level shortcut function (similar to cpln).
@@ -17,7 +15,7 @@ Pending:
 * improve scrollbar thumb dragging.
 * close version 0.4;
 
-Resolved - version 0.4:
+## Resolved - version 0.4:
 * [26/11/2011] even when running release mode, output events must be thrown and TRACE_ECHO and JS_ECHO must still work.
 * [26/11/2011] fix bug when pressing up key in input text field that throws an exception when history is empty.
 * [26/11/2011] create assets package and rename AssetFactory to DefaultAssetFactory (making AssetFactory an interface).

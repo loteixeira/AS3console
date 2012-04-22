@@ -1,9 +1,6 @@
-######################
-# AS3CONSOLE CHANGES #
-######################
+# AS3console changes
 
-Version 0.3:
-============
+## Version 0.3
 * CodeEval plugin added using As3Eval Lib
 * Library package changed from 'br.dcoder' to 'br.dcoder.console'
 * Top level free function 'cpln' added to be an alias of 'Console.getInstance().println'
