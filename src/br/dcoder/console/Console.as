@@ -25,21 +25,24 @@ package br.dcoder.console
 		 */
 		public static const VERSION:String = ConsoleCore.VERSION;
 		
-		private static var _maxCharacters : uint = ConsoleCore.DEFAULT_MAX_CHARACTERS;
+		private static var _maxCharacters:uint = ConsoleCore.DEFAULT_MAX_CHARACTERS;
 
 		/**
 		 * Max characters stored in console text area. Can be modified at runtime.
 		 */
-		public static function get MAX_CHARACTERS():uint{
+		public static function get MAX_CHARACTERS():uint
+		{
 			return _maxCharacters;
 		}
 
 		/**
 		 * 
 		 */
-		public static function set MAX_CHARACTERS(value:uint):void{
+		public static function set MAX_CHARACTERS(value:uint):void
+		{
 			_maxCharacters = value;
-			if( _coreInstance ){
+			if (_coreInstance)
+			{
 				_coreInstance.maxCharacters = value;
 			}
 		}
@@ -51,16 +54,19 @@ package br.dcoder.console
 		 * Max line length before automatic breaking. Can be modified at runtime.
 		 * Note that modifying this attribute at runtime won't change text previously written.
 		 */
-		public static function get MAX_LINE_LENGTH():uint{
+		public static function get MAX_LINE_LENGTH():uint
+		{
 			return _maxLineLength;
 		}
 
 		/**
 		 * 
 		 */
-		public static function set MAX_LINE_LENGTH(value:uint):void{
+		public static function set MAX_LINE_LENGTH(value:uint):void
+		{
 			_maxLineLength = value;
-			if( _coreInstance ){
+			if (_coreInstance)
+			{
 				_coreInstance.maxLineLength = value;
 			}
 		}
@@ -71,16 +77,19 @@ package br.dcoder.console
 		 * Max input navigation history. Can be modified at runtime.
 		 * You can access input history using up/down arrow keys when input text field is selected.
 		 */
-		public static function get MAX_INPUT_HISTORY():uint{
+		public static function get MAX_INPUT_HISTORY():uint
+		{
 			return _maxInputHistory;
 		}
 
 		/**
 		 * 
 		 */
-		public static function set MAX_INPUT_HISTORY(value:uint):void{
+		public static function set MAX_INPUT_HISTORY(value:uint):void
+		{
 			_maxInputHistory = value;
-			if( _coreInstance ){
+			if (_coreInstance)
+			{
 				_coreInstance.maxInputHistory = value;
 			}
 		}
@@ -90,16 +99,19 @@ package br.dcoder.console
 		/**
 		 * Print elapsed milliseconds since the flash virtual machine started. Can be modified at runtime.
 		 */
-		public static function get PRINT_TIMER():Boolean{
+		public static function get PRINT_TIMER():Boolean
+		{
 			return _printTimer;
 		}
 
 		/**
 		 * 
 		 */
-		public static function set PRINT_TIMER(value:Boolean):void{
+		public static function set PRINT_TIMER(value:Boolean):void
+		{
 			_printTimer = value;
-			if( _coreInstance ){
+			if (_coreInstance)
+			{
 				_coreInstance.printTimer = value;
 			}
 		}
@@ -109,16 +121,19 @@ package br.dcoder.console
 		/**
 		 * Print output in flash trace window. Can be modified at runtime.
 		 */
-		public static function get TRACE_ECHO():Boolean{
+		public static function get TRACE_ECHO():Boolean
+		{
 			return _traceEcho;
 		}
 
 		/**
 		 * @private
 		 */
-		public static function set TRACE_ECHO(value:Boolean):void{
+		public static function set TRACE_ECHO(value:Boolean):void
+		{
 			_traceEcho = value;
-			if( _coreInstance ){
+			if (_coreInstance)
+			{
 				_coreInstance.traceEcho = value;
 			}
 		}
@@ -128,16 +143,19 @@ package br.dcoder.console
 		/**
 		 * Print output in javascript console window. Can be modified at runtime.
 		 */
-		public static function get JS_ECHO():Boolean{
+		public static function get JS_ECHO():Boolean
+		{
 			return _jsEcho;
 		}
 
 		/**
 		 * @private
 		 */
-		public static function set JS_ECHO(value:Boolean):void{
+		public static function set JS_ECHO(value:Boolean):void
+		{
 			_jsEcho = value;
-			if( _coreInstance ){
+			if (_coreInstance)
+			{
 				_coreInstance.jsEcho = value;
 			}
 		}

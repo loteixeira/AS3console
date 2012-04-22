@@ -69,7 +69,7 @@ package br.dcoder.console
 		public var jsEcho : Boolean = DEFAULT_JS_ECHO;
 		public var eventDispatcher : IEventDispatcher;
 		
-		public function ConsoleCore( stage : Stage, release : Boolean = false, eventDispatcher : IEventDispatcher = null )
+		public function ConsoleCore(stage:Stage, release:Boolean = false, eventDispatcher:IEventDispatcher = null)
 		{
 			this.stage = stage;
 			_release = release;
@@ -77,7 +77,8 @@ package br.dcoder.console
 			init();
 		}
 		
-		internal function init():void{
+		internal function init():void
+		{
 			rect = new Rectangle(50, 50, 250, 250);
 			
 			if (!release)
@@ -425,8 +426,12 @@ package br.dcoder.console
 		public function toFront():void
 		{
 			if (!release)
+			{
 				while (container.parent.getChildIndex(container) < container.parent.numChildren - 1)
+				{
 					container.parent.swapChildren(container, container.parent.getChildAt(container.parent.getChildIndex(container) + 1));
+				}
+			}
 		}
 		
 		/**
@@ -454,14 +459,14 @@ package br.dcoder.console
 			// build string
 			var str:String = StringUtil.check(info);
 			
-			if ( printTimer )
+			if (printTimer)
 				str = "[" + getTimer() + "] " + str;
 			
 			// throw events
-			if ( traceEcho )
+			if (traceEcho)
 				trace(str);
 			
-			if ( jsEcho )
+			if (jsEcho)
 			{
 				try
 				{
