@@ -7,15 +7,13 @@
 * improve documentation.
 * create a "how to" tutorial.
 * create ConsoleProgram concept (to work differently from input events).
-* create ConsoleConfig class to manage all public static variables used for runtime configuration.
-* improve console gui api.
-* refactor AssetFactory interface and DefaultAssetFactory class.
+* improve AssetFactory interface and DefaultAssetFactory class.
 * add custom channel name for LocalClient and LocalServer plugins (each client or server can open different channels).
-* add get embed command.
+* add get (http request) embed command.
 * improve scrollbar thumb dragging.
-* close version 0.4;
 
 ## Resolved - version 0.4:
+* [22/04/2012] close version 0.4;
 * [26/11/2011] even when running release mode, output events must be thrown and TRACE_ECHO and JS_ECHO must still work.
 * [26/11/2011] fix bug when pressing up key in input text field that throws an exception when history is empty.
 * [26/11/2011] create assets package and rename AssetFactory to DefaultAssetFactory (making AssetFactory an interface).
