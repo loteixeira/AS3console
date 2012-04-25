@@ -7,6 +7,8 @@
 package br.dcoder.console
 {
 	import br.dcoder.console.*;
+	import br.dcoder.console.assets.DefaultAssetFactory;
+	import br.dcoder.console.assets.HerculesAssetFactory;
 	import br.dcoder.console.plugin.CodeEval;
 	import br.dcoder.console.plugin.LocalClient;
 	
@@ -17,7 +19,9 @@ package br.dcoder.console
 	import flash.geom.Rectangle;
 	
 	public class ConsoleDemo extends Sprite
-	{		
+	{
+		private var assetFactoryName:String;
+		
 		public function ConsoleDemo()
 		{
 			addEventListener(Event.ADDED_TO_STAGE, addedToStage);
@@ -30,13 +34,18 @@ package br.dcoder.console
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
+			assetFactoryName = "default";
+			
 			Console.create(stage);
 			CodeEval.start(this);
 			LocalClient.start();
 			
 			Console.instance.addEventListener(ConsoleEvent.INPUT, consoleInput);
 			Console.instance.area = new Rectangle(50, 50, 500, 400);
-			cpln("Starting Console Demo by Lucas Teixeira (Disturbed Coder)");
+			//Console.instance.draggable = false;
+			//Console.instance.resizable = false;
+
+			cpln("Starting AS3console Demo by Lucas Teixeira (Disturbed Coder)");
 			cpln("Project page: https://github.com/loteixeira/as3console");
 			cpln("Type 'help' for commands.");
 			cpln("Press Ctrl+M to show/hide console component.");
@@ -50,8 +59,8 @@ package br.dcoder.console
 			
 			if (args[0] == "help")
 			{
-				cpln("AS3Console Demo Help:");
-				cpln("=====================");
+				cpln("AS3console embed commands:");
+				cpln("==========================");
 				cpln("- alpha [value]");
 				cpln("  Set console alpha if value is defined.");
 				cpln("  Otherwise print current alpha.");
@@ -64,6 +73,40 @@ package br.dcoder.console
 				cpln("- version");
 				cpln("  Print console version.");
 				cpln("");
+				cpln("AS3console demo commands:");
+				cpln("=========================");
+				cpln("- assetFactory [name]");
+				cpln("  Set console AssetFacotry if value is defined. Valid values are: default and hercules");
+				cpln("  Otherwise print current AssetFactory.");
+			}
+			else if (args[0] == "assetFactory")
+			{
+				if (args.length == 1)
+				{
+					cpln("Current asset factory: " + assetFactoryName);
+					cpln("");
+				}
+				else if (args.length == 2)
+				{
+					if (args[1] != "default" && args[1] != "hercules")
+					{
+						cpln("Error: valid asset factories are default and hercules");
+						cpln("");
+					}
+					else
+					{
+						assetFactoryName = args[1];
+						
+						if (assetFactoryName == "default")
+						{
+							Console.instance.setAssetFactory(new DefaultAssetFactory());
+						}
+						else if (assetFactoryName == "hercules")
+						{
+							Console.instance.setAssetFactory(new HerculesAssetFactory());
+						}
+					}
+				}
 			}
 			else
 			{

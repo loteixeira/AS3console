@@ -28,7 +28,7 @@ package br.dcoder.console.plugin
 			{
 				input: function(text:String):void
 				{
-					Console.instance.dispatchEvent(new ConsoleEvent(ConsoleEvent.INPUT, text));
+					Console.instance.dispatchEvent(new ConsoleEvent(ConsoleEvent.INPUT, false, false, text));
 				}
 			};
 			
