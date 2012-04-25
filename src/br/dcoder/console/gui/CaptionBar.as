@@ -11,7 +11,8 @@ package br.dcoder.console.gui
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-	
+
+	import br.dcoder.console.ConsoleConfig;
 	import br.dcoder.console.assets.AssetFactory;
 	import br.dcoder.console.util.StringUtil;
 
@@ -23,11 +24,14 @@ package br.dcoder.console.gui
 		public static const START_DRAG_EVENT:String = "startDragEvent";
 		public static const STOP_DRAG_EVENT:String = "stopDragEvent";
 		
+		private var _draggable:Boolean;
 		private var textField:TextField;
 		
-		public function CaptionBar(assetFactory:AssetFactory)
+		public function CaptionBar(config:ConsoleConfig, assetFactory:AssetFactory)
 		{
-			super(assetFactory);
+			super(config, assetFactory);
+			
+			_draggable = true;
 
 			// setup content
 			content.addEventListener(MouseEvent.MOUSE_UP, contentMouseUp);
@@ -40,6 +44,17 @@ package br.dcoder.console.gui
 			textField.selectable = false;
 			textField.y = 2;
 			content.addChild(textField);
+		}
+		
+		public function get draggable():Boolean
+		{
+			return _draggable;
+		}
+		
+		public function set draggable(_draggable:Boolean):void
+		{
+			this._draggable = _draggable;
+			content.buttonMode = _draggable;
 		}
 		
 		public function get text():String
@@ -68,8 +83,8 @@ package br.dcoder.console.gui
 			textFormat.color = assetFactory.getButtonForegroundColor();
 			textFormat.font = assetFactory.getFontName();
 			textFormat.size = assetFactory.getCaptionFontSize();
-			textField.setTextFormat(textFormat);
 			textField.defaultTextFormat = textFormat;
+			textField.setTextFormat(textFormat);
 			
 			// update text field
 			textField.width = rect.width;
@@ -79,12 +94,18 @@ package br.dcoder.console.gui
 		
 		private function contentMouseUp(event:MouseEvent):void
 		{
-			dispatchEvent(new Event(STOP_DRAG_EVENT));
+			if (_draggable)
+			{
+				dispatchEvent(new Event(STOP_DRAG_EVENT));
+			}
 		}
 		
 		private function contentMouseDown(event:MouseEvent):void
 		{
-			dispatchEvent(new Event(START_DRAG_EVENT));
+			if (_draggable)
+			{
+				dispatchEvent(new Event(START_DRAG_EVENT));
+			}
 		}
 	}
 }

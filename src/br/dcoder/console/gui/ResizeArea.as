@@ -10,6 +10,7 @@ package br.dcoder.console.gui
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
+	import br.dcoder.console.ConsoleConfig;
 	import br.dcoder.console.assets.AssetFactory;
 
 	/**
@@ -24,9 +25,9 @@ package br.dcoder.console.gui
 		private var resizing:Boolean;
 		private var _widthOffset:int, _heightOffset:int;
 		
-		public function ResizeArea(assetFactory:AssetFactory)
+		public function ResizeArea(config:ConsoleConfig, assetFactory:AssetFactory)
 		{
-			super(assetFactory);
+			super(config, assetFactory);
 			
 			resizeOffset = new Point();
 			resizing = false;
@@ -44,6 +45,16 @@ package br.dcoder.console.gui
 				content.stage.addEventListener(MouseEvent.MOUSE_MOVE, stageMouseMove);
 				content.stage.addEventListener(MouseEvent.MOUSE_UP, stageMouseUp);
 			});
+		}
+		
+		public function get visible():Boolean
+		{
+			return content.visible;
+		}
+		
+		public function set visible(_visible:Boolean):void
+		{
+			content.visible = _visible;
 		}
 		
 		public function get widthOffset():int

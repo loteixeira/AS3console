@@ -11,7 +11,8 @@ package br.dcoder.console.gui
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.utils.getTimer;
-	
+
+	import br.dcoder.console.ConsoleConfig;
 	import br.dcoder.console.assets.AssetFactory;
 	
 	public class ScrollBar extends GUIBaseElement
@@ -40,9 +41,9 @@ package br.dcoder.console.gui
 		//
 		// constructor
 		//
-		public function ScrollBar(assetFactory:AssetFactory, orientation:String, length:uint)
+		public function ScrollBar(config:ConsoleConfig, assetFactory:AssetFactory, orientation:String, length:uint)
 		{
-			super(assetFactory);
+			super(config, assetFactory);
 			
 			this.orientation = orientation;
 			this.length = length;
@@ -105,6 +106,16 @@ package br.dcoder.console.gui
 		//
 		// public interface
 		//
+		override public function setAssetFactory(assetFactory:AssetFactory):void
+		{
+			super.setAssetFactory(assetFactory);
+			
+			assetFactory.drawButton(incButton, assetFactory.getButtonSize(), assetFactory.getButtonSize());
+			assetFactory.drawButton(decButton, assetFactory.getButtonSize(), assetFactory.getButtonSize());
+			assetFactory.drawArrow(incArrow, assetFactory.getButtonSize() / 2, assetFactory.getButtonSize() / 2);
+			assetFactory.drawArrow(decArrow, assetFactory.getButtonSize() / 2, assetFactory.getButtonSize() / 2);
+		}
+		
 		public function getOrientation():String
 		{
 			return orientation;

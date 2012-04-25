@@ -9,7 +9,8 @@ package br.dcoder.console.gui
 	import flash.display.Sprite;
 	import flash.events.EventDispatcher;
 	import flash.geom.Rectangle;
-	
+
+	import br.dcoder.console.ConsoleConfig;
 	import br.dcoder.console.assets.AssetFactory;
 	
 	/**
@@ -18,11 +19,13 @@ package br.dcoder.console.gui
 	public class GUIBaseElement extends EventDispatcher
 	{
 		public var rect:Rectangle = new Rectangle();
+		protected var config:ConsoleConfig;
 		protected var assetFactory:AssetFactory;
 		protected var content:Sprite;
 		
-		public function GUIBaseElement(assetFactory:AssetFactory)
+		public function GUIBaseElement(config:ConsoleConfig, assetFactory:AssetFactory)
 		{
+			this.config = config;
 			this.assetFactory = assetFactory;
 			content = new Sprite();
 		}
