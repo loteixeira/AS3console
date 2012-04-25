@@ -26,6 +26,10 @@ package br.dcoder.console
 		 * Defines hide console event type.
 		 */
 		public static const HIDE:String = "hide";
+		/**
+		 * Defines resize component event type.
+		 */
+		public static const RESIZE:String = "resize";
 		
 		private var value:String;
 		
@@ -33,11 +37,11 @@ package br.dcoder.console
 		 * Creates an event object that contains information about console events.
 		 * @param type The type of console event. Possible values are: ConsoleEvent.INPUT, ConsoleEvent.OUTPUT,
 		 * ConsoleEvent.SHOW or ConsoleEvent.HIDE.
-		 * @param value Text value of this event. Is valid for ConsoleEvent.INPUT and ConsoleEvent.OUTPUT.
 		 * @param bubbles Determines whether the Event object participates in the bubbling phase of the event flow. 
 		 * @param cancelable Determines whether the Event object can be canceled.
+		 * * @param value Text value of this event. Is valid for ConsoleEvent.INPUT and ConsoleEvent.OUTPUT.
 		 */
-		public function ConsoleEvent(type:String, value:String = "", bubbles:Boolean = false, cancelable:Boolean = false)
+		public function ConsoleEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false, value:String = "")
 		{
 			super(type, bubbles, cancelable);
 			this.value = value;
