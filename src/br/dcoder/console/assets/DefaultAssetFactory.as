@@ -9,17 +9,10 @@ package br.dcoder.console.assets
 	import flash.display.Sprite;
 	
 	/**
-	 * Console default asset factory.
+	 * Console default asset factory, used since the first version.
 	 */
 	public class DefaultAssetFactory implements AssetFactory
 	{
-		/**
-		 * Create a instance of DefaultAssetFactory class.
-		 */
-		public function DefaultAssetFactory()
-		{
-		}
-		
 		/**
 		 * Get the value of background color.
 		 * @return Background color.
