@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="ConsoleEvent,br.dcoder.console.ConsoleEvent,HIDE,INPUT,OUTPUT,SHOW,text" name="keywords">
+<meta content="ConsoleEvent,br.dcoder.console.ConsoleEvent,HIDE,INPUT,OUTPUT,RESIZE,SHOW,text" name="keywords">
 <title>br.dcoder.console.ConsoleEvent</title>
 </head>
 <body>
@@ -42,7 +42,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </tr>
 </table>
 <p></p>
-<p></p>
+  Events dispatched by ConsoleCore, or by the related IEventDispatcher object.
+  <p></p>
+<p>
+<span class="classHeaderTableLabel">See also</span>
+</p>
+<div class="seeAlso">
+<a href="ConsoleCore.html" target="">ConsoleCore</a>
+</div>
 <br>
 <hr>
 </div>
@@ -70,7 +77,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#ConsoleEvent()">ConsoleEvent</a>(type:String, value:String = "", bubbles:Boolean = false, cancelable:Boolean = false)</div>
+<a class="signatureLink" href="#ConsoleEvent()">ConsoleEvent</a>(type:String, bubbles:Boolean = false, cancelable:Boolean = false, value:String = "")</div>
 <div class="summaryTableDescription">
    Creates an event object that contains information about console events.</div>
 </td><td class="summaryTableOwnerCol">ConsoleEvent</td>
@@ -97,6 +104,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#OUTPUT">OUTPUT</a> : String = "output"<div class="summaryTableDescription">[static]
    Defines data output event type.</div>
+</td><td class="summaryTableOwnerCol">ConsoleEvent</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#RESIZE">RESIZE</a> : String = "resize"<div class="summaryTableDescription">[static]
+   Defines resize component event type.</div>
 </td><td class="summaryTableOwnerCol">ConsoleEvent</td>
 </tr>
 <tr class="">
@@ -137,20 +149,13 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function ConsoleEvent(type:String, value:String = "", bubbles:Boolean = false, cancelable:Boolean = false)</code><p>
+<code>public function ConsoleEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false, value:String = "")</code><p>
    Creates an event object that contains information about console events.
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20px"></td><td><code><span class="label">type</span>:String</code> &mdash; The type of console event. Possible values are: ConsoleEvent.INPUT, ConsoleEvent.OUTPUT,
    ConsoleEvent.SHOW or ConsoleEvent.HIDE.
-   </td>
-</tr>
-<tr>
-<td class="paramSpacer">&nbsp;</td>
-</tr>
-<tr>
-<td width="20px"></td><td><code><span class="label">value</span>:String</code> (default = "<code></code>")<code></code> &mdash; Text value of this event. Is valid for ConsoleEvent.INPUT and ConsoleEvent.OUTPUT.
    </td>
 </tr>
 <tr>
@@ -167,7 +172,20 @@ showHideInherited();
 <td width="20px"></td><td><code><span class="label">cancelable</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; Determines whether the Event object can be canceled.
    </td>
 </tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">value</span>:String</code> (default = "<code></code>")<code></code> &mdash; Text value of this event. Is valid for ConsoleEvent.INPUT and ConsoleEvent.OUTPUT.
+   </td>
+</tr>
 </table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="ConsoleCore.html" target="">ConsoleCore</a>
+</div>
 </div>
 <a name="constantDetail"></a>
 <div class="detailSectionHeader">Constant detail</div>
@@ -200,6 +218,16 @@ showHideInherited();
 <div class="detailBody">
 <code>public static const OUTPUT:String = "output"</code><p>
    Defines data output event type.
+   </p></div>
+<a name="RESIZE"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">RESIZE</td><td class="detailHeaderType">constant</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static const RESIZE:String = "resize"</code><p>
+   Defines resize component event type.
    </p></div>
 <a name="SHOW"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
