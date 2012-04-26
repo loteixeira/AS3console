@@ -27,6 +27,7 @@ package br.dcoder.console.gui
 		{
 			this.config = config;
 			this.assetFactory = assetFactory;
+			rect = new Rectangle();
 			content = new Sprite();
 		}
 		

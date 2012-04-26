@@ -74,11 +74,13 @@ package br.dcoder.console.gui
 			content.graphics.drawRect(0, 0, assetFactory.getButtonContainerSize() - 2, assetFactory.getButtonContainerSize() - 2);
 			content.graphics.endFill();
 
+			var halfDistance:Number = (assetFactory.getButtonContainerSize() - assetFactory.getButtonSize()) / 2;
+
 			content.graphics.lineStyle(1, assetFactory.getButtonForegroundColor());			
 			content.graphics.beginFill(assetFactory.getButtonBackgroundColor());
-			content.graphics.moveTo(assetFactory.getButtonContainerSize() - 4, 3);
-			content.graphics.lineTo(assetFactory.getButtonContainerSize() - 4, assetFactory.getButtonContainerSize() - 4);
-			content.graphics.lineTo(3, assetFactory.getButtonContainerSize() - 4);
+			content.graphics.moveTo(assetFactory.getButtonContainerSize() - halfDistance * 2, halfDistance);
+			content.graphics.lineTo(assetFactory.getButtonContainerSize() - halfDistance * 2, assetFactory.getButtonContainerSize() - halfDistance * 2);
+			content.graphics.lineTo(halfDistance, assetFactory.getButtonContainerSize() - halfDistance * 2);
 			content.graphics.endFill();
 			
 			content.x = rect.left;
