@@ -37,11 +37,11 @@ package br.dcoder.console
 			assetFactoryName = "default";
 			
 			Console.create(stage);
-			CodeEval.start(this);
-			LocalClient.start();
+			Console.instance.installPlugin(new CodeEval(this));
+			Console.instance.installPlugin(new LocalClient());
 			
-			Console.instance.addEventListener(ConsoleEvent.INPUT, consoleInput);
-			Console.instance.area = new Rectangle(50, 50, 500, 400);
+			Console.instance.getEventDispatcher().addEventListener(ConsoleEvent.INPUT, consoleInput);
+			Console.instance.area = new Rectangle(50, 50, 600, 400);
 			//Console.instance.draggable = false;
 			//Console.instance.resizable = false;
 
@@ -70,6 +70,8 @@ package br.dcoder.console
 				cpln("  Hide console component.");
 				cpln("- mem");
 				cpln("  Print memory amount used by flash application.");
+				cpln("- plugins");
+				cpln("  List installed plugins.");
 				cpln("- version");
 				cpln("  Print console version.");
 				cpln("");
@@ -78,6 +80,7 @@ package br.dcoder.console
 				cpln("- assetFactory [name]");
 				cpln("  Set console AssetFacotry if value is defined. Valid values are: default and hercules");
 				cpln("  Otherwise print current AssetFactory.");
+				cpln("");
 			}
 			else if (args[0] == "assetFactory")
 			{
