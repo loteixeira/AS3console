@@ -6,7 +6,8 @@
 
 package br.dcoder.console.plugin
 {
-	import br.dcoder.console.*;
+	import br.dcoder.console.ConsoleCore;
+	import br.dcoder.console.ConsoleEvent;
 	
 	import flash.events.AsyncErrorEvent;
 	import flash.events.SecurityErrorEvent;
@@ -14,21 +15,33 @@ package br.dcoder.console.plugin
 	import flash.net.LocalConnection;
 	
 	/**
-	 * @author lteixeira
+	 * Plugin to send/receive console output/input from a LocalServer.
+	 * You can activate this plugin in your application (or execute as3console-demo.swf) and open the console-local-server.swf file.
+	 * @see LocalServer
 	 */
-	public class LocalClient
+	public class LocalClient extends ConsolePlugin
 	{
-		private static var conn:LocalConnection;
+		private var conn:LocalConnection;
 		
-		public static function start():void
+		/**
+		 * Create a instance of LocalClient plugin. Output is send to a LocalServer and input is received from a LocalServer.
+		 * @see LocalServer
+		 */
+		public function LocalClient():void
 		{
-			Console.instance.addEventListener(ConsoleEvent.OUTPUT, output);
-			
+			super("LocalClient", "Sends console output and receives input from a LocalServer.");
+		}
+		
+		/**
+		 * @private
+		 */
+		override public function install(consoleCore:ConsoleCore):void
+		{
 			var client:Object = 
 			{
 				input: function(text:String):void
 				{
-					Console.instance.dispatchEvent(new ConsoleEvent(ConsoleEvent.INPUT, false, false, text));
+					consoleCore.getEventDispatcher().dispatchEvent(new ConsoleEvent(ConsoleEvent.INPUT, false, false, text));
 				}
 			};
 			
@@ -37,14 +50,14 @@ package br.dcoder.console.plugin
 			
 			conn.addEventListener(AsyncErrorEvent.ASYNC_ERROR, function(event:AsyncErrorEvent):void
 			{
-				cpln("LocalClient plugin error:");
-				cpln(event);
+				consoleCore.println("LocalClient plugin error:");
+				consoleCore.println(event);
 			});
 			
 			conn.addEventListener(SecurityErrorEvent.SECURITY_ERROR, function(event:SecurityError):void
 			{
-				cpln("LocalClient plugin error:");
-				cpln(event);
+				consoleCore.println("LocalClient plugin error:");
+				consoleCore.println(event);
 			});
 			
 			conn.addEventListener(StatusEvent.STATUS, function(event:StatusEvent):void
@@ -59,21 +72,26 @@ package br.dcoder.console.plugin
 			}
 			catch (e:Error)
 			{
-				cpln("LocalClient plugin error:");
-				cpln(e);
+				consoleCore.println("LocalClient plugin error:");
+				consoleCore.println(e);
 			}
 		}
 
-		private static function output(event:ConsoleEvent):void
+		/**
+		 * @private
+		 */
+		override protected function output(data:String):Boolean
 		{
 			try
 			{
-				conn.send("AS3ConsoleLocalServer", "output", event.text);
+				conn.send("AS3ConsoleLocalServer", "output", data);
 			}
 			catch (e:Error)
 			{
 				// ignore this error
 			}
+			
+			return false;
 		}
 	}
 }

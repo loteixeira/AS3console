@@ -6,29 +6,42 @@
 
 package br.dcoder.console.plugin
 {
-	import br.dcoder.console.*;
-
+	import br.dcoder.console.ConsoleCore;
+	
 	import flash.events.AsyncErrorEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.events.StatusEvent;
 	import flash.net.LocalConnection;
 	
 	/**
-	 * @author lteixeira
+	 * Plugin to receive/send console input/output to a LocalClient.
+	 * This plugin is used in console-local-server.swf application, to communicate with a LocalClient.
+	 * To test you can start console-local-server.swf and then as3console-demo.swf.
+	 * @see LocalClient
 	 */
-	public class LocalServer
+	public class LocalServer extends ConsolePlugin
 	{
-		private static var conn:LocalConnection;
+		private var conn:LocalConnection;
 		
-		public static function start():void
+		/**
+		 * Create a instance of LocalServer plugin. Input is send to a LocalClient and output is received from a LocalClient.
+		 * @see LocalClient
+		 */
+		public function LocalServer():void
 		{
-			Console.instance.addEventListener(ConsoleEvent.INPUT, input);
-			
+			super("LocalServer", "Receives console output and sends input to a LocalClient.");
+		}
+		
+		/**
+		 * @private
+		 */
+		override public function install(consoleCore:ConsoleCore):void
+		{
 			var client:Object =
 			{
 				output: function(text:String):void
 				{
-					cpln(text);
+					consoleCore.println(text);
 				}
 			};
 			
@@ -37,22 +50,22 @@ package br.dcoder.console.plugin
 			
 			conn.addEventListener(AsyncErrorEvent.ASYNC_ERROR, function(event:AsyncErrorEvent):void
 			{
-				cpln("LocalServer plugin error:");
-				cpln(event);
+				consoleCore.println("LocalServer plugin error:");
+				consoleCore.println(event);
 			});
 			
 			conn.addEventListener(SecurityErrorEvent.SECURITY_ERROR, function(event:SecurityError):void
 			{
-				cpln("LocalServer plugin error:");
-				cpln(event);
+				consoleCore.println("LocalServer plugin error:");
+				consoleCore.println(event);
 			});
 			
 			conn.addEventListener(StatusEvent.STATUS, function(event:StatusEvent):void
 			{
 				if (event.level == "warning")
-					cpln("*** warning: " + event + " ***");
+					consoleCore.println("*** warning: " + event + " ***");
 				else if (event.level == "error")
-					cpln("*** error: " + event + " ***");
+					consoleCore.println("*** error: " + event + " ***");
 			});
 			
 			try
@@ -61,22 +74,27 @@ package br.dcoder.console.plugin
 			}
 			catch (e:Error)
 			{
-				cpln("LocalServer plugin error:");
-				cpln(e);
+				consoleCore.println("LocalServer plugin error:");
+				consoleCore.println(e);
 			}
 		}
 
-		private static function input(event:ConsoleEvent):void
+		/**
+		 * @private
+		 */
+		override protected function input(data:String):Boolean
 		{
 			try
 			{
-				conn.send("AS3ConsoleLocalClient", "input", event.text);
+				conn.send("AS3ConsoleLocalClient", "input", data);
 			}
 			catch (e:Error)
 			{
-				cpln("LocalServer plugin error:");
-				cpln(e);
+				consoleCore.println("LocalServer plugin error:");
+				consoleCore.println(e);
 			}
+			
+			return false;
 		}
 	}
 }
