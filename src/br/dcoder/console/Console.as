@@ -11,52 +11,48 @@ package br.dcoder.console
 	import br.dcoder.console.assets.AssetFactory;
 	
 	import flash.display.Stage;
+	import flash.events.IEventDispatcher;
 
 	/**
-	 * Console static class is a wrapper of a ConsoleCore instance. You can use AS3console through this class,
-	 * accessible from any point of your code, or create and manage instances of ConsoleCore separately.
-	 * You shouldn't create it using regular constructor, instead use create static method.
+	 * Wrapper of a single ConsoleCore instance, used to simplify logging process. You can use AS3console through this class,
+	 * accessible from any point of your code, or creating and managing instances of ConsoleCore separately.
+	 * You shouldn't instantiate this class using regular constructor, instead use create static method.
+	 * @see #create()
+	 * @see #instance
+	 * @see ConsoleCore
 	 */
 	public class Console
 	{
-		//
-		// internal data
-		//
 		private static var _instance:ConsoleCore = null;
-		
-		//
-		// static methods
-		//
+
 		/**
-		 * Create a ConsoleCore instance. Should be called once.
-		 * If release parameter is true, an empty console is created to avoid overhead.
+		 * Create a ConsoleCore instance to be wrapped within Console static class. This method must be called once.
+		 * If stage instance if null, ConsoleCore instance runs in release mode, where it dispatches all events but has no graphical interface.
 		 * @param stage Reference to application stage object.
-		 * @param release Use to create release versions and remove console overhead.
 		 * @param assetFactory Use to specify a non-default instance of AssetFactory.
+		 * @param eventDispatcher An object to dispatch ConsoleCore events.
 		 * @return ConsoleCore instance.
+		 * @see br.dcoder.console.assets.AssetFactory
+		 * @see br.dcoder.console.assets.DefaultAssetFactory
 		 */
-		public static function create(stage:Stage, release:Boolean = false, assetFactory:AssetFactory = null):ConsoleCore
+		public static function create(stage:Stage = null, assetFactory:AssetFactory = null, eventDispatcher:IEventDispatcher = null):ConsoleCore
 		{
 			if (_instance)
 				throw new Error("Create method should be called once");
 			
-			_instance = new ConsoleCore(stage, release, assetFactory);
-			
+			_instance = new ConsoleCore(stage, assetFactory, eventDispatcher);
 			return _instance;
 		}
 		
 		/**
-		 * Return current instance of ConsoleCore.
-		 * @return Console singleton instance.
+		 * Return current instance of ConsoleCore class.
+		 * @return ConsoleCore instance.
 		 */
 		public static function get instance():ConsoleCore
 		{
 			return _instance;
 		}
-		
-		//
-		// constructor
-		//
+
 		/**
 		 * @private
 		 */
