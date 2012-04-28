@@ -15,10 +15,11 @@ package br.dcoder.console
 	import br.dcoder.console.gui.ResizeArea;
 	import br.dcoder.console.gui.ScrollBar;
 	import br.dcoder.console.gui.TextArea;
+	import br.dcoder.console.plugin.ConsolePlugin;
 	import br.dcoder.console.util.StringUtil;
 	
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
-	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
@@ -28,24 +29,25 @@ package br.dcoder.console
 	import flash.system.System;
 	import flash.utils.getTimer;
 
+	/**
+	 * AS3console component main class, where you can write/read data, throw/listen events, etc.
+	 * You can use AS3console through Console class, where a single instance may be accessed from any point of the code,
+	 * or creating a instance of the ConsoleCore class. Whether you instantiate this class, you must keep a reference to the object.
+	 * However, cpln won't work (the alias is tied to Console static instance).
+	 * Using instances of this class instead of Console single instance allows you to manage several different consoles.
+	 * @see Console
+	 */
 	public class ConsoleCore
 	{
 		private static const DEFAULT_ALPHA:Number = 0.75;
-		/**
-		 * Console version.
-		 */
-		public static const VERSION:String = "0.4.0";
 		
-		public static const DEFAULT_MAX_CHARACTERS:uint = 100000;
-		public static const DEFAULT_MAX_LINE_LENGTH:uint = 1000;
-		public static const DEFAULT_MAX_INPUT_HISTORY:uint = 15;
-		public static const DEFAULT_PRINT_TIMER:Boolean = false;
-		public static const DEFAULT_TRACE_ECHO:Boolean = false;
-		public static const DEFAULT_JS_ECHO:Boolean = false;
-		
-		internal var rect:Rectangle;
-		private var stage:Stage;
+		private var _config:ConsoleConfig;
+
+		private var parent:DisplayObjectContainer;
 		private var assetFactory:AssetFactory;
+		private var eventDispatcher:IEventDispatcher;
+		private var rect:Rectangle;
+		private var plugins:Array;
 		
 		private var container:Sprite;
 		private var captionBar:CaptionBar;
@@ -59,160 +61,84 @@ package br.dcoder.console
 		private var shortcutKeys:Array, shortcutStates:Array;
 		private var shortcutUseAlt:Boolean, shortcutUseCtrl:Boolean, shortcutUseShift:Boolean;
 		
-		private var _release :Boolean;
-
-		public var maxCharacters : uint = DEFAULT_MAX_CHARACTERS;
-		public var maxLineLength : uint = DEFAULT_MAX_LINE_LENGTH;
-		public var maxInputHistory : uint = DEFAULT_MAX_INPUT_HISTORY;
-		public var printTimer : Boolean = DEFAULT_PRINT_TIMER;
-		public var traceEcho : Boolean = DEFAULT_TRACE_ECHO;
-		public var jsEcho : Boolean = DEFAULT_JS_ECHO;
-		public var eventDispatcher : IEventDispatcher;
-		
-		public function ConsoleCore(stage:Stage, release:Boolean = false, eventDispatcher:IEventDispatcher = null)
+		//
+		// constructor
+		//
+		/**
+		 * Create an instance of AS3console component. If parent is non-null the instance will have a graphical interface,
+		 * otherwise it runs in release mode.
+		 * If assetFactory is null, a DefaultAssetFactory is used.<br>
+		 * Note: parent object <b>MUST</b> be part of the display list in such way that parent.stage attribute is valid.
+		 * @param parent DisplayObjectContainer to add console component. If this value is null, console runs in release mode.
+		 * @param assetFactory Use to specify a non-default instance of AssetFactory.
+		 * @param eventDispatcher An object to dispatch ConsoleCore events.
+		 * @see br.dcoder.console.assets.AssetFactory
+		 * @see br.dcoder.console.assets.DefaultAssetFactory
+		 */
+		public function ConsoleCore(parent:DisplayObjectContainer = null, assetFactory:AssetFactory = null, eventDispatcher:IEventDispatcher = null)
 		{
-			this.stage = stage;
-			_release = release;
+			this.parent = parent;
+			this.assetFactory = assetFactory;
 			this.eventDispatcher = eventDispatcher || new EventDispatcher();
+			
+			_config = new ConsoleConfig();
+			rect = new Rectangle(50, 50, 250, 250);
+			plugins = [];
+			
 			init();
 		}
 		
-		internal function init():void
-		{
-			rect = new Rectangle(50, 50, 250, 250);
-			
-			if (!release)
-			{
-				this.stage = stage;
-				assetFactory = new DefaultAssetFactory();
-				container = new Sprite();
-				stage.addChild(container);
-				
-				// caption bar
-				captionBar = new CaptionBar(assetFactory);
-				captionBar.text = "AS3Console" + VERSION;
-				container.addChild(captionBar.getContent());
-				
-				captionBar.addEventListener(CaptionBar.START_DRAG_EVENT, onStartDrag );
-				
-				captionBar.addEventListener(CaptionBar.STOP_DRAG_EVENT, onStopDrag );
-				
-				// content
-				content = new Sprite();
-				content.y = assetFactory.getButtonContainerSize();
-				container.addChild(content);
-				
-				// text area
-				textArea = new TextArea(assetFactory);
-				content.addChild(textArea.getContent());
-				
-				textArea.addEventListener(TextArea.SCROLL_EVENT, onScroll );
-				
-				// input field
-				inputField = new InputField(assetFactory);
-				content.addChild(inputField.getContent());
-				
-				inputField.addEventListener(InputField.INPUT_EVENT, onInput );
-				
-				// scroll bars
-				hScrollBar = new ScrollBar(assetFactory, ScrollBar.HORIZONTAL, 250);
-				hScrollBar.setMaxValue(0);
-				content.addChild(hScrollBar.getContent());
-				
-				hScrollBar.addEventListener(Event.CHANGE, onChange_hScrollBar );
-				
-				vScrollBar = new ScrollBar(assetFactory, ScrollBar.VERTICAL, 250);
-				vScrollBar.setMaxValue(0);
-				content.addChild(vScrollBar.getContent());
-				
-				vScrollBar.addEventListener(Event.CHANGE, onChange_vScrollBar );
-				
-				// resize area
-				resizeArea = new ResizeArea(assetFactory);
-				content.addChild(resizeArea.getContent());
-				
-				resizeArea.addEventListener(ResizeArea.RESIZE_EVENT, onResize );
-				
-				resizeArea.addEventListener(ResizeArea.RESIZE_STOP_EVENT, onResizeStop );
-				
-				// shortcut
-				shortcutKeys = [ "m" ];
-				shortcutStates = [ false ];
-				shortcutUseAlt = false;
-				shortcutUseCtrl = true;
-				shortcutUseShift = false;
-				
-				// stage events
-				stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-				stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
-				
-				// update component
-				alpha = DEFAULT_ALPHA;
-				update();
-			}
-		}
-		
-		protected function onResizeStop(event:Event):void
-		{
-			inputField.getFocus();
-		}
-		
-		protected function onResize(event:Event):void
-		{
-			rect.width += resizeArea.widthOffset;
-			rect.height += resizeArea.heightOffset;
-			update();
-		}
-		
-		protected function onChange_vScrollBar(event:Event):void
-		{
-			textArea.scrollV = vScrollBar.getValue() + 1;
-		}
-		
-		protected function onChange_hScrollBar(event:Event):void
-		{
-			textArea.scrollH = hScrollBar.getValue() + 1;
-		}
-		
-		protected function onInput(event:Event):void
-		{
-			println("> " + inputField.getText());
-			
-			if (!handleEmbedCommands(inputField.getText().split(" ")))
-				eventDispatcher.dispatchEvent(new ConsoleEvent(ConsoleEvent.INPUT, inputField.getText()));
-		}
-		
-		protected function onScroll(event:Event):void
-		{
-			vScrollBar.setValue(textArea.scrollV - 1);
-		}
-		
-		protected function onStopDrag(event:Event):void
-		{
-			container.stopDrag();
-			rect.x = container.x;
-			rect.y = container.y;
-			inputField.getFocus();
-		}
-		
-		protected function onStartDrag(event:Event):void
-		{
-			toFront();
-			container.startDrag();
-		}
-		
+		//
+		// getters and setters
+		//
 		/**
-		 * Check if console is running release version.
-		 * @return Return true if is release version.
+		 * Check if console is running release mode.
 		 */
 		public function get release():Boolean
 		{
-			return _release;
+			return parent == null;
 		}
 		
-		//
-		// public interface
-		//
+		/**
+		 * ConsoleConfig instance related to this ConsoleCore object.
+		 */
+		public function get config():ConsoleConfig
+		{
+			return _config;
+		}
+		
+		/**
+		 * Gets/sets whether ConsoleCore object is resizable (default value is true).
+		 * Setting this attribute to false, the console resize area won't be visible.
+		 * If running release mode, this attribute is ignored.
+		 */
+		public function get resizable():Boolean
+		{
+			return release ? false : resizeArea.visible;
+		}
+		
+		public function set resizable(_resizable:Boolean):void
+		{
+			if (!release)
+				resizeArea.visible = _resizable;
+		}
+		
+		/**
+		 * Gets/sets whether ConsoleCore object is draggable (default value is true).
+		 * You can drag the component clicking on the caption bar.
+		 * If running release mode, this attribute is ignored.
+		 */
+		public function get draggable():Boolean
+		{
+			return release ? false : captionBar.draggable;
+		}
+		
+		public function set draggable(_draggable:Boolean):void
+		{
+			if (!release)
+				captionBar.draggable = _draggable;
+		}
+		
 		/**
 		 * Console position and dimension represented by a Rectangle object.
 		 */
@@ -228,7 +154,7 @@ package br.dcoder.console
 		}
 		
 		/**
-		 * Console transparecy. If is release, the value is always zero.
+		 * Console transparecy. If running release mode, the value is always zero.
 		 */
 		public function get alpha():Number
 		{
@@ -242,7 +168,7 @@ package br.dcoder.console
 		}
 		
 		/**
-		 * Console caption text. If is release, caption bar text is always "".
+		 * Console caption text. If running release mode, caption bar text is always "" (empty string).
 		 */
 		public function get caption():String
 		{
@@ -255,13 +181,25 @@ package br.dcoder.console
 				captionBar.text = text;
 		}
 		
+		//
+		// public interface
+		//
 		/**
 		 * Set asset factory instance.
 		 * @param assetFactory New asset factory instance.
+		 * @see br.dcoder.console.assets.DefaultAssetFactory
+		 * @see br.dcoder.console.assets.HerculesAssetFactory
 		 */
 		public function setAssetFactory(assetFactory:AssetFactory):void
 		{
 			this.assetFactory = assetFactory;
+			
+			captionBar.setAssetFactory(assetFactory);
+			textArea.setAssetFactory(assetFactory);
+			inputField.setAssetFactory(assetFactory);
+			hScrollBar.setAssetFactory(assetFactory);
+			vScrollBar.setAssetFactory(assetFactory);
+			resizeArea.setAssetFactory(assetFactory);
 			update();
 		}
 		
@@ -275,8 +213,18 @@ package br.dcoder.console
 		}
 		
 		/**
+		 * Get IEventDispatcher object related to this instance.
+		 * @return An object to dispatch the ConsoleCore events.
+		 */
+		public function getEventDispatcher():IEventDispatcher
+		{
+			return eventDispatcher;
+		}
+		
+		/**
 		 * Update console gaphical interface.
 		 * It's automatically called when console area has changed or a new AssetFactory instance was set.
+		 * If running release mode does nothing.
 		 */
 		public function update():void
 		{
@@ -294,20 +242,32 @@ package br.dcoder.console
 				container.y = rect.top;
 				
 				// caption bar
-				captionBar.rect = new Rectangle(0, 0, rect.width, assetFactory.getButtonContainerSize());
+				captionBar.rect.x = 0;
+				captionBar.rect.y = 0;
+				captionBar.rect.width = rect.width;
+				captionBar.rect.height = assetFactory.getButtonContainerSize();
 				captionBar.update();
 				
 				// text area
-				textArea.rect = new Rectangle(1, 1, rect.width - assetFactory.getButtonContainerSize() - 1, rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize() - inputField.getMinimumHeight() - 1);
+				textArea.rect.x = 1;
+				textArea.rect.y = 1;
+				textArea.rect.width = rect.width - assetFactory.getButtonContainerSize() - 1;
+				textArea.rect.height = rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize() - inputField.getMinimumHeight() - 1;
 				textArea.scrollV = textArea.maxScrollV;
 				textArea.update();
 				
 				// input field
-				inputField.rect = new Rectangle(1, rect.height - assetFactory.getButtonContainerSize() * 2 - inputField.getMinimumHeight(), rect.width - assetFactory.getButtonContainerSize(), inputField.getMinimumHeight());
+				inputField.rect.x = 1;
+				inputField.rect.y = rect.height - assetFactory.getButtonContainerSize() * 2 - inputField.getMinimumHeight();
+				inputField.rect.width = rect.width - assetFactory.getButtonContainerSize();
+				inputField.rect.height = inputField.getMinimumHeight();
 				inputField.update();
 				
 				// horizontal scroll bar
-				hScrollBar.rect = new Rectangle(0, rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize(), 0, 0);
+				hScrollBar.rect.x = 0;
+				hScrollBar.rect.y = rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize();
+				hScrollBar.rect.width = 0; // value ignored
+				hScrollBar.rect.height = 0; // value ignored
 				hScrollBar.setLength(rect.width - assetFactory.getButtonContainerSize() + 1);
 				hScrollBar.setMaxValue(textArea.maxScrollH == 0 ? 0 : textArea.maxScrollH - 1);
 				hScrollBar.update();
@@ -316,7 +276,10 @@ package br.dcoder.console
 					hScrollBar.toMaxValue();
 				
 				// vertical scroll bar
-				vScrollBar.rect = new Rectangle(rect.width - assetFactory.getButtonContainerSize(), 0);
+				vScrollBar.rect.x = rect.width - assetFactory.getButtonContainerSize();
+				vScrollBar.rect.y = 0;
+				vScrollBar.rect.width = 0; // value ignored
+				vScrollBar.rect.height = 0; // value ignored 
 				vScrollBar.setLength(rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize() + 1);
 				vScrollBar.setMaxValue(textArea.maxScrollV == 0 ? 0 : textArea.maxScrollV - 1);
 				vScrollBar.update();
@@ -325,13 +288,17 @@ package br.dcoder.console
 					vScrollBar.toMaxValue();
 				
 				// resize area
-				resizeArea.rect = new Rectangle(hScrollBar.rect.left + hScrollBar.getLength(), vScrollBar.rect.top + vScrollBar.getLength(), 0, 0);
+				resizeArea.rect.x = hScrollBar.rect.left + hScrollBar.getLength();
+				resizeArea.rect.y = vScrollBar.rect.top + vScrollBar.getLength();
+				resizeArea.rect.width = 0; // value ignored
+				resizeArea.rect.height = 0; // value ignored
 				resizeArea.update();
 			}
 		}
 		
 		/**
 		 * Show console component and throws ConsoleEvent.SHOW. If running release mode, does nothing.
+		 * @see ConsoleEvent
 		 */
 		public function show():void
 		{
@@ -347,6 +314,7 @@ package br.dcoder.console
 		
 		/**
 		 * Hide console component and throws ConsoleEvent.HIDE. If running release mode, does nothing.
+		 * @see ConsoleEvent
 		 */
 		public function hide():void
 		{
@@ -368,7 +336,8 @@ package br.dcoder.console
 		}
 		
 		/**
-		 * Completely show console component (caption bar and text area content). 
+		 * Completely show console component (caption bar and text area content).
+		 * If running release mode, does nothing. 
 		 */
 		public function maximize():void
 		{
@@ -378,6 +347,7 @@ package br.dcoder.console
 		
 		/**
 		 * Minimize console component, only caption bar remains visible.
+		 * If running release mode, does nothing.
 		 */
 		public function minimize():void
 		{
@@ -435,7 +405,7 @@ package br.dcoder.console
 		}
 		
 		/**
-		 * Clear console text.
+		 * Clear console text. If running release mode, does nothing.
 		 */
 		public function clear():void
 		{
@@ -451,34 +421,27 @@ package br.dcoder.console
 		
 		/**
 		 * Print information to console text area plus "\n". This method throws ConsoleEvent.OUTPUT. If running release mode, the event is thrown and
-		 * TRACE_ECHO/JS_ECHO still works. 
+		 * traceEcho/jsEcho still works. 
 		 * @param info Any information to be printed. If is null, "(null)" string is used.
+		 * @see ConsoleConfig
+		 * @see ConsoleEvent
 		 */
 		public function println(info:Object):void
 		{
 			// build string
 			var str:String = StringUtil.check(info);
 			
-			if (printTimer)
+			if (config.printTimer)
 				str = "[" + getTimer() + "] " + str;
 			
 			// throw events
-			if (traceEcho)
+			if (config.traceEcho)
 				trace(str);
 			
-			if (jsEcho)
-			{
-				try
-				{
-					ExternalInterface.call("console.log", "[AS3Console" + VERSION + "] " + str);
-				}
-				catch (e:Error)
-				{
-					str = "[Error writing on javascript console window: " + e + "]\n" + str;
-				}
-			}
+			if (config.jsEcho && ExternalInterface.available)
+				ExternalInterface.call("console.log", "[AS3Console" + ConsoleConfig.VERSION + "] " + str);
 			
-			eventDispatcher.dispatchEvent(new ConsoleEvent(ConsoleEvent.OUTPUT, str));
+			eventDispatcher.dispatchEvent(new ConsoleEvent(ConsoleEvent.OUTPUT, false, false, str));
 			
 			if (!release)
 			{
@@ -492,14 +455,112 @@ package br.dcoder.console
 				
 				// bring to front if visible
 				if (isVisible())
+				{
 					toFront();
+				}
 			}
+		}
+		
+		/**
+		 * Install a plugin.
+		 * @param plugin ConsolePlugin child class instance
+		 */
+		public function installPlugin(plugin:ConsolePlugin):void
+		{
+			plugins.push(plugin);
+			plugin.install(this);
+		}
+		
+		/**
+		 * Get an array with all installed plugins.
+		 * @return Plugins array
+		 * @see br.dcoder.console.plugin.ConsolePlugin
+		 * @see br.dcoder.console.plugin.ConsolePlugin#name
+		 */
+		public function getPlugins():Array
+		{
+			return plugins;
 		}
 		
 		//
 		// private methods
 		//
-		private function handleEmbedCommands(params:Array):Boolean {
+		private function init():void
+		{
+			if (!release)
+			{
+				if (!assetFactory)
+					assetFactory = new DefaultAssetFactory();
+				
+				container = new Sprite();
+				parent.addChild(container);
+				
+				// caption bar
+				captionBar = new CaptionBar(config, assetFactory);
+				captionBar.text = "AS3console" + ConsoleConfig.VERSION;
+				container.addChild(captionBar.getContent());
+				
+				captionBar.addEventListener(CaptionBar.START_DRAG_EVENT, startDrag);
+				captionBar.addEventListener(CaptionBar.STOP_DRAG_EVENT, stopDrag);
+				
+				// content
+				content = new Sprite();
+				content.y = assetFactory.getButtonContainerSize();
+				container.addChild(content);
+				
+				// text area
+				textArea = new TextArea(config, assetFactory);
+				content.addChild(textArea.getContent());
+				
+				textArea.addEventListener(TextArea.SCROLL_EVENT, textScroll);
+				
+				// input field
+				inputField = new InputField(config, assetFactory);
+				content.addChild(inputField.getContent());
+				
+				inputField.addEventListener(InputField.INPUT_EVENT, input);
+				
+				// scroll bars
+				hScrollBar = new ScrollBar(config, assetFactory, ScrollBar.HORIZONTAL, 250);
+				hScrollBar.setMaxValue(0);
+				content.addChild(hScrollBar.getContent());
+				
+				hScrollBar.addEventListener(Event.CHANGE, hScrollBarChange);
+				
+				vScrollBar = new ScrollBar(config, assetFactory, ScrollBar.VERTICAL, 250);
+				vScrollBar.setMaxValue(0);
+				content.addChild(vScrollBar.getContent());
+				
+				vScrollBar.addEventListener(Event.CHANGE, vScrollBarChange);
+				
+				// resize area
+				resizeArea = new ResizeArea(config, assetFactory);
+				content.addChild(resizeArea.getContent());
+				
+				resizeArea.addEventListener(ResizeArea.RESIZE_EVENT, resize);
+				resizeArea.addEventListener(ResizeArea.RESIZE_STOP_EVENT, resizeStop);
+				
+				// shortcut
+				shortcutKeys = [ "m" ];
+				shortcutStates = [ false ];
+				shortcutUseAlt = false;
+				shortcutUseCtrl = true;
+				shortcutUseShift = false;
+				
+				// stage events
+				parent.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+				parent.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+				
+				// update component
+				alpha = DEFAULT_ALPHA;
+				update();
+			}
+		}
+		
+		private function handleEmbedCommands(params:Array):Boolean
+		{
+			var i:int;
+			
 			if (params[0] == "alpha")
 			{
 				if (params.length == 1)
@@ -541,7 +602,7 @@ package br.dcoder.console
 				var result:String = "";
 				var lastIndex:int = memUsed.length;
 				
-				for (var i:int = memUsed.length - 1; i >= 0; i--)
+				for (i = memUsed.length - 1; i >= 0; i--)
 				{
 					result = memUsed.charAt(i) + result;
 					
@@ -557,9 +618,29 @@ package br.dcoder.console
 				
 				return true;
 			}
+			else if (params[0] == "plugins")
+			{
+				var empty:Boolean = true;
+				
+				for (i = 0; i < plugins.length; i++)
+				{
+					var plugin:ConsolePlugin = plugins[i];
+					cpln((i + 1) + ". " + plugin.name + ": " + plugin.description);
+					
+					if (empty)
+						empty = false;
+				}
+				
+				if (empty)
+					cpln("No installed plugins.");
+				
+				cpln("");
+				
+				return true;
+			}
 			else if (params[0] == "version")
 			{
-				println("AS3Console version " + VERSION);
+				println("AS3console version " + ConsoleConfig.VERSION);
 				println("Created by Disturbed Coder.");
 				println("Project page: https://github.com/loteixeira/as3console");
 				println("");
@@ -568,6 +649,62 @@ package br.dcoder.console
 			}
 			
 			return false;
+		}
+		
+		//
+		// gui elements events
+		//
+		private function resize(event:Event):void
+		{
+			rect.width += resizeArea.widthOffset;
+			rect.height += resizeArea.heightOffset;
+			update();
+			
+			eventDispatcher.dispatchEvent(new ConsoleEvent(ConsoleEvent.RESIZE));
+		}
+		
+		private function resizeStop(event:Event):void
+		{
+			inputField.getFocus();
+		}
+		
+		private function vScrollBarChange(event:Event):void
+		{
+			textArea.scrollV = vScrollBar.getValue() + 1;
+		}
+		
+		private function hScrollBarChange(event:Event):void
+		{
+			textArea.scrollH = hScrollBar.getValue() + 1;
+		}
+		
+		private function input(event:Event):void
+		{
+			println("> " + inputField.getText());
+			
+			if (!handleEmbedCommands(inputField.getText().split(" ")))
+			{
+				eventDispatcher.dispatchEvent(new ConsoleEvent(ConsoleEvent.INPUT, false, false,  inputField.getText()));
+			}
+		}
+		
+		private function textScroll(event:Event):void
+		{
+			vScrollBar.setValue(textArea.scrollV - 1);
+		}
+		
+		private function stopDrag(event:Event):void
+		{
+			container.stopDrag();
+			rect.x = container.x;
+			rect.y = container.y;
+			inputField.getFocus();
+		}
+		
+		private function startDrag(event:Event):void
+		{
+			toFront();
+			container.startDrag();
 		}
 		
 		//

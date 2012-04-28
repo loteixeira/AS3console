@@ -12,7 +12,7 @@ package br.dcoder.console.gui
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
 	
-	import br.dcoder.console.Console;
+	import br.dcoder.console.ConsoleConfig;
 	import br.dcoder.console.assets.AssetFactory;
 
 	/**
@@ -26,9 +26,9 @@ package br.dcoder.console.gui
 		private var inputHistory:Array;
 		private var historyIndex:int;
 			
-		public function InputField(assetFactory:AssetFactory)
+		public function InputField(config:ConsoleConfig, assetFactory:AssetFactory)
 		{
-			super(assetFactory);
+			super(config, assetFactory);
 			
 			// setup text field
 			textField = new TextField();
@@ -90,7 +90,7 @@ package br.dcoder.console.gui
 
 				inputHistory.splice(0, 0, textField.text);
 					
-				while (inputHistory.length > Console.MAX_INPUT_HISTORY)
+				while (inputHistory.length > config.maxInputHistory)
 					inputHistory.pop();
 				
 				textField.text = "";

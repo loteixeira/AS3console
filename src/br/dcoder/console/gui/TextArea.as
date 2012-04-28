@@ -11,7 +11,7 @@ package br.dcoder.console.gui
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	
-	import br.dcoder.console.Console;
+	import br.dcoder.console.ConsoleConfig;
 	import br.dcoder.console.assets.AssetFactory;
 
 	/**
@@ -23,9 +23,9 @@ package br.dcoder.console.gui
 		
 		private var textField:TextField;
 		
-		public function TextArea(assetFactory:AssetFactory)
+		public function TextArea(config:ConsoleConfig, assetFactory:AssetFactory)
 		{
-			super(assetFactory);
+			super(config, assetFactory);
 			
 			// setup text field
 			textField = new TextField();
@@ -71,18 +71,18 @@ package br.dcoder.console.gui
 		
 		public function writeln(str:String):void
 		{
-			while (str.length > Console.MAX_LINE_LENGTH)
+			while (str.length > config.maxLineLength)
 			{
-				var tmp:String = str.substr(0, Console.MAX_LINE_LENGTH);
+				var tmp:String = str.substr(0, config.maxLineLength);
 				textField.appendText(tmp + "\n");
-				str = str.substr(Console.MAX_LINE_LENGTH);
+				str = str.substr(config.maxLineLength);
 			}
 
 			textField.appendText(str);
 			textField.appendText("\n");
 			
-			if (textField.length > Console.MAX_CHARACTERS)
-				textField.replaceText(0, textField.length - Console.MAX_CHARACTERS, "");
+			if (textField.length > config.maxCharacters)
+				textField.replaceText(0, textField.length - config.maxCharacters, "");
 		}
 		
 		public override function update():void
@@ -93,6 +93,7 @@ package br.dcoder.console.gui
 			textFormat.font = assetFactory.getFontName();
 			textFormat.size = assetFactory.getLogFontSize();
 			textField.defaultTextFormat = textFormat;
+			textField.setTextFormat(textFormat);
 			
 			// update text field
 			textField.x = rect.left;

@@ -7,61 +7,83 @@
 package br.dcoder.console.assets
 {
 	import flash.display.Sprite;
-	
+
 	/**
-	 * AssetFactory classes are used to externalize AS3console graphical interface management.
-	 * @see br.dcoder.console.Console
-	 * @see br.dcoder.console.ConsoleCore
+	 * Hercules asset factory, based in old hercules monitors.
 	 */
-	public interface AssetFactory
+	public class HerculesAssetFactory implements AssetFactory
 	{
 		/**
 		 * Get the value of background color.
 		 * @return Background color.
 		 */
-		function getBackgroundColor():uint;
+		public function getBackgroundColor():uint
+		{
+			return 0x000000;
+		}
 		
 		/**
 		 * Get the value of button foreground color.
 		 * @return Button foreground color.
 		 */
-		function getButtonForegroundColor():uint;
+		public function getButtonForegroundColor():uint
+		{
+			return 0x00cc00;
+		}
 		
 		/**
 		 * Get the value of button background color.
 		 * @return Button background color.
 		 */
-		function getButtonBackgroundColor():uint;
+		public function getButtonBackgroundColor():uint
+		{
+			return 0x000000;
+		}
 		
 		/**
 		 * Get the default size of button.
 		 * @return Default button size.
 		 */
-		function getButtonSize():int;
+		public function getButtonSize():int
+		{
+			return 12;
+		}
 		
 		/**
 		 * Get the default size of button container.
 		 * @return Default button container size.
 		 */
-		function getButtonContainerSize():int;
+		public function getButtonContainerSize():int
+		{
+			return 22;
+		}
 		
 		/**
 		 * Get the default caption font size.
 		 * @return Caption font size.
 		 */
-		function getCaptionFontSize():uint;
+		public function getCaptionFontSize():uint
+		{
+			return 14;
+		}
 		
 		/**
 		 * Get the default log text font size.
 		 * @return Log text font size.
 		 */
-		function getLogFontSize():uint;
+		public function getLogFontSize():uint
+		{
+			return 12;
+		}
 		
 		/**
 		 * Get the default font name.
 		 * @return Default font name.
 		 */
-		function getFontName():String;
+		public function getFontName():String
+		{
+			return "_typewriter";
+		}
 		
 		/**
 		 * Draw button to parameter sprite.
@@ -69,7 +91,14 @@ package br.dcoder.console.assets
 		 * @param w Width of the button.
 		 * @param h Height of the button.
 		 */
-		function drawButton(sprite:Sprite, w:int, h:int):void;
+		public function drawButton(sprite:Sprite, w:int, h:int):void
+		{
+			sprite.graphics.clear();
+			sprite.graphics.lineStyle(1, getButtonForegroundColor());
+			sprite.graphics.beginFill(getButtonBackgroundColor());
+			sprite.graphics.drawRect(0, 0, w, h);
+			sprite.graphics.endFill();
+		}
 		
 		/**
 		 * Draw an arrow pointing right to parameter sprite.
@@ -77,6 +106,15 @@ package br.dcoder.console.assets
 		 * @param w Width of the arrow.
 		 * @param h Height of the arrow.
 		 */
-		function drawArrow(sprite:Sprite, w:int, h:int):void;
+		public function drawArrow(sprite:Sprite, w:int, h:int):void
+		{
+			sprite.graphics.clear();
+			sprite.graphics.beginFill(getButtonForegroundColor());
+			sprite.graphics.moveTo(-w / 2, 0);
+			sprite.graphics.lineTo(w / 2, -h / 2);
+			sprite.graphics.lineTo(w / 2, h / 2);
+			sprite.graphics.lineTo(-w / 2, 0);
+			sprite.graphics.endFill();
+		}
 	}
 }

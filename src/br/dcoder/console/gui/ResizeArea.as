@@ -10,6 +10,7 @@ package br.dcoder.console.gui
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
+	import br.dcoder.console.ConsoleConfig;
 	import br.dcoder.console.assets.AssetFactory;
 
 	/**
@@ -24,9 +25,9 @@ package br.dcoder.console.gui
 		private var resizing:Boolean;
 		private var _widthOffset:int, _heightOffset:int;
 		
-		public function ResizeArea(assetFactory:AssetFactory)
+		public function ResizeArea(config:ConsoleConfig, assetFactory:AssetFactory)
 		{
-			super(assetFactory);
+			super(config, assetFactory);
 			
 			resizeOffset = new Point();
 			resizing = false;
@@ -46,6 +47,16 @@ package br.dcoder.console.gui
 			});
 		}
 		
+		public function get visible():Boolean
+		{
+			return content.visible;
+		}
+		
+		public function set visible(_visible:Boolean):void
+		{
+			content.visible = _visible;
+		}
+		
 		public function get widthOffset():int
 		{
 			return _widthOffset;
@@ -63,11 +74,13 @@ package br.dcoder.console.gui
 			content.graphics.drawRect(0, 0, assetFactory.getButtonContainerSize() - 2, assetFactory.getButtonContainerSize() - 2);
 			content.graphics.endFill();
 
+			var halfDistance:Number = (assetFactory.getButtonContainerSize() - assetFactory.getButtonSize()) / 2;
+
 			content.graphics.lineStyle(1, assetFactory.getButtonForegroundColor());			
 			content.graphics.beginFill(assetFactory.getButtonBackgroundColor());
-			content.graphics.moveTo(assetFactory.getButtonContainerSize() - 4, 3);
-			content.graphics.lineTo(assetFactory.getButtonContainerSize() - 4, assetFactory.getButtonContainerSize() - 4);
-			content.graphics.lineTo(3, assetFactory.getButtonContainerSize() - 4);
+			content.graphics.moveTo(assetFactory.getButtonContainerSize() - halfDistance * 2, halfDistance);
+			content.graphics.lineTo(assetFactory.getButtonContainerSize() - halfDistance * 2, assetFactory.getButtonContainerSize() - halfDistance * 2);
+			content.graphics.lineTo(halfDistance, assetFactory.getButtonContainerSize() - halfDistance * 2);
 			content.graphics.endFill();
 			
 			content.x = rect.left;

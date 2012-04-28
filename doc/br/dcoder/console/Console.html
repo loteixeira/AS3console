@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="Console,br.dcoder.console.Console,FIREBUG_ECHO,MAX_CHARACTERS,MAX_INPUT_HISTORY,MAX_LINE_LENGTH,PRINT_TIMER,TRACE_ECHO,VERSION,alpha,area,caption,clear,create,getAssetFactory,getInstance,hide,isMaximized,isRelease,isVisible,maximize,minimize,println,setAssetFactory,shortcut,show,toFront,update" name="keywords">
+<meta content="Console,br.dcoder.console.Console,instance,create" name="keywords">
 <title>br.dcoder.console.Console</title>
 </head>
 <body>
@@ -19,7 +19,7 @@
 <td align="left" class="titleTableTitle">AS3Console</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?br/dcoder/console/Console.html&amp;br/dcoder/console/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
 </tr>
 <tr class="titleTableRow2">
-<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;Console</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a>&nbsp;| <a href="#constantSummary">Constants</a></td>
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;Console</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
 </tr>
 <tr class="titleTableRow3">
 <td colspan="2">&nbsp;</td>
@@ -27,7 +27,7 @@
 </table>
 <script type="text/javascript" language="javascript">
 <!--
-if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class Console"); titleBar_setSubNav(true,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class Console"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
 --></script>
 <div class="MainContent">
 <table cellspacing="0" cellpadding="0" class="classHeaderTable">
@@ -37,14 +37,22 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr>
 <td class="classHeaderTableLabel">Class</td><td class="classSignature">public class Console</td>
 </tr>
-<tr>
-<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">Console <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> flash.events.EventDispatcher</td>
-</tr>
 </table>
 <p></p>
-  Console class is a singleton used to access all functionalities of AS3Console.
-  You shouldn't create it using regular constructor, instead use create static method.
+  Wrapper of a single ConsoleCore instance, used to simplify logging process. You can use AS3console through this class,
+  accessible from any point of your code, or creating and managing instances of ConsoleCore separately.
+  You shouldn't instantiate this class using regular constructor, instead use create static method.
   <p></p>
+<p>
+<span class="classHeaderTableLabel">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../console/Console.html#create()" target="">create()</a>
+<br>
+<a href="../console/Console.html#instance" target="">instance</a>
+<br>
+<a href="ConsoleCore.html" target="">ConsoleCore</a>
+</div>
 <br>
 <hr>
 </div>
@@ -56,48 +64,9 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
 </tr>
 <tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#alpha">alpha</a> : Number<div class="summaryTableDescription">
-   Console transparecy.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#area">area</a> : Rectangle<div class="summaryTableDescription">
-   Console position and dimension represented by a Rectangle object.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#caption">caption</a> : String<div class="summaryTableDescription">
-   Console caption text.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#FIREBUG_ECHO">FIREBUG_ECHO</a> : Boolean = false<div class="summaryTableDescription">[static]
-   Print output in firebug window.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#MAX_CHARACTERS">MAX_CHARACTERS</a> : uint = 100000<div class="summaryTableDescription">[static]
-   Max characters stored in console text area.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#MAX_INPUT_HISTORY">MAX_INPUT_HISTORY</a> : uint = 15<div class="summaryTableDescription">[static]
-   Max input navigation history.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#MAX_LINE_LENGTH">MAX_LINE_LENGTH</a> : uint = 1000<div class="summaryTableDescription">[static]
-   Max line length before automatic breaking.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#PRINT_TIMER">PRINT_TIMER</a> : Boolean = false<div class="summaryTableDescription">[static]
-   Print elapsed milliseconds since the flash virtual machine started.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#TRACE_ECHO">TRACE_ECHO</a> : Boolean = false<div class="summaryTableDescription">[static]
-   Print output in flash trace window.</div>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#instance">instance</a> : <a href="../console/ConsoleCore.html">ConsoleCore</a>
+<div class="summaryTableDescription">[static][read-only]
+   Return current instance of ConsoleCore class.</div>
 </td><td class="summaryTableOwnerCol">Console</td>
 </tr>
 </table>
@@ -112,146 +81,10 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#clear()">clear</a>():void</div>
-<div class="summaryTableDescription">
-   Clear console text.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#create()">create</a>(stage:Stage, release:Boolean = false):<a href="../console/Console.html">Console</a>
+<a class="signatureLink" href="#create()">create</a>(stage:Stage = null, assetFactory:<a href="assets/AssetFactory.html">AssetFactory</a> = null, eventDispatcher:IEventDispatcher = null):<a href="../console/ConsoleCore.html">ConsoleCore</a>
 </div>
 <div class="summaryTableDescription">[static]
-   Create console singleton instance.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#getAssetFactory()">getAssetFactory</a>():<a href="../console/AssetFactory.html">AssetFactory</a>
-</div>
-<div class="summaryTableDescription">
-   Get current asset factory instance.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#getInstance()">getInstance</a>():<a href="../console/Console.html">Console</a>
-</div>
-<div class="summaryTableDescription">[static]
-   Return console singleton instance.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#hide()">hide</a>():void</div>
-<div class="summaryTableDescription">
-   Hide console component.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#isMaximized()">isMaximized</a>():Boolean</div>
-<div class="summaryTableDescription">
-   Check if console component is maximized.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#isRelease()">isRelease</a>():Boolean</div>
-<div class="summaryTableDescription">[static]
-   Check if console is running release version.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#isVisible()">isVisible</a>():Boolean</div>
-<div class="summaryTableDescription">
-   Check if console component is visible.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#maximize()">maximize</a>():void</div>
-<div class="summaryTableDescription">
-   Completely show console component (caption bar and text area content).</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#minimize()">minimize</a>():void</div>
-<div class="summaryTableDescription">
-   Minimize console component, only caption bar remains visible.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#println()">println</a>(info:Object):void</div>
-<div class="summaryTableDescription">
-   Print information to console text area plus "\n".</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#setAssetFactory()">setAssetFactory</a>(assetFactory:<a href="AssetFactory.html">AssetFactory</a>):void</div>
-<div class="summaryTableDescription">
-   Set asset factory instance.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#shortcut()">shortcut</a>(shortcutKeys:Array, shortcutUseAlt:Boolean = false, shortcutUseCtrl:Boolean = true, shortcutUseShift:Boolean = false):void</div>
-<div class="summaryTableDescription">
-   Set show/hide shortcut.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#show()">show</a>():void</div>
-<div class="summaryTableDescription">
-   Show console component.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#toFront()">toFront</a>():void</div>
-<div class="summaryTableDescription">
-   Bring console to front of other display objects.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#update()">update</a>():void</div>
-<div class="summaryTableDescription">
-   Update console gaphical interface.</div>
-</td><td class="summaryTableOwnerCol">Console</td>
-</tr>
-</table>
-</div>
-<a name="constantSummary"></a>
-<div class="summarySection">
-<div class="summaryTableTitle">Public Constants</div>
-<table id="summaryTableConstant" class="summaryTable " cellpadding="3" cellspacing="0">
-<tr>
-<th>&nbsp;</th><th colspan="2">Constant</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#VERSION">VERSION</a> : String = "0.3"<div class="summaryTableDescription">[static]
-   Console version.</div>
+   Create a ConsoleCore instance to be wrapped within Console static class.</div>
 </td><td class="summaryTableOwnerCol">Console</td>
 </tr>
 </table>
@@ -263,150 +96,50 @@ showHideInherited();
 <div class="MainContent">
 <a name="propertyDetail"></a>
 <div class="detailSectionHeader">Property detail</div>
-<a name="alpha"></a>
+<a name="instance"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">alpha</td><td class="detailHeaderType">property</td>
+<td class="detailHeaderName">instance</td><td class="detailHeaderType">property</td>
 </tr>
 </table>
 <div class="detailBody">
-<code>alpha:Number</code>&nbsp;&nbsp;[read-write]<p>
-   Console transparecy.
+<code>instance:<a href="../console/ConsoleCore.html">ConsoleCore</a></code>&nbsp;&nbsp;[read-only]<p>
+   Return current instance of ConsoleCore class.
    </p><span class="label">Implementation</span>
 <br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get alpha():Number</code>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set alpha(value:Number):void</code>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public static function get instance():<a href="../console/ConsoleCore.html">ConsoleCore</a></code>
 <br>
 </div>
-<a name="area"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">area</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>area:Rectangle</code>&nbsp;&nbsp;[read-write]<p>
-   Console position and dimension represented by a Rectangle object.
-   </p><span class="label">Implementation</span>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get area():Rectangle</code>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set area(value:Rectangle):void</code>
-<br>
-</div>
-<a name="caption"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">caption</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>caption:String</code>&nbsp;&nbsp;[read-write]<p>
-   Console caption text.
-   </p><span class="label">Implementation</span>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get caption():String</code>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set caption(value:String):void</code>
-<br>
-</div>
-<a name="FIREBUG_ECHO"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">FIREBUG_ECHO</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public static var FIREBUG_ECHO:Boolean = false</code><p>
-   Print output in firebug window. Can be modified at runtime.
-   </p></div>
-<a name="MAX_CHARACTERS"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">MAX_CHARACTERS</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public static var MAX_CHARACTERS:uint = 100000</code><p>
-   Max characters stored in console text area. Can be modified at runtime.
-   </p></div>
-<a name="MAX_INPUT_HISTORY"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">MAX_INPUT_HISTORY</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public static var MAX_INPUT_HISTORY:uint = 15</code><p>
-   Max input navigation history. Can be modified at runtime.
-   You can access input history using up/down arrow keys when input text field is selected.
-   </p></div>
-<a name="MAX_LINE_LENGTH"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">MAX_LINE_LENGTH</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public static var MAX_LINE_LENGTH:uint = 1000</code><p>
-   Max line length before automatic breaking. Can be modified at runtime.
-   Note that modifying this attribute at runtime won't change text previously written.
-   </p></div>
-<a name="PRINT_TIMER"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">PRINT_TIMER</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public static var PRINT_TIMER:Boolean = false</code><p>
-   Print elapsed milliseconds since the flash virtual machine started. Can be modified at runtime.
-   </p></div>
-<a name="TRACE_ECHO"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">TRACE_ECHO</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public static var TRACE_ECHO:Boolean = false</code><p>
-   Print output in flash trace window. Can be modified at runtime.
-   </p></div>
 <a name="methodDetail"></a>
 <div class="detailSectionHeader">Method detail</div>
-<a name="clear()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">clear</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function clear():void</code><p>
-   Clear console text.
-   </p></div>
 <a name="create()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">create</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+<td class="detailHeaderName">create</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
 </tr>
 </table>
 <div class="detailBody">
-<code>public static function create(stage:Stage, release:Boolean = false):<a href="../console/Console.html">Console</a></code><p>
-   Create console singleton instance. Should be called once.
-   If assetFactory parameter is null, default AssetFactory is created.
-   If release parameter is true, an empty console is created to avoid overhead.
+<code>public static function create(stage:Stage = null, assetFactory:<a href="assets/AssetFactory.html">AssetFactory</a> = null, eventDispatcher:IEventDispatcher = null):<a href="../console/ConsoleCore.html">ConsoleCore</a></code><p>
+   Create a ConsoleCore instance to be wrapped within Console static class. This method must be called once.
+   If stage instance if null, ConsoleCore instance runs in release mode, where it dispatches all events but has no graphical interface.
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">stage</span>:Stage</code> &mdash; Reference to application stage object.
+<td width="20px"></td><td><code><span class="label">stage</span>:Stage</code> (default = <code>null</code>)<code></code> &mdash; Reference to application stage object.
    </td>
 </tr>
 <tr>
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">release</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; AssetFactory instance used to set component appearance.
+<td width="20px"></td><td><code><span class="label">assetFactory</span>:<a href="assets/AssetFactory.html">AssetFactory</a></code> (default = <code>null</code>)<code></code> &mdash; Use to specify a non-default instance of AssetFactory.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">eventDispatcher</span>:IEventDispatcher</code> (default = <code>null</code>)<code></code> &mdash; An object to dispatch ConsoleCore events.
    </td>
 </tr>
 </table>
@@ -414,255 +147,22 @@ showHideInherited();
 <span class="label">Returns</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20"></td><td><code><a href="../console/Console.html">Console</a></code> &mdash; 
-                        Console singleton instance.
+<td width="20"></td><td><code><a href="../console/ConsoleCore.html">ConsoleCore</a></code> &mdash; 
+                        ConsoleCore instance.
    
                         
                      </td>
 </tr>
 </table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="assets/AssetFactory.html" target="">br.dcoder.console.assets.AssetFactory</a>
+<br>
+<a href="assets/DefaultAssetFactory.html" target="">br.dcoder.console.assets.DefaultAssetFactory</a>
 </div>
-<a name="getAssetFactory()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">getAssetFactory</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function getAssetFactory():<a href="../console/AssetFactory.html">AssetFactory</a></code><p>
-   Get current asset factory instance.
-   </p><p></p>
-<span class="label">Returns</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20"></td><td><code><a href="../console/AssetFactory.html">AssetFactory</a></code> &mdash; 
-                        Current asset factory instance.
-   
-                        
-                     </td>
-</tr>
-</table>
 </div>
-<a name="getInstance()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">getInstance</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public static function getInstance():<a href="../console/Console.html">Console</a></code><p>
-   Return console singleton instance.
-   </p><p></p>
-<span class="label">Returns</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20"></td><td><code><a href="../console/Console.html">Console</a></code> &mdash; 
-                        Console singleton instance.
-   
-                        
-                     </td>
-</tr>
-</table>
-</div>
-<a name="hide()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">hide</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function hide():void</code><p>
-   Hide console component.
-   </p></div>
-<a name="isMaximized()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">isMaximized</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function isMaximized():Boolean</code><p>
-   Check if console component is maximized.
-   </p><p></p>
-<span class="label">Returns</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20"></td><td><code>Boolean</code> &mdash; Return true if console is maximized.
-   </td>
-</tr>
-</table>
-</div>
-<a name="isRelease()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">isRelease</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public static function isRelease():Boolean</code><p>
-   Check if console is running release version.
-   </p><p></p>
-<span class="label">Returns</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20"></td><td><code>Boolean</code> &mdash; Return true if is release version.
-   </td>
-</tr>
-</table>
-</div>
-<a name="isVisible()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">isVisible</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function isVisible():Boolean</code><p>
-   Check if console component is visible.
-   </p><p></p>
-<span class="label">Returns</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20"></td><td><code>Boolean</code> &mdash; Return true if console is visible.
-   </td>
-</tr>
-</table>
-</div>
-<a name="maximize()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">maximize</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function maximize():void</code><p>
-   Completely show console component (caption bar and text area content). 
-   </p></div>
-<a name="minimize()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">minimize</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function minimize():void</code><p>
-   Minimize console component, only caption bar remains visible.
-   </p></div>
-<a name="println()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">println</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function println(info:Object):void</code><p>
-   Print information to console text area plus "\n".
-   </p><span class="label">Parameters</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20px"></td><td><code><span class="label">info</span>:Object</code> &mdash; Any information to be printed. If is null, "(null)" string is used.
-   </td>
-</tr>
-</table>
-</div>
-<a name="setAssetFactory()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">setAssetFactory</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function setAssetFactory(assetFactory:<a href="AssetFactory.html">AssetFactory</a>):void</code><p>
-   Set asset factory instance.
-   </p><span class="label">Parameters</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20px"></td><td><code><span class="label">assetFactory</span>:<a href="AssetFactory.html">AssetFactory</a></code> &mdash; New asset factory instance.
-   </td>
-</tr>
-</table>
-</div>
-<a name="shortcut()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">shortcut</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function shortcut(shortcutKeys:Array, shortcutUseAlt:Boolean = false, shortcutUseCtrl:Boolean = true, shortcutUseShift:Boolean = false):void</code><p>
-   Set show/hide shortcut. If this shortcut is already used by container application (Flash IDE, Web Browser, etc) console shortcut will never be triggered.
-   </p><span class="label">Parameters</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20px"></td><td><code><span class="label">shortcutKeys</span>:Array</code> &mdash; An array with all keys that should be pressed to trigger shortcut. Each key is a one-character string. Example: [ "m" ].
-   </td>
-</tr>
-<tr>
-<td class="paramSpacer">&nbsp;</td>
-</tr>
-<tr>
-<td width="20px"></td><td><code><span class="label">shortcutUseAlt</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If true ALT key should be pressed to trigger shortcut.
-   </td>
-</tr>
-<tr>
-<td class="paramSpacer">&nbsp;</td>
-</tr>
-<tr>
-<td width="20px"></td><td><code><span class="label">shortcutUseCtrl</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If true CTRL key should be pressed to trigger shortcut.
-   </td>
-</tr>
-<tr>
-<td class="paramSpacer">&nbsp;</td>
-</tr>
-<tr>
-<td width="20px"></td><td><code><span class="label">shortcutUseShift</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If true SHIFT key should be pressed to trigger shortcut.
-   </td>
-</tr>
-</table>
-</div>
-<a name="show()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">show</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function show():void</code><p>
-   Show console component.
-   </p></div>
-<a name="toFront()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">toFront</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function toFront():void</code><p>
-   Bring console to front of other display objects. This call don't change the order of the objects added to stage, making console component invisible to host application.
-   </p></div>
-<a name="update()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">update</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function update():void</code><p>
-   Update console gaphical interface.
-   It's automatically called when console area has changed or a new AssetFactory instance was set.
-   </p></div>
-<a name="constantDetail"></a>
-<div class="detailSectionHeader">Constant detail</div>
-<a name="VERSION"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">VERSION</td><td class="detailHeaderType">constant</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public static const VERSION:String = "0.3"</code><p>
-   Console version.
-   </p></div>
 <br>
 <br>
 <hr>

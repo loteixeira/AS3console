@@ -30,12 +30,13 @@ package br.dcoder.console
 			
 			Console.create(stage);
 			Console.instance.caption = "Console Local Server";
-			
-			LocalServer.start();
+			Console.instance.installPlugin(new LocalServer());
 			
 			stage.addEventListener(Event.RESIZE, resize);
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
+			
+			resize(null);
 		}
 		
 		private function resize(event:Event):void

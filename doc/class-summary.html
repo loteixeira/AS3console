@@ -37,26 +37,70 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Al
 <th>&nbsp;</th><th width="20%">Class</th><th width="20%">Package</th><th width="60%">Description</th>
 </tr>
 <tr class="prow1">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="br/dcoder/console/AssetFactory.html">AssetFactory</a>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="br/dcoder/console/assets/AssetFactory.html"><i>AssetFactory</i></a>
 <br>
-</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('br/dcoder/console/class-list.html');" href="br/dcoder/console/package-detail.html">br.dcoder.console</a></td><td class="summaryTableLastCol">
-  Class used to manage console appearance.</td>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('br/dcoder/console/assets/class-list.html');" href="br/dcoder/console/assets/package-detail.html">br.dcoder.console.assets</a></td><td class="summaryTableLastCol">
+  AssetFactory classes are used to externalize AS3console graphical interface management.</td>
 </tr>
 <tr class="prow0">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="br/dcoder/console/plugin/CodeEval.html">CodeEval</a>
 <br>
-</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('br/dcoder/console/plugin/class-list.html');" href="br/dcoder/console/plugin/package-detail.html">br.dcoder.console.plugin</a></td><td class="summaryTableLastCol">&nbsp;</td>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('br/dcoder/console/plugin/class-list.html');" href="br/dcoder/console/plugin/package-detail.html">br.dcoder.console.plugin</a></td><td class="summaryTableLastCol">
+  Plugin to run Actionscript3 code in AS3console.</td>
 </tr>
 <tr class="prow1">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="br/dcoder/console/Console.html">Console</a>
 <br>
 </td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('br/dcoder/console/class-list.html');" href="br/dcoder/console/package-detail.html">br.dcoder.console</a></td><td class="summaryTableLastCol">
-  Console class is a singleton used to access all functionalities of AS3Console.</td>
+  Wrapper of a single ConsoleCore instance, used to simplify logging process.</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="br/dcoder/console/ConsoleConfig.html">ConsoleConfig</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('br/dcoder/console/class-list.html');" href="br/dcoder/console/package-detail.html">br.dcoder.console</a></td><td class="summaryTableLastCol">
+  Class which stores configuration details of each instance of ConsoleCore.</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="br/dcoder/console/ConsoleCore.html">ConsoleCore</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('br/dcoder/console/class-list.html');" href="br/dcoder/console/package-detail.html">br.dcoder.console</a></td><td class="summaryTableLastCol">
+  AS3console component main class, where you can write/read data, throw/listen events, etc.</td>
 </tr>
 <tr class="prow0">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="br/dcoder/console/ConsoleEvent.html">ConsoleEvent</a>
 <br>
-</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('br/dcoder/console/class-list.html');" href="br/dcoder/console/package-detail.html">br.dcoder.console</a></td><td class="summaryTableLastCol">&nbsp;</td>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('br/dcoder/console/class-list.html');" href="br/dcoder/console/package-detail.html">br.dcoder.console</a></td><td class="summaryTableLastCol">
+  Events dispatched by ConsoleCore, or by the related IEventDispatcher object.</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="br/dcoder/console/plugin/ConsolePlugin.html">ConsolePlugin</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('br/dcoder/console/plugin/class-list.html');" href="br/dcoder/console/plugin/package-detail.html">br.dcoder.console.plugin</a></td><td class="summaryTableLastCol">
+  AS3console plugins base class.</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="br/dcoder/console/assets/DefaultAssetFactory.html">DefaultAssetFactory</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('br/dcoder/console/assets/class-list.html');" href="br/dcoder/console/assets/package-detail.html">br.dcoder.console.assets</a></td><td class="summaryTableLastCol">
+  Console default asset factory, used since the first version.</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="br/dcoder/console/assets/HerculesAssetFactory.html">HerculesAssetFactory</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('br/dcoder/console/assets/class-list.html');" href="br/dcoder/console/assets/package-detail.html">br.dcoder.console.assets</a></td><td class="summaryTableLastCol">
+  Hercules asset factory, based in old hercules monitors.</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="br/dcoder/console/plugin/LocalClient.html">LocalClient</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('br/dcoder/console/plugin/class-list.html');" href="br/dcoder/console/plugin/package-detail.html">br.dcoder.console.plugin</a></td><td class="summaryTableLastCol">
+  Plugin to send/receive console output/input from a LocalServer.</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="br/dcoder/console/plugin/LocalServer.html">LocalServer</a>
+<br>
+</td><td class="summaryTableCol"><a onclick="javascript:loadClassListFrame('br/dcoder/console/plugin/class-list.html');" href="br/dcoder/console/plugin/package-detail.html">br.dcoder.console.plugin</a></td><td class="summaryTableLastCol">
+  Plugin to receive/send console input/output to a LocalClient.</td>
 </tr>
 </table>
 <p></p>
