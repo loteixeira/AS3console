@@ -3,6 +3,7 @@
 //
 // This software is distribuited under the terms of the GNU Lesser Public License.
 // See license.txt for more information.
+//
 // Contributed:
 // - 04/20/2012, Camille Reynders, http://www.creynders.be
 
@@ -14,9 +15,9 @@ package br.dcoder.console
 	import flash.events.IEventDispatcher;
 
 	/**
-	 * Wrapper of a single ConsoleCore instance, used to simplify logging process. You can use AS3console through this class,
-	 * accessible from any point of your code, or creating and managing instances of ConsoleCore separately.
-	 * You shouldn't instantiate this class using regular constructor, instead use create static method.
+	 * Wrapper of a single <code>ConsoleCore</code> instance, used to simplify logging process. You can use AS3console through this class,
+	 * accessible from any point of your code, or creating and managing instances of <code>ConsoleCore</code> separately.
+	 * You shouldn't instantiate this class using regular constructor, instead use <code>create</code> static method.
 	 * @see #create()
 	 * @see #instance
 	 * @see ConsoleCore
@@ -26,12 +27,13 @@ package br.dcoder.console
 		private static var _instance:ConsoleCore = null;
 
 		/**
-		 * Create a ConsoleCore instance to be wrapped within Console static class. This method must be called once.
-		 * If stage instance if null, ConsoleCore instance runs in release mode, where it dispatches all events but has no graphical interface.
+		 * Create a <code>ConsoleCore</code> instance to be wrapped within <code>Console</code> static class. This method must be called once.
+		 * If stage instance if null, <code>ConsoleCore</code> instance runs in release mode, where it dispatches all events but has no graphical interface.
 		 * @param stage Reference to application stage object.
 		 * @param assetFactory Use to specify a non-default instance of AssetFactory.
 		 * @param eventDispatcher An object to dispatch ConsoleCore events.
 		 * @return ConsoleCore instance.
+		 * @see ConsoleCore#release
 		 * @see br.dcoder.console.assets.AssetFactory
 		 * @see br.dcoder.console.assets.DefaultAssetFactory
 		 */
@@ -45,7 +47,7 @@ package br.dcoder.console
 		}
 		
 		/**
-		 * Return current instance of ConsoleCore class.
+		 * Return current instance of <code>ConsoleCore</code> class.
 		 * @return ConsoleCore instance.
 		 */
 		public static function get instance():ConsoleCore

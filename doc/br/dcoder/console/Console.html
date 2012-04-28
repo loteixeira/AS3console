@@ -39,9 +39,9 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </tr>
 </table>
 <p></p>
-  Wrapper of a single ConsoleCore instance, used to simplify logging process. You can use AS3console through this class,
-  accessible from any point of your code, or creating and managing instances of ConsoleCore separately.
-  You shouldn't instantiate this class using regular constructor, instead use create static method.
+  Wrapper of a single <code>ConsoleCore</code> instance, used to simplify logging process. You can use AS3console through this class,
+  accessible from any point of your code, or creating and managing instances of <code>ConsoleCore</code> separately.
+  You shouldn't instantiate this class using regular constructor, instead use <code>create</code> static method.
   <p></p>
 <p>
 <span class="classHeaderTableLabel">See also</span>
@@ -66,7 +66,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#instance">instance</a> : <a href="../console/ConsoleCore.html">ConsoleCore</a>
 <div class="summaryTableDescription">[static][read-only]
-   Return current instance of ConsoleCore class.</div>
+   Return current instance of <code>ConsoleCore</code> class.</div>
 </td><td class="summaryTableOwnerCol">Console</td>
 </tr>
 </table>
@@ -84,7 +84,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a class="signatureLink" href="#create()">create</a>(stage:Stage = null, assetFactory:<a href="assets/AssetFactory.html">AssetFactory</a> = null, eventDispatcher:IEventDispatcher = null):<a href="../console/ConsoleCore.html">ConsoleCore</a>
 </div>
 <div class="summaryTableDescription">[static]
-   Create a ConsoleCore instance to be wrapped within Console static class.</div>
+   Create a <code>ConsoleCore</code> instance to be wrapped within <code>Console</code> static class.</div>
 </td><td class="summaryTableOwnerCol">Console</td>
 </tr>
 </table>
@@ -104,7 +104,7 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>instance:<a href="../console/ConsoleCore.html">ConsoleCore</a></code>&nbsp;&nbsp;[read-only]<p>
-   Return current instance of ConsoleCore class.
+   Return current instance of <code>ConsoleCore</code> class.
    </p><span class="label">Implementation</span>
 <br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public static function get instance():<a href="../console/ConsoleCore.html">ConsoleCore</a></code>
@@ -120,8 +120,8 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public static function create(stage:Stage = null, assetFactory:<a href="assets/AssetFactory.html">AssetFactory</a> = null, eventDispatcher:IEventDispatcher = null):<a href="../console/ConsoleCore.html">ConsoleCore</a></code><p>
-   Create a ConsoleCore instance to be wrapped within Console static class. This method must be called once.
-   If stage instance if null, ConsoleCore instance runs in release mode, where it dispatches all events but has no graphical interface.
+   Create a <code>ConsoleCore</code> instance to be wrapped within <code>Console</code> static class. This method must be called once.
+   If stage instance if null, <code>ConsoleCore</code> instance runs in release mode, where it dispatches all events but has no graphical interface.
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
@@ -158,6 +158,8 @@ showHideInherited();
 <span class="label">See also</span>
 </p>
 <div class="seeAlso">
+<a href="ConsoleCore.html#release" target="">ConsoleCore.release</a>
+<br>
 <a href="assets/AssetFactory.html" target="">br.dcoder.console.assets.AssetFactory</a>
 <br>
 <a href="assets/DefaultAssetFactory.html" target="">br.dcoder.console.assets.DefaultAssetFactory</a>

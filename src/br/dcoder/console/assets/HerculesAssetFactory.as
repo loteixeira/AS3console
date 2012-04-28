@@ -87,7 +87,7 @@ package br.dcoder.console.assets
 		
 		/**
 		 * Draw button to parameter sprite.
-		 * @param sprite Sprite to draw the button.
+		 * @param sprite Instance of <code>Sprite</code> class to draw the button.
 		 * @param w Width of the button.
 		 * @param h Height of the button.
 		 */
@@ -102,7 +102,7 @@ package br.dcoder.console.assets
 		
 		/**
 		 * Draw an arrow pointing right to parameter sprite.
-		 * @param sprite Sprite to draw the arrow.
+		 * @param sprite Instance of <code>Sprite</code> class to draw the arrow.
 		 * @param w Width of the arrow.
 		 * @param h Height of the arrow.
 		 */

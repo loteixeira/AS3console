@@ -3,6 +3,7 @@
 //
 // This software is distribuited under the terms of the GNU Lesser Public License.
 // See license.txt for more information.
+//
 // Contributed:
 // - 04/20/2012, Camille Reynders, http://www.creynders.be
 
@@ -31,11 +32,22 @@ package br.dcoder.console
 
 	/**
 	 * AS3console component main class, where you can write/read data, throw/listen events, etc.
-	 * You can use AS3console through Console class, where a single instance may be accessed from any point of the code,
-	 * or creating a instance of the ConsoleCore class. Whether you instantiate this class, you must keep a reference to the object.
-	 * However, cpln won't work (the alias is tied to Console static instance).
-	 * Using instances of this class instead of Console single instance allows you to manage several different consoles.
+	 * You can use AS3console through <code>Console</code> class, where a single instance may be accessed from any point of the code,
+	 * or creating an instance of <code>ConsoleCore</code> class. If you instantiate this class you must keep a reference to the object
+	 * and <code>cpln</code> don't work (this alias is tied to <code>Console</code> static instance).<br>
+	 * Using instances of this class instead of <code>Console</code> single instance allows you to manage several different consoles.<br><br>
+	 * <b>Console embed commands</b><br>
+	 * There are some embed input commands that you can type in console window:
+	 * <li>alpha [value]: get console component alpha value, if value exists set console alpha.
+	 * <li>clear: clear console text area.
+	 * <li>hide: hide console window.
+	 * <li>mem: show memory used by the flash player.
+	 * <li>plugins: list installed plugins.
+	 * <li>version: print console version details.<br><br>
+	 * Everytime text is inserted into console input field <code>ConsoleEvent.INPUT</code> event is thrown, if the text isn't a embed command.
 	 * @see Console
+	 * @see ConsoleEvent
+	 * @see br.dcoder.console.plugin.ConsolePlugin
 	 */
 	public class ConsoleCore
 	{
@@ -66,12 +78,15 @@ package br.dcoder.console
 		//
 		/**
 		 * Create an instance of AS3console component. If parent is non-null the instance will have a graphical interface,
-		 * otherwise it runs in release mode.
-		 * If assetFactory is null, a DefaultAssetFactory is used.<br>
+		 * otherwise it runs in release mode (only throwing events and responding to <code>config.traceEcho</code> and <code>config.jsEcho</code>).
+		 * If <code>assetFactory</code> is null, a instance of <code>DefaultAssetFactory</code> is created.<br>
+		 * If you want a single instance through static <code>Console</code> class, see <code>Console.create()</code> method.<br>
 		 * Note: parent object <b>MUST</b> be part of the display list in such way that parent.stage attribute is valid.
-		 * @param parent DisplayObjectContainer to add console component. If this value is null, console runs in release mode.
-		 * @param assetFactory Use to specify a non-default instance of AssetFactory.
-		 * @param eventDispatcher An object to dispatch ConsoleCore events.
+		 * @param parent An instance of <code>DisplayObjectContainer</code> to add console component as child. If this value is null, console runs in release mode.
+		 * @param assetFactory Use to specify a non-default instance of <code>AssetFactory</code>.
+		 * @param eventDispatcher An object to dispatch <code>ConsoleCore</code> events.
+		 * @see Console#create()
+		 * @see ConsoleConfig
 		 * @see br.dcoder.console.assets.AssetFactory
 		 * @see br.dcoder.console.assets.DefaultAssetFactory
 		 */
@@ -92,7 +107,10 @@ package br.dcoder.console
 		// getters and setters
 		//
 		/**
-		 * Check if console is running release mode.
+		 * Check whether console is running release mode.
+		 * If <code>parent</code> value was null in <code>ConsoleCore</code> constructor or <code>stage</code> value was null in <code>Console</code> create method, console will run in release mode.
+		 * @see #ConsoleCore()
+		 * @see Console#create()
 		 */
 		public function get release():Boolean
 		{
@@ -100,7 +118,7 @@ package br.dcoder.console
 		}
 		
 		/**
-		 * ConsoleConfig instance related to this ConsoleCore object.
+		 * ConsoleConfig instance related to this <code>ConsoleCore</code> object.
 		 */
 		public function get config():ConsoleConfig
 		{
@@ -108,7 +126,7 @@ package br.dcoder.console
 		}
 		
 		/**
-		 * Gets/sets whether ConsoleCore object is resizable (default value is true).
+		 * Defines whether <code>ConsoleCore</code> object is resizable (default value is true).
 		 * Setting this attribute to false, the console resize area won't be visible.
 		 * If running release mode, this attribute is ignored.
 		 */
@@ -124,7 +142,7 @@ package br.dcoder.console
 		}
 		
 		/**
-		 * Gets/sets whether ConsoleCore object is draggable (default value is true).
+		 * Defines whether <code>ConsoleCore</code> object is draggable (default value is true).
 		 * You can drag the component clicking on the caption bar.
 		 * If running release mode, this attribute is ignored.
 		 */
@@ -140,7 +158,9 @@ package br.dcoder.console
 		}
 		
 		/**
-		 * Console position and dimension represented by a Rectangle object.
+		 * Console position and dimension represented by a <code>Rectangle</code> object.
+		 * This call will cause this instance to update the component graphical interface.
+		 * @see #update()
 		 */
 		public function get area():Rectangle
 		{
@@ -185,8 +205,10 @@ package br.dcoder.console
 		// public interface
 		//
 		/**
-		 * Set asset factory instance.
+		 * Set asset factory instance. <code>AssetFactory</code> class is used to defined how console graphical interface will render itself.
+		 * This call will cause this instance to update the component graphical interface.
 		 * @param assetFactory New asset factory instance.
+		 * @see #update()
 		 * @see br.dcoder.console.assets.DefaultAssetFactory
 		 * @see br.dcoder.console.assets.HerculesAssetFactory
 		 */
@@ -213,7 +235,7 @@ package br.dcoder.console
 		}
 		
 		/**
-		 * Get IEventDispatcher object related to this instance.
+		 * Get the <code>IEventDispatcher</code> object related to this instance.
 		 * @return An object to dispatch the ConsoleCore events.
 		 */
 		public function getEventDispatcher():IEventDispatcher
@@ -222,9 +244,11 @@ package br.dcoder.console
 		}
 		
 		/**
-		 * Update console gaphical interface.
-		 * It's automatically called when console area has changed or a new AssetFactory instance was set.
+		 * Update console graphical interface, redrawing all components.
+		 * It's automatically called when console area has changed or a new <code>AssetFactory</code> instance was set.
 		 * If running release mode does nothing.
+		 * @see #area
+		 * @see #setAssetFactory()
 		 */
 		public function update():void
 		{
@@ -297,7 +321,7 @@ package br.dcoder.console
 		}
 		
 		/**
-		 * Show console component and throws ConsoleEvent.SHOW. If running release mode, does nothing.
+		 * Show console component and throws <code>ConsoleEvent.SHOW</code>. If running release mode, does nothing.
 		 * @see ConsoleEvent
 		 */
 		public function show():void
@@ -313,7 +337,7 @@ package br.dcoder.console
 		}
 		
 		/**
-		 * Hide console component and throws ConsoleEvent.HIDE. If running release mode, does nothing.
+		 * Hide console component and throws <code>ConsoleEvent.HIDE</code>. If running release mode, does nothing.
 		 * @see ConsoleEvent
 		 */
 		public function hide():void
@@ -420,8 +444,8 @@ package br.dcoder.console
 		}
 		
 		/**
-		 * Print information to console text area plus "\n". This method throws ConsoleEvent.OUTPUT. If running release mode, the event is thrown and
-		 * traceEcho/jsEcho still works. 
+		 * Print information in console text area plus "\n". This method throws <code>ConsoleEvent.OUTPUT</code>. If running release mode, the event will be thrown and
+		 * <code>config.traceEcho</code>/<code>config.jsEcho</code> still work. 
 		 * @param info Any information to be printed. If is null, "(null)" string is used.
 		 * @see ConsoleConfig
 		 * @see ConsoleEvent
@@ -463,7 +487,7 @@ package br.dcoder.console
 		
 		/**
 		 * Install a plugin.
-		 * @param plugin ConsolePlugin child class instance
+		 * @param plugin <code>ConsolePlugin</code> child class instance
 		 */
 		public function installPlugin(plugin:ConsolePlugin):void
 		{
@@ -475,7 +499,6 @@ package br.dcoder.console
 		 * Get an array with all installed plugins.
 		 * @return Plugins array
 		 * @see br.dcoder.console.plugin.ConsolePlugin
-		 * @see br.dcoder.console.plugin.ConsolePlugin#name
 		 */
 		public function getPlugins():Array
 		{
@@ -625,16 +648,16 @@ package br.dcoder.console
 				for (i = 0; i < plugins.length; i++)
 				{
 					var plugin:ConsolePlugin = plugins[i];
-					cpln((i + 1) + ". " + plugin.name + ": " + plugin.description);
+					println((i + 1) + ". " + plugin.name + ": " + plugin.description);
 					
 					if (empty)
 						empty = false;
 				}
 				
 				if (empty)
-					cpln("No installed plugins.");
+					println("No installed plugins.");
 				
-				cpln("");
+				println("");
 				
 				return true;
 			}

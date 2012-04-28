@@ -14,8 +14,8 @@ package br.dcoder.console.plugin
 	import flash.net.LocalConnection;
 	
 	/**
-	 * Plugin to receive/send console input/output to a LocalClient.
-	 * This plugin is used in console-local-server.swf application, to communicate with a LocalClient.
+	 * Plugin to receive/send console input/output to a <code>LocalClient</code>.
+	 * This plugin is used in console-local-server.swf application, to communicate with a <code>LocalClient</code>.
 	 * To test you can start console-local-server.swf and then as3console-demo.swf.
 	 * @see LocalClient
 	 */
@@ -24,7 +24,7 @@ package br.dcoder.console.plugin
 		private var conn:LocalConnection;
 		
 		/**
-		 * Create a instance of LocalServer plugin. Input is send to a LocalClient and output is received from a LocalClient.
+		 * Create a instance of <code>LocalServer</code> plugin. Input is send to a <code>LocalClient</code> and output is received from a <code>LocalClient</code>.
 		 * @see LocalClient
 		 */
 		public function LocalServer():void

@@ -43,8 +43,8 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </table>
 <p></p>
   AS3console plugins base class. A plugin can listen for console input and output.
-  To add a plugin to a ConsoleCore instance use installPlugin method.
-  One instance of a plugin <b>MUST</b> be installed in only one ConsoleCore object.
+  To add a plugin to a <code>ConsoleCore</code> instance use installPlugin method.
+  An instance of a plugin <b>MUST</b> be installed in only one <code>ConsoleCore</code> object.
   <p></p>
 <p>
 <span class="classHeaderTableLabel">See also</span>
@@ -88,7 +88,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#consoleCore">consoleCore</a> : <a href="../../console/ConsoleCore.html">ConsoleCore</a>
 <div class="summaryTableDescription">
-   ConsoleCore object in which this plugin was installed.</div>
+   <code>ConsoleCore</code> object in which this plugin was installed.</div>
 </td><td class="summaryTableOwnerCol">ConsolePlugin</td>
 </tr>
 </table>
@@ -113,7 +113,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summarySignature">
 <a class="signatureLink" href="#install()">install</a>(consoleCore:<a href="../ConsoleCore.html">ConsoleCore</a>):void</div>
 <div class="summaryTableDescription">
-   Connects this plugin instance to a ConsoleCore instance.</div>
+   Connects this plugin instance to a <code>ConsoleCore</code> instance.</div>
 </td><td class="summaryTableOwnerCol">ConsolePlugin</td>
 </tr>
 </table>
@@ -158,7 +158,7 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>protected var consoleCore:<a href="../../console/ConsoleCore.html">ConsoleCore</a></code><p>
-   ConsoleCore object in which this plugin was installed.
+   <code>ConsoleCore</code> object in which this plugin was installed.
    </p></div>
 <a name="description"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
@@ -248,8 +248,8 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public function install(consoleCore:<a href="../ConsoleCore.html">ConsoleCore</a>):void</code><p>
-   Connects this plugin instance to a ConsoleCore instance.
-   Do not call this method directly, instead use ConsoleCore installPlugin method.
+   Connects this plugin instance to a <code>ConsoleCore</code> instance.
+   Do not call this method directly, instead use <code>ConsoleCore.installPlugin</code>.
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>

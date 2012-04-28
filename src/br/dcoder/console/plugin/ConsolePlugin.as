@@ -11,8 +11,8 @@ package br.dcoder.console.plugin
 
 	/**
 	 * AS3console plugins base class. A plugin can listen for console input and output.
-	 * To add a plugin to a ConsoleCore instance use installPlugin method.
-	 * One instance of a plugin <b>MUST</b> be installed in only one ConsoleCore object.
+	 * To add a plugin to a <code>ConsoleCore</code> instance use installPlugin method.
+	 * An instance of a plugin <b>MUST</b> be installed in only one <code>ConsoleCore</code> object.
 	 * @see br.dcoder.console.ConsoleCore
 	 * @see br.dcoder.console.ConsoleCore#installPlugin()
 	 */
@@ -22,7 +22,7 @@ package br.dcoder.console.plugin
 		private var _description:String;
 		
 		/**
-		 * ConsoleCore object in which this plugin was installed.
+		 * <code>ConsoleCore</code> object in which this plugin was installed.
 		 */
 		protected var consoleCore:ConsoleCore;
 		
@@ -53,8 +53,8 @@ package br.dcoder.console.plugin
 		}
 		
 		/**
-		 * Connects this plugin instance to a ConsoleCore instance.
-		 * Do not call this method directly, instead use ConsoleCore installPlugin method.
+		 * Connects this plugin instance to a <code>ConsoleCore</code> instance.
+		 * Do not call this method directly, instead use <code>ConsoleCore.installPlugin</code>.
 		 * @param consoleCore Instance to install this plugin object
 		 * @see br.dcoder.console.ConsoleCore#installPlugin()
 		 */

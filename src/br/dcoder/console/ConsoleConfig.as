@@ -7,7 +7,7 @@
 package br.dcoder.console
 {
 	/**
-	 * Class which stores configuration details of each instance of ConsoleCore.
+	 * Class which stores configuration details of an instance of <code>ConsoleCore</code>.
 	 * All attributes are public members where you can freely modify.
 	 * @see br.dcoder.console.ConsoleCore
 	 */
@@ -26,7 +26,7 @@ package br.dcoder.console
 		private static const DEFAULT_JS_ECHO:Boolean = false;
 		
 		/**
-		 * Max characters stored in ConsoleCore text area. Default value is 100000.
+		 * Max characters stored in <code>ConsoleCore</code> text area. Default value is 100000.
 		 */
 		public var maxCharacters:uint = DEFAULT_MAX_CHARACTERS;
 		/**
@@ -52,7 +52,7 @@ package br.dcoder.console
 		public var jsEcho:Boolean = DEFAULT_JS_ECHO;
 		
 		/**
-		 * Create a ConsoleConfig instance.
+		 * Create a <code>ConsoleConfig</code> instance.
 		 */
 		public function ConsoleConfig()
 		{

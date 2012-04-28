@@ -42,7 +42,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </tr>
 </table>
 <p></p>
-  Events dispatched by ConsoleCore, or by the related IEventDispatcher object.
+  Events dispatched by <code>ConsoleCore</code> through the IEventDispatcher object which it owns.
   <p></p>
 <p>
 <span class="classHeaderTableLabel">See also</span>
@@ -154,29 +154,29 @@ showHideInherited();
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">type</span>:String</code> &mdash; The type of console event. Possible values are: ConsoleEvent.INPUT, ConsoleEvent.OUTPUT,
-   ConsoleEvent.SHOW or ConsoleEvent.HIDE.
+<td width="20px"></td><td><code><span class="label">type</span>:String</code> &mdash; The type of console event. Possible values are: <code>ConsoleEvent.INPUT</code>, <codeConsoleEvent.OUTPUT</code>,
+   <code>ConsoleEvent.SHOW</code>, <code>ConsoleEvent.HIDE</code> or <code>ConsoleEvent.RESIZE</code>.
    </td>
 </tr>
 <tr>
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">bubbles</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; Determines whether the Event object participates in the bubbling phase of the event flow. 
+<td width="20px"></td><td><code><span class="label">bubbles</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; Determines whether the <code>Event</code> object participates in the bubbling phase of the event flow. 
    </td>
 </tr>
 <tr>
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">cancelable</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; Determines whether the Event object can be canceled.
+<td width="20px"></td><td><code><span class="label">cancelable</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; Determines whether the <code>Event</code> object can be canceled.
    </td>
 </tr>
 <tr>
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">value</span>:String</code> (default = "<code></code>")<code></code> &mdash; Text value of this event. Is valid for ConsoleEvent.INPUT and ConsoleEvent.OUTPUT.
+<td width="20px"></td><td><code><span class="label">value</span>:String</code> (default = "<code></code>")<code></code> &mdash; Text value of this event. Is valid for <code>ConsoleEvent.INPUT</code> and <code>ConsoleEvent.OUTPUT</code>.
    </td>
 </tr>
 </table>

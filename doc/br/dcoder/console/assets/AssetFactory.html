@@ -42,7 +42,8 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 </tr>
 </table>
 <p></p>
-  AssetFactory classes are used to externalize AS3console graphical interface management.
+  Classes which implements <AssetFactory> interface are used to externalize AS3console graphical interface management.
+  Information of how console should redraw itself is contained within these instances.
   <p></p>
 <p>
 <span class="classHeaderTableLabel">See also</span>
@@ -163,7 +164,7 @@ showHideInherited();
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">sprite</span>:Sprite</code> &mdash; Sprite to draw the arrow.
+<td width="20px"></td><td><code><span class="label">sprite</span>:Sprite</code> &mdash; Instance of <code>Sprite</code> class to draw the arrow.
    </td>
 </tr>
 <tr>
@@ -194,7 +195,7 @@ showHideInherited();
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">sprite</span>:Sprite</code> &mdash; Sprite to draw the button.
+<td width="20px"></td><td><code><span class="label">sprite</span>:Sprite</code> &mdash; Instance of <code>Sprite</code> class to draw the button.
    </td>
 </tr>
 <tr>

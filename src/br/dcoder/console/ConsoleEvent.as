@@ -9,7 +9,7 @@ package br.dcoder.console
 	import flash.events.Event;
 	
 	/**
-	 * Events dispatched by ConsoleCore, or by the related IEventDispatcher object.
+	 * Events dispatched by <code>ConsoleCore</code> through the IEventDispatcher object which it owns.
 	 * @see ConsoleCore
 	 */
 	public class ConsoleEvent extends Event
@@ -39,11 +39,11 @@ package br.dcoder.console
 		
 		/**
 		 * Creates an event object that contains information about console events.
-		 * @param type The type of console event. Possible values are: ConsoleEvent.INPUT, ConsoleEvent.OUTPUT,
-		 * ConsoleEvent.SHOW or ConsoleEvent.HIDE.
-		 * @param bubbles Determines whether the Event object participates in the bubbling phase of the event flow. 
-		 * @param cancelable Determines whether the Event object can be canceled.
-		 * @param value Text value of this event. Is valid for ConsoleEvent.INPUT and ConsoleEvent.OUTPUT.
+		 * @param type The type of console event. Possible values are: <code>ConsoleEvent.INPUT</code>, <codeConsoleEvent.OUTPUT</code>,
+		 * <code>ConsoleEvent.SHOW</code>, <code>ConsoleEvent.HIDE</code> or <code>ConsoleEvent.RESIZE</code>.
+		 * @param bubbles Determines whether the <code>Event</code> object participates in the bubbling phase of the event flow. 
+		 * @param cancelable Determines whether the <code>Event</code> object can be canceled.
+		 * @param value Text value of this event. Is valid for <code>ConsoleEvent.INPUT</code> and <code>ConsoleEvent.OUTPUT</code>.
 		 * @see ConsoleCore
 		 */
 		public function ConsoleEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false, value:String = "")

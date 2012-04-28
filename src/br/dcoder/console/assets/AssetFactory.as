@@ -9,7 +9,8 @@ package br.dcoder.console.assets
 	import flash.display.Sprite;
 	
 	/**
-	 * AssetFactory classes are used to externalize AS3console graphical interface management.
+	 * Classes which implements <AssetFactory> interface are used to externalize AS3console graphical interface management.
+	 * Information of how console should redraw itself is contained within these instances.
 	 * @see br.dcoder.console.Console
 	 * @see br.dcoder.console.ConsoleCore
 	 */
@@ -65,7 +66,7 @@ package br.dcoder.console.assets
 		
 		/**
 		 * Draw button to parameter sprite.
-		 * @param sprite Sprite to draw the button.
+		 * @param sprite Instance of <code>Sprite</code> class to draw the button.
 		 * @param w Width of the button.
 		 * @param h Height of the button.
 		 */
@@ -73,7 +74,7 @@ package br.dcoder.console.assets
 		
 		/**
 		 * Draw an arrow pointing right to parameter sprite.
-		 * @param sprite Sprite to draw the arrow.
+		 * @param sprite Instance of <code>Sprite</code> class to draw the arrow.
 		 * @param w Width of the arrow.
 		 * @param h Height of the arrow.
 		 */
