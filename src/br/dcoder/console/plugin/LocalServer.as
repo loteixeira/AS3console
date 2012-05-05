@@ -37,6 +37,8 @@ package br.dcoder.console.plugin
 		 */
 		override public function install(consoleCore:ConsoleCore):void
 		{
+			super.install(consoleCore);
+			
 			var client:Object =
 			{
 				output: function(text:String):void
