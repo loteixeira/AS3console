@@ -30,6 +30,8 @@ package br.dcoder.console
 			
 			Console.create(stage);
 			Console.instance.caption = "Console Local Server";
+			Console.instance.draggable = false;
+			Console.instance.resizable = false;
 			Console.instance.installPlugin(new LocalServer());
 			
 			stage.addEventListener(Event.RESIZE, resize);
