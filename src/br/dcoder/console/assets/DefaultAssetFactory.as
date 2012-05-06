@@ -46,7 +46,7 @@ package br.dcoder.console.assets
 		 */
 		public function getButtonSize():int
 		{
-			return 13;
+			return 12;
 		}
 		
 		/**

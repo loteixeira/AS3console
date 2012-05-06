@@ -14,8 +14,7 @@ package br.dcoder.console.gui
 	import br.dcoder.console.assets.AssetFactory;
 
 	/**
-	 * @author lteixeira
-	 */
+	 * @author lteixeira	 */
 	public class ResizeArea extends GUIBaseElement
 	{
 		public static const RESIZE_EVENT:String = "resizeEvent";
@@ -78,11 +77,10 @@ package br.dcoder.console.gui
 
 			content.graphics.lineStyle(1, assetFactory.getButtonForegroundColor());			
 			content.graphics.beginFill(assetFactory.getButtonBackgroundColor());
-			content.graphics.moveTo(assetFactory.getButtonContainerSize() - halfDistance * 2, halfDistance);
-			content.graphics.lineTo(assetFactory.getButtonContainerSize() - halfDistance * 2, assetFactory.getButtonContainerSize() - halfDistance * 2);
-			content.graphics.lineTo(halfDistance, assetFactory.getButtonContainerSize() - halfDistance * 2);
+			content.graphics.moveTo(assetFactory.getButtonContainerSize() - halfDistance, halfDistance);
+			content.graphics.lineTo(assetFactory.getButtonContainerSize() - halfDistance, assetFactory.getButtonContainerSize() - halfDistance);
+			content.graphics.lineTo(halfDistance, assetFactory.getButtonContainerSize() - halfDistance);
 			content.graphics.endFill();
-			
 			content.x = rect.left;
 			content.y = rect.top;
 		}

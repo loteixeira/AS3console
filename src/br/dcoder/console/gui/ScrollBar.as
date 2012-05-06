@@ -181,7 +181,7 @@ package br.dcoder.console.gui
 			content.graphics.clear();
 			content.graphics.lineStyle(1, assetFactory.getButtonForegroundColor());
 			content.graphics.beginFill(assetFactory.getBackgroundColor());
-			content.graphics.drawRect(0, 0, width - 1, height - 1);
+			content.graphics.drawRect(0, 0, width, height);
 			content.graphics.endFill();
 			
 			drawThumb();

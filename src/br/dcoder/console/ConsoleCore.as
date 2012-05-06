@@ -255,6 +255,7 @@ package br.dcoder.console
 			if (!release)
 			{
 				// draw background
+				content.y = assetFactory.getButtonContainerSize();
 				content.graphics.clear();
 				content.graphics.lineStyle(1, assetFactory.getButtonForegroundColor());
 				content.graphics.beginFill(assetFactory.getBackgroundColor());
@@ -289,10 +290,10 @@ package br.dcoder.console
 				
 				// horizontal scroll bar
 				hScrollBar.rect.x = 0;
-				hScrollBar.rect.y = rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize();
+				hScrollBar.rect.y = rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize() - 1;
 				hScrollBar.rect.width = 0; // value ignored
 				hScrollBar.rect.height = 0; // value ignored
-				hScrollBar.setLength(rect.width - assetFactory.getButtonContainerSize() + 1);
+				hScrollBar.setLength(rect.width - assetFactory.getButtonContainerSize() - 1);
 				hScrollBar.setMaxValue(textArea.maxScrollH == 0 ? 0 : textArea.maxScrollH - 1);
 				hScrollBar.update();
 				
@@ -300,11 +301,11 @@ package br.dcoder.console
 					hScrollBar.toMaxValue();
 				
 				// vertical scroll bar
-				vScrollBar.rect.x = rect.width - assetFactory.getButtonContainerSize();
+				vScrollBar.rect.x = rect.width - assetFactory.getButtonContainerSize() - 1;
 				vScrollBar.rect.y = 0;
 				vScrollBar.rect.width = 0; // value ignored
 				vScrollBar.rect.height = 0; // value ignored 
-				vScrollBar.setLength(rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize() + 1);
+				vScrollBar.setLength(rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize() - 1);
 				vScrollBar.setMaxValue(textArea.maxScrollV == 0 ? 0 : textArea.maxScrollV - 1);
 				vScrollBar.update();
 				
@@ -312,8 +313,8 @@ package br.dcoder.console
 					vScrollBar.toMaxValue();
 				
 				// resize area
-				resizeArea.rect.x = hScrollBar.rect.left + hScrollBar.getLength();
-				resizeArea.rect.y = vScrollBar.rect.top + vScrollBar.getLength();
+				resizeArea.rect.x = hScrollBar.rect.left + hScrollBar.getLength() + 1;
+				resizeArea.rect.y = vScrollBar.rect.top + vScrollBar.getLength() + 1;
 				resizeArea.rect.width = 0; // value ignored
 				resizeArea.rect.height = 0; // value ignored
 				resizeArea.update();
