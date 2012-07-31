@@ -1,759 +1,133 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
-<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="ConsoleCore,br.dcoder.console.ConsoleCore,alpha,area,caption,config,draggable,release,resizable,clear,getAssetFactory,getEventDispatcher,getPlugins,hide,installPlugin,isMaximized,isVisible,maximize,minimize,println,setAssetFactory,shortcut,show,toFront,update" name="keywords">
-<title>br.dcoder.console.ConsoleCore</title>
-</head>
-<body>
-<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
-<!--
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><!-- saved from url=(0014)about:internet --><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../../override.css" type="text/css"><meta name="keywords" content="ConsoleCore,br.dcoder.console.ConsoleCore,HIDE,INPUT,OUTPUT,RESIZE,SHOW,VERSION,alpha,area,caption,config,draggable,instance,jsEcho,maxCharacters,maxInputHistory,maxLineLength,printTimer,release,resizable,text,traceEcho,clear,create,getAssetFactory,getEventDispatcher,getPlugins,hide,installPlugin,isMaximized,isVisible,maximize,minimize,println,setAssetFactory,shortcut,show,toFront,update"><title>br.dcoder.console.ConsoleCore</title></head><body><script language="javascript" type="text/javascript" src="../../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../../help.js"></script><script language="javascript" type="text/javascript" src="../../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
 				asdocTitle = 'ConsoleCore - API Documentation';
 				var baseRef = '../../../';
 				window.onload = configPage;
 			--></script>
-<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
-<tr>
-<td align="left" class="titleTableTitle">AS3Console</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?br/dcoder/console/ConsoleCore.html&amp;br/dcoder/console/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
-</tr>
-<tr class="titleTableRow2">
-<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;ConsoleCore</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
-</tr>
-<tr class="titleTableRow3">
-<td colspan="2">&nbsp;</td>
-</tr>
-</table>
-<script type="text/javascript" language="javascript">
-<!--
-if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class ConsoleCore"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
---></script>
-<div class="MainContent">
-<table cellspacing="0" cellpadding="0" class="classHeaderTable">
-<tr>
-<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">br.dcoder.console</a></td>
-</tr>
-<tr>
-<td class="classHeaderTableLabel">Class</td><td class="classSignature">public class ConsoleCore</td>
-</tr>
-</table>
-<p></p>
-  AS3console component main class, where you can write/read data, throw/listen events, etc.
-  You can use AS3console through <code>Console</code> class, where a single instance may be accessed from any point of the code,
-  or creating an instance of <code>ConsoleCore</code> class. If you instantiate this class you must keep a reference to the object
-  and <code>cpln</code> don't work (this alias is tied to <code>Console</code> static instance).<br>
-  Using instances of this class instead of <code>Console</code> single instance allows you to manage several different consoles.<br><br>
-  <b>Console embed commands</b><br>
-  There are some embed input commands that you can type in console window:
-  <li>alpha [value]: get console component alpha value, if value exists set console alpha.
-  <li>clear: clear console text area.
-  <li>hide: hide console window.
-  <li>mem: show memory used by the flash player.
-  <li>plugins: list installed plugins.
-  <li>version: print console version details.<br><br>
-  Everytime text is inserted into console input field <code>ConsoleEvent.INPUT</code> event is thrown, if the text isn't a embed command.
-  <p></p>
-<p>
-<span class="classHeaderTableLabel">See also</span>
-</p>
-<div class="seeAlso">
-<a href="Console.html" target="">Console</a>
-<br>
-<a href="ConsoleEvent.html" target="">ConsoleEvent</a>
-<br>
-<a href="plugin/ConsolePlugin.html" target="">br.dcoder.console.plugin.ConsolePlugin</a>
-</div>
-<br>
-<hr>
-</div>
-<a name="propertySummary"></a>
-<div class="summarySection">
-<div class="summaryTableTitle">Public Properties</div>
-<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
-<tr>
-<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#alpha">alpha</a> : Number<div class="summaryTableDescription">
-   Console transparecy.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#area">area</a> : Rectangle<div class="summaryTableDescription">
-   Console position and dimension represented by a <code>Rectangle</code> object.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#caption">caption</a> : String<div class="summaryTableDescription">
-   Console caption text.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#config">config</a> : <a href="../console/ConsoleConfig.html">ConsoleConfig</a>
-<div class="summaryTableDescription">[read-only]
-   ConsoleConfig instance related to this <code>ConsoleCore</code> object.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#draggable">draggable</a> : Boolean<div class="summaryTableDescription">
-   Defines whether <code>ConsoleCore</code> object is draggable (default value is true).</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#release">release</a> : Boolean<div class="summaryTableDescription">[read-only]
-   Check whether console is running release mode.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#resizable">resizable</a> : Boolean<div class="summaryTableDescription">
-   Defines whether <code>ConsoleCore</code> object is resizable (default value is true).</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-</table>
-</div>
-<a name="methodSummary"></a>
-<div class="summarySection">
-<div class="summaryTableTitle">Public Methods</div>
-<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
-<tr>
-<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#ConsoleCore()">ConsoleCore</a>(parent:DisplayObjectContainer = null, assetFactory:<a href="assets/AssetFactory.html">AssetFactory</a> = null, eventDispatcher:IEventDispatcher = null)</div>
-<div class="summaryTableDescription">
-   Create an instance of AS3console component.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#clear()">clear</a>():void</div>
-<div class="summaryTableDescription">
-   Clear console text.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#getAssetFactory()">getAssetFactory</a>():<a href="assets/AssetFactory.html">AssetFactory</a>
-</div>
-<div class="summaryTableDescription">
-   Get current asset factory instance.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#getEventDispatcher()">getEventDispatcher</a>():IEventDispatcher</div>
-<div class="summaryTableDescription">
-   Get the <code>IEventDispatcher</code> object related to this instance.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#getPlugins()">getPlugins</a>():Array</div>
-<div class="summaryTableDescription">
-   Get an array with all installed plugins.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#hide()">hide</a>():void</div>
-<div class="summaryTableDescription">
-   Hide console component and throws <code>ConsoleEvent.HIDE</code>.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#installPlugin()">installPlugin</a>(plugin:<a href="plugin/ConsolePlugin.html">ConsolePlugin</a>):void</div>
-<div class="summaryTableDescription">
-   Install a plugin.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#isMaximized()">isMaximized</a>():Boolean</div>
-<div class="summaryTableDescription">
-   Check if console component is maximized.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#isVisible()">isVisible</a>():Boolean</div>
-<div class="summaryTableDescription">
-   Check if console component is visible.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#maximize()">maximize</a>():void</div>
-<div class="summaryTableDescription">
-   Completely show console component (caption bar and text area content).</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#minimize()">minimize</a>():void</div>
-<div class="summaryTableDescription">
-   Minimize console component, only caption bar remains visible.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#println()">println</a>(info:Object):void</div>
-<div class="summaryTableDescription">
-   Print information in console text area plus "\n".</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#setAssetFactory()">setAssetFactory</a>(assetFactory:<a href="assets/AssetFactory.html">AssetFactory</a>):void</div>
-<div class="summaryTableDescription">
-   Set asset factory instance.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#shortcut()">shortcut</a>(shortcutKeys:Array, shortcutUseAlt:Boolean = false, shortcutUseCtrl:Boolean = true, shortcutUseShift:Boolean = false):void</div>
-<div class="summaryTableDescription">
-   Set show/hide shortcut.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#show()">show</a>():void</div>
-<div class="summaryTableDescription">
-   Show console component and throws <code>ConsoleEvent.SHOW</code>.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#toFront()">toFront</a>():void</div>
-<div class="summaryTableDescription">
-   Bring console to front of other display objects.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
-<a class="signatureLink" href="#update()">update</a>():void</div>
-<div class="summaryTableDescription">
-   Update console graphical interface, redrawing all components.</div>
-</td><td class="summaryTableOwnerCol">ConsoleCore</td>
-</tr>
-</table>
-</div>
-<script type="text/javascript" language="javascript">
-<!--
-showHideInherited();
---></script>
-<div class="MainContent">
-<a name="propertyDetail"></a>
-<div class="detailSectionHeader">Property detail</div>
-<a name="alpha"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">alpha</td><td class="detailHeaderType">property</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>alpha:Number</code>&nbsp;&nbsp;[read-write]<p>
-   Console transparecy. If running release mode, the value is always zero.
-   </p><span class="label">Implementation</span>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get alpha():Number</code>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set alpha(value:Number):void</code>
-<br>
-</div>
-<a name="area"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">area</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>area:Rectangle</code>&nbsp;&nbsp;[read-write]<p>
-   Console position and dimension represented by a <code>Rectangle</code> object.
-   This call will cause this instance to update the component graphical interface.
-   </p><span class="label">Implementation</span>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get area():Rectangle</code>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set area(value:Rectangle):void</code>
-<br>
-<p>
-<span class="label">See also</span>
-</p>
-<div class="seeAlso">
-<a href="../console/ConsoleCore.html#update()" target="">update()</a>
-</div>
-</div>
-<a name="caption"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">caption</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>caption:String</code>&nbsp;&nbsp;[read-write]<p>
-   Console caption text. If running release mode, caption bar text is always "" (empty string).
-   </p><span class="label">Implementation</span>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get caption():String</code>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set caption(value:String):void</code>
-<br>
-</div>
-<a name="config"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">config</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>config:<a href="../console/ConsoleConfig.html">ConsoleConfig</a></code>&nbsp;&nbsp;[read-only]<p>
-   ConsoleConfig instance related to this <code>ConsoleCore</code> object.
-   </p><span class="label">Implementation</span>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get config():<a href="../console/ConsoleConfig.html">ConsoleConfig</a></code>
-<br>
-</div>
-<a name="draggable"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">draggable</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>draggable:Boolean</code>&nbsp;&nbsp;[read-write]<p>
-   Defines whether <code>ConsoleCore</code> object is draggable (default value is true).
-   You can drag the component clicking on the caption bar.
-   If running release mode, this attribute is ignored.
-   </p><span class="label">Implementation</span>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get draggable():Boolean</code>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set draggable(value:Boolean):void</code>
-<br>
-</div>
-<a name="release"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">release</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>release:Boolean</code>&nbsp;&nbsp;[read-only]<p>
-   Check whether console is running release mode.
-   If <code>parent</code> value was null in <code>ConsoleCore</code> constructor or <code>stage</code> value was null in <code>Console</code> create method, console will run in release mode.
-   </p><span class="label">Implementation</span>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get release():Boolean</code>
-<br>
-<p>
-<span class="label">See also</span>
-</p>
-<div class="seeAlso">
-<a href="../console/ConsoleCore.html#ConsoleCore()" target="">ConsoleCore()</a>
-<br>
-<a href="Console.html#create()" target="">Console.create()</a>
-</div>
-</div>
-<a name="resizable"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">resizable</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>resizable:Boolean</code>&nbsp;&nbsp;[read-write]<p>
-   Defines whether <code>ConsoleCore</code> object is resizable (default value is true).
-   Setting this attribute to false, the console resize area won't be visible.
-   If running release mode, this attribute is ignored.
-   </p><span class="label">Implementation</span>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get resizable():Boolean</code>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set resizable(value:Boolean):void</code>
-<br>
-</div>
-<a name="constructorDetail"></a>
-<div class="detailSectionHeader">Constructor detail</div>
-<a name="ConsoleCore()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">ConsoleCore</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function ConsoleCore(parent:DisplayObjectContainer = null, assetFactory:<a href="assets/AssetFactory.html">AssetFactory</a> = null, eventDispatcher:IEventDispatcher = null)</code><p>
-   Create an instance of AS3console component. If parent is non-null the instance will have a graphical interface,
-   otherwise it runs in release mode (only throwing events and responding to <code>config.traceEcho</code> and <code>config.jsEcho</code>).
-   If <code>assetFactory</code> is null, a instance of <code>DefaultAssetFactory</code> is created.<br>
-   If you want a single instance through static <code>Console</code> class, see <code>Console.create()</code> method.<br>
-   Note: parent object <b>MUST</b> be part of the display list in such way that parent.stage attribute is valid.
-   </p><span class="label">Parameters</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20px"></td><td><code><span class="label">parent</span>:DisplayObjectContainer</code> (default = <code>null</code>)<code></code> &mdash; An instance of <code>DisplayObjectContainer</code> to add console component as child. If this value is null, console runs in release mode.
-   </td>
-</tr>
-<tr>
-<td class="paramSpacer">&nbsp;</td>
-</tr>
-<tr>
-<td width="20px"></td><td><code><span class="label">assetFactory</span>:<a href="assets/AssetFactory.html">AssetFactory</a></code> (default = <code>null</code>)<code></code> &mdash; Use to specify a non-default instance of <code>AssetFactory</code>.
-   </td>
-</tr>
-<tr>
-<td class="paramSpacer">&nbsp;</td>
-</tr>
-<tr>
-<td width="20px"></td><td><code><span class="label">eventDispatcher</span>:IEventDispatcher</code> (default = <code>null</code>)<code></code> &mdash; An object to dispatch <code>ConsoleCore</code> events.
-   </td>
-</tr>
-</table>
-<p>
-<span class="label">See also</span>
-</p>
-<div class="seeAlso">
-<a href="Console.html#create()" target="">Console.create()</a>
-<br>
-<a href="ConsoleConfig.html" target="">ConsoleConfig</a>
-<br>
-<a href="assets/AssetFactory.html" target="">br.dcoder.console.assets.AssetFactory</a>
-<br>
-<a href="assets/DefaultAssetFactory.html" target="">br.dcoder.console.assets.DefaultAssetFactory</a>
-</div>
-</div>
-<a name="methodDetail"></a>
-<div class="detailSectionHeader">Method detail</div>
-<a name="clear()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">clear</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function clear():void</code><p>
-   Clear console text. If running release mode, does nothing.
-   </p></div>
-<a name="getAssetFactory()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">getAssetFactory</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function getAssetFactory():<a href="assets/AssetFactory.html">AssetFactory</a></code><p>
-   Get current asset factory instance.
-   </p><p></p>
-<span class="label">Returns</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20"></td><td><code><a href="assets/AssetFactory.html">AssetFactory</a></code> &mdash; 
-                        Current asset factory instance.
-   
-                        
-                     </td>
-</tr>
-</table>
-</div>
-<a name="getEventDispatcher()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">getEventDispatcher</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function getEventDispatcher():IEventDispatcher</code><p>
-   Get the <code>IEventDispatcher</code> object related to this instance.
-   </p><p></p>
-<span class="label">Returns</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20"></td><td><code>IEventDispatcher</code> &mdash; An object to dispatch the ConsoleCore events.
-   </td>
-</tr>
-</table>
-</div>
-<a name="getPlugins()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">getPlugins</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function getPlugins():Array</code><p>
-   Get an array with all installed plugins.
-   </p><p></p>
-<span class="label">Returns</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20"></td><td><code>Array</code> &mdash; Plugins array
-   </td>
-</tr>
-</table>
-<p>
-<span class="label">See also</span>
-</p>
-<div class="seeAlso">
-<a href="plugin/ConsolePlugin.html" target="">br.dcoder.console.plugin.ConsolePlugin</a>
-</div>
-</div>
-<a name="hide()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">hide</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function hide():void</code><p>
-   Hide console component and throws <code>ConsoleEvent.HIDE</code>. If running release mode, does nothing.
-   </p><p>
-<span class="label">See also</span>
-</p>
-<div class="seeAlso">
-<a href="ConsoleEvent.html" target="">ConsoleEvent</a>
-</div>
-</div>
-<a name="installPlugin()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">installPlugin</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function installPlugin(plugin:<a href="plugin/ConsolePlugin.html">ConsolePlugin</a>):void</code><p>
-   Install a plugin.
-   </p><span class="label">Parameters</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20px"></td><td><code><span class="label">plugin</span>:<a href="plugin/ConsolePlugin.html">ConsolePlugin</a></code> &mdash; <code>ConsolePlugin</code> child class instance
-   </td>
-</tr>
-</table>
-</div>
-<a name="isMaximized()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">isMaximized</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function isMaximized():Boolean</code><p>
-   Check if console component is maximized.
-   </p><p></p>
-<span class="label">Returns</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20"></td><td><code>Boolean</code> &mdash; Return true if console is maximized. If is release mode, always return false.
-   </td>
-</tr>
-</table>
-</div>
-<a name="isVisible()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">isVisible</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function isVisible():Boolean</code><p>
-   Check if console component is visible.
-   </p><p></p>
-<span class="label">Returns</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20"></td><td><code>Boolean</code> &mdash; Return true if console is visible. If running release mode returns always false;
-   </td>
-</tr>
-</table>
-</div>
-<a name="maximize()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">maximize</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function maximize():void</code><p>
-   Completely show console component (caption bar and text area content).
-   If running release mode, does nothing. 
-   </p></div>
-<a name="minimize()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">minimize</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function minimize():void</code><p>
-   Minimize console component, only caption bar remains visible.
-   If running release mode, does nothing.
-   </p></div>
-<a name="println()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">println</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function println(info:Object):void</code><p>
-   Print information in console text area plus "\n". This method throws <code>ConsoleEvent.OUTPUT</code>. If running release mode, the event will be thrown and
-   <code>config.traceEcho</code>/<code>config.jsEcho</code> still work. 
-   </p><span class="label">Parameters</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20px"></td><td><code><span class="label">info</span>:Object</code> &mdash; Any information to be printed. If is null, "(null)" string is used.
-   </td>
-</tr>
-</table>
-<p>
-<span class="label">See also</span>
-</p>
-<div class="seeAlso">
-<a href="ConsoleConfig.html" target="">ConsoleConfig</a>
-<br>
-<a href="ConsoleEvent.html" target="">ConsoleEvent</a>
-</div>
-</div>
-<a name="setAssetFactory()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">setAssetFactory</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function setAssetFactory(assetFactory:<a href="assets/AssetFactory.html">AssetFactory</a>):void</code><p>
-   Set asset factory instance. <code>AssetFactory</code> class is used to defined how console graphical interface will render itself.
-   This call will cause this instance to update the component graphical interface.
-   </p><span class="label">Parameters</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20px"></td><td><code><span class="label">assetFactory</span>:<a href="assets/AssetFactory.html">AssetFactory</a></code> &mdash; New asset factory instance.
-   </td>
-</tr>
-</table>
-<p>
-<span class="label">See also</span>
-</p>
-<div class="seeAlso">
-<a href="../console/ConsoleCore.html#update()" target="">update()</a>
-<br>
-<a href="assets/DefaultAssetFactory.html" target="">br.dcoder.console.assets.DefaultAssetFactory</a>
-<br>
-<a href="assets/HerculesAssetFactory.html" target="">br.dcoder.console.assets.HerculesAssetFactory</a>
-</div>
-</div>
-<a name="shortcut()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">shortcut</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function shortcut(shortcutKeys:Array, shortcutUseAlt:Boolean = false, shortcutUseCtrl:Boolean = true, shortcutUseShift:Boolean = false):void</code><p>
-   Set show/hide shortcut. If this shortcut is already used by container application (Flash IDE, Web Browser, etc) or running release mode, console shortcut will never be triggered.
-   </p><span class="label">Parameters</span>
-<table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20px"></td><td><code><span class="label">shortcutKeys</span>:Array</code> &mdash; An array with all keys that should be pressed to trigger shortcut. Each key is a one-character string. Example: [ "m" ].
-   </td>
-</tr>
-<tr>
-<td class="paramSpacer">&nbsp;</td>
-</tr>
-<tr>
-<td width="20px"></td><td><code><span class="label">shortcutUseAlt</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If true ALT key should be pressed to trigger shortcut.
-   </td>
-</tr>
-<tr>
-<td class="paramSpacer">&nbsp;</td>
-</tr>
-<tr>
-<td width="20px"></td><td><code><span class="label">shortcutUseCtrl</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If true CTRL key should be pressed to trigger shortcut.
-   </td>
-</tr>
-<tr>
-<td class="paramSpacer">&nbsp;</td>
-</tr>
-<tr>
-<td width="20px"></td><td><code><span class="label">shortcutUseShift</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If true SHIFT key should be pressed to trigger shortcut.
-   </td>
-</tr>
-</table>
-</div>
-<a name="show()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">show</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function show():void</code><p>
-   Show console component and throws <code>ConsoleEvent.SHOW</code>. If running release mode, does nothing.
-   </p><p>
-<span class="label">See also</span>
-</p>
-<div class="seeAlso">
-<a href="ConsoleEvent.html" target="">ConsoleEvent</a>
-</div>
-</div>
-<a name="toFront()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">toFront</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function toFront():void</code><p>
-   Bring console to front of other display objects. This call don't change the order of the objects added to stage, making console component invisible to host application.
-   </p></div>
-<a name="update()"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">update</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public function update():void</code><p>
-   Update console graphical interface, redrawing all components.
-   It's automatically called when console area has changed or a new <code>AssetFactory</code> instance was set.
-   If running release mode does nothing.
-   </p><p>
-<span class="label">See also</span>
-</p>
-<div class="seeAlso">
-<a href="../console/ConsoleCore.html#area" target="">area</a>
-<br>
-<a href="../console/ConsoleCore.html#setAssetFactory()" target="">setAssetFactory()</a>
-</div>
-</div>
-<br>
-<br>
-<hr>
-<br>
-<p></p>
-<center class="copyright"> 
-</center>
-</div>
-</body>
-</html>
-<!-- -->
+<script type="text/javascript">
+			scrollToNameAnchor();
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">AS3console</td><td class="titleTableTopNav" align="right"><a href="../../../package-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../class-summary.html" onclick="loadClassListFrame('../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../all-index-A.html" onclick="loadClassListFrame('../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../index.html?br/dcoder/console/ConsoleCore.html&amp;br/dcoder/console/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">ConsoleCore</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+				<!--
+				
+					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("ConsoleCore"); titleBar_setSubNav(false,true,false,false,false,false,false,false,true,false,false	,false,false,false,false,false);}	
+				-->
+			</script><div xmlns:fn="http://www.w3.org/2005/xpath-functions" class="MainContent"><table class="classHeaderTable" cellpadding="0" cellspacing="0"><tr><td class="classHeaderTableLabel">Package</td><td><a href="package-detail.html" onclick="javascript:loadClassListFrame('class-list.html')">br.dcoder.console</a></td></tr><tr><td class="classHeaderTableLabel">Class</td><td class="classSignature">public  class  ConsoleCore</td></tr><tr><td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">ConsoleCore  <img src="../../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> Object</td></tr></table><p></p><p></p><p></p>
+	 AS3console component main class, where you can write/read data, throw/listen events, etc.
+	 You can use AS3console through <code>Console</code> class, where a single instance may be accessed from any point of the code,
+	 or creating an instance of <code>ConsoleCore</code> class. If you instantiate this class you must keep a reference to the object
+	 and <code>cpln</code> don't work (this alias is tied to <code>Console</code> static instance).
+	 Using instances of this class instead of <code>Console</code> single instance allows you to manage several different consoles.
+	 <b>Console embed commands: </b>
+	 There are some embed input commands that you can type in console window:
+	 <li>alpha [value]: get console component alpha value, if value exists set console alpha.</li>
+	              <li>clear: clear console text area.</li>
+	              <li>hide: hide console window.</li>
+	              <li>mem: show memory used by the flash player.</li>
+	              <li>plugins: list installed plugins.</li>
+	              <li>version: print console version details.</li>
+	 Everytime text is inserted into console input field <code>ConsoleEvent.INPUT</code> event is thrown, if the text isn't a embed command.
+	 <p></p><p><span class="classHeaderTableLabel">See also</span></p><div class="seeAlso"><a href="Console.html" target="">Console</a><br/><a href="ConsoleEvent.html" target="">ConsoleEvent</a><br/><a href="../../../br/dcoder/console/plugin/ConsolePlugin.html" target="">br.dcoder.console.plugin.ConsolePlugin</a></div><br/><hr></div><a name="propertySummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Properties</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableProperty"><tr><th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#alpha" class="signatureLink">alpha</a> : Number<div class="summaryTableDescription">
+		 Console transparecy.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#area" class="signatureLink">area</a> : Rectangle<div class="summaryTableDescription">
+		 Console position and dimension represented by a Rectangle object.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#caption" class="signatureLink">caption</a> : String<div class="summaryTableDescription">
+		 Console caption text.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#config" class="signatureLink">config</a> : <a href="../../../br/dcoder/console/ConsoleConfig.html">ConsoleConfig</a><div class="summaryTableDescription">[read-only] 
+		 ConsoleConfig instance related to this ConsoleCore object.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#draggable" class="signatureLink">draggable</a> : Boolean<div class="summaryTableDescription">
+		 Defines whether ConsoleCore object is draggable (default value is true).</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#release" class="signatureLink">release</a> : Boolean<div class="summaryTableDescription">[read-only] 
+		 Check whether console is running release mode.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#resizable" class="signatureLink">resizable</a> : Boolean<div class="summaryTableDescription">
+		 Defines whether ConsoleCore object is resizable (default value is true).</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr></table></div><a name="methodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Methods </div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#ConsoleCore()" class="signatureLink">ConsoleCore</a>(parent:DisplayObjectContainer = null, assetFactory:<a href="../../../br/dcoder/console/assets/AssetFactory.html">AssetFactory</a> = null, eventDispatcher:IEventDispatcher = null)</div><div class="summaryTableDescription">
+		 Create an instance of AS3console component.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#clear()" class="signatureLink">clear</a>():void</div><div class="summaryTableDescription">
+		 Clear console text.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getAssetFactory()" class="signatureLink">getAssetFactory</a>():<a href="../../../br/dcoder/console/assets/AssetFactory.html">AssetFactory</a></div><div class="summaryTableDescription">
+		 Get current asset factory instance.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getEventDispatcher()" class="signatureLink">getEventDispatcher</a>():IEventDispatcher</div><div class="summaryTableDescription">
+		 Get the IEventDispatcher object related to this instance.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#getPlugins()" class="signatureLink">getPlugins</a>():Array</div><div class="summaryTableDescription">
+		 Get an array with all installed plugins.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#hide()" class="signatureLink">hide</a>():void</div><div class="summaryTableDescription">
+		 Hide console component and throws ConsoleEvent.HIDE.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#installPlugin()" class="signatureLink">installPlugin</a>(plugin:<a href="../../../br/dcoder/console/plugin/ConsolePlugin.html">ConsolePlugin</a>):void</div><div class="summaryTableDescription">
+		 Install a plugin.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#isMaximized()" class="signatureLink">isMaximized</a>():Boolean</div><div class="summaryTableDescription">
+		 Check if console component is maximized.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#isVisible()" class="signatureLink">isVisible</a>():Boolean</div><div class="summaryTableDescription">
+		 Check if console component is visible.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#maximize()" class="signatureLink">maximize</a>():void</div><div class="summaryTableDescription">
+		 Completely show console component (caption bar and text area content).</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#minimize()" class="signatureLink">minimize</a>():void</div><div class="summaryTableDescription">
+		 Minimize console component, only caption bar remains visible.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#println()" class="signatureLink">println</a>(info:Object):void</div><div class="summaryTableDescription">
+		 Print information in console text area plus "\n".</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#setAssetFactory()" class="signatureLink">setAssetFactory</a>(assetFactory:<a href="../../../br/dcoder/console/assets/AssetFactory.html">AssetFactory</a>):void</div><div class="summaryTableDescription">
+		 Set asset factory instance.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#shortcut()" class="signatureLink">shortcut</a>(shortcutKeys:Array, shortcutUseAlt:Boolean = false, shortcutUseCtrl:Boolean = true, shortcutUseShift:Boolean = false):void</div><div class="summaryTableDescription">
+		 Set show/hide shortcut.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#show()" class="signatureLink">show</a>():void</div><div class="summaryTableDescription">
+		 Show console component and throws ConsoleEvent.SHOW.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#toFront()" class="signatureLink">toFront</a>():void</div><div class="summaryTableDescription">
+		 Bring console to front of other display objects.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#update()" class="signatureLink">update</a>():void</div><div class="summaryTableDescription">
+		 Update console graphical interface, redrawing all components.</div></td><td class="summaryTableOwnerCol">ConsoleCore</td></tr></table></div><script language="javascript" type="text/javascript"><!--
+										showHideInherited();
+										--></script><div class="MainContent"><div class="detailSectionHeader">Property Detail</div><a name="propertyDetail"></a><a name="alpha"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">alpha</td><td class="detailHeaderType">property</td></tr></table><div class="detailBody"><code>alpha:Number</code><p></p><p></p><p>
+		 Console transparecy. If running release mode, the value is always zero.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get alpha():Number</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set alpha(value:Number):void</code><br/></div><a name="propertyDetail"></a><a name="area"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">area</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>area:Rectangle</code><p></p><p></p><p>
+		 Console position and dimension represented by a <code>Rectangle</code> object.
+		 This call will cause this instance to update the component graphical interface.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get area():Rectangle</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set area(value:Rectangle):void</code><br/><p><span class="label">See also</span></p><div class="seeAlso"><a href="ConsoleCore.html#update()" target="">update()</a></div></div><a name="propertyDetail"></a><a name="caption"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">caption</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>caption:String</code><p></p><p></p><p>
+		 Console caption text. If running release mode, caption bar text is always "" (empty string).
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get caption():String</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set caption(value:String):void</code><br/></div><a name="propertyDetail"></a><a name="config"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">config</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>config:<a href="../../../br/dcoder/console/ConsoleConfig.html">ConsoleConfig</a></code>&nbsp;&nbsp;[read-only] <p></p><p></p><p>
+		 ConsoleConfig instance related to this <code>ConsoleCore</code> object.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get config():<a href="../../../br/dcoder/console/ConsoleConfig.html">ConsoleConfig</a></code><br/></div><a name="propertyDetail"></a><a name="draggable"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">draggable</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>draggable:Boolean</code><p></p><p></p><p>
+		 Defines whether <code>ConsoleCore</code> object is draggable (default value is true).
+		 You can drag the component clicking on the caption bar.
+		 If running release mode, this attribute is ignored.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get draggable():Boolean</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set draggable(value:Boolean):void</code><br/></div><a name="propertyDetail"></a><a name="release"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">release</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>release:Boolean</code>&nbsp;&nbsp;[read-only] <p></p><p></p><p>
+		 Check whether console is running release mode.
+		 If <code>parent</code> value was null in <code>ConsoleCore</code> constructor or <code>stage</code> value was null in <code>Console</code> create method, console will run in release mode.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get release():Boolean</code><br/><p><span class="label">See also</span></p><div class="seeAlso"><a href="ConsoleCore.html#ConsoleCore()" target="">ConsoleCore()</a><br/><a href="Console.html#create()" target="">Console.create()</a></div></div><a name="propertyDetail"></a><a name="resizable"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">resizable</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code>resizable:Boolean</code><p></p><p></p><p>
+		 Defines whether <code>ConsoleCore</code> object is resizable (default value is true).
+		 Setting this attribute to false, the console resize area won't be visible.
+		 If running release mode, this attribute is ignored.
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get resizable():Boolean</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function set resizable(value:Boolean):void</code><br/></div><a name="constructorDetail"></a><div class="detailSectionHeader">Constructor Detail</div><a name="ConsoleCore()"></a><a name="ConsoleCore(flash.display.DisplayObjectContainer,br.dcoder.console.assets.AssetFactory,flash.events.IEventDispatcher)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">ConsoleCore</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">Constructor</td></tr></table><div class="detailBody"><code>public function ConsoleCore(parent:DisplayObjectContainer = null, assetFactory:<a href="../../../br/dcoder/console/assets/AssetFactory.html">AssetFactory</a> = null, eventDispatcher:IEventDispatcher = null)</code><p></p><p>
+		 Create an instance of AS3console component. If parent is non-null the instance will have a graphical interface,
+		 otherwise it runs in release mode (only throwing events and responding to <code>config.traceEcho</code> and <code>config.jsEcho</code>).
+		 If <code>assetFactory</code> is null, a instance of <code>DefaultAssetFactory</code> is created.
+		 If you want a single instance through static <code>Console</code> class, see <code>Console.create()</code> method.
+		 Note: parent object <b>MUST</b> be part of the display list in such way that parent.stage attribute is valid.
+		 </p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">parent</span>:DisplayObjectContainer</code> (default = <code>null</code>)<code></code> &mdash; An instance of <code>DisplayObjectContainer</code> to add console component as child. If this value is null, console runs in release mode.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">assetFactory</span>:<a href="../../../br/dcoder/console/assets/AssetFactory.html">AssetFactory</a></code> (default = <code>null</code>)<code></code> &mdash; Use to specify a non-default instance of <code>AssetFactory</code>.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">eventDispatcher</span>:IEventDispatcher</code> (default = <code>null</code>)<code></code> &mdash; An object to dispatch <code>ConsoleCore</code> events.
+		 </td></tr></table><p><span class="label">See also</span></p><div class="seeAlso"><a href="Console.html#create()" target="">Console.create()</a><br/><a href="ConsoleConfig.html" target="">ConsoleConfig</a><br/><a href="../../../br/dcoder/console/assets/AssetFactory.html" target="">br.dcoder.console.assets.AssetFactory</a><br/><a href="../../../br/dcoder/console/assets/DefaultAssetFactory.html" target="">br.dcoder.console.assets.DefaultAssetFactory</a></div></div><a name="methodDetail"></a><div class="detailSectionHeader">Method Detail</div><a name="clear()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">clear</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td></tr></table><div class="detailBody"><code> public function clear():void</code><p></p><p></p><p>
+		 Clear console text. If running release mode, does nothing.
+		 </p></div><a name="getAssetFactory()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getAssetFactory</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getAssetFactory():<a href="../../../br/dcoder/console/assets/AssetFactory.html">AssetFactory</a></code><p></p><p></p><p>
+		 Get current asset factory instance.
+		 </p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code><a href="../../../br/dcoder/console/assets/AssetFactory.html">AssetFactory</a></code> &mdash; Current asset factory instance.
+		 </td></tr></table></div><a name="getEventDispatcher()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getEventDispatcher</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getEventDispatcher():IEventDispatcher</code><p></p><p></p><p>
+		 Get the <code>IEventDispatcher</code> object related to this instance.
+		 </p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>IEventDispatcher</code> &mdash; An object to dispatch the ConsoleCore events.
+		 </td></tr></table></div><a name="getPlugins()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">getPlugins</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function getPlugins():Array</code><p></p><p></p><p>
+		 Get an array with all installed plugins.
+		 </p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Array</code> &mdash; Plugins array
+		 </td></tr></table><p><span class="label">See also</span></p><div class="seeAlso"><a href="../../../br/dcoder/console/plugin/ConsolePlugin.html" target="">br.dcoder.console.plugin.ConsolePlugin</a></div></div><a name="hide()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">hide</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function hide():void</code><p></p><p></p><p>
+		 Hide console component and throws <code>ConsoleEvent.HIDE</code>. If running release mode, does nothing.
+		 </p><p><span class="label">See also</span></p><div class="seeAlso"><a href="ConsoleEvent.html" target="">ConsoleEvent</a></div></div><a name="installPlugin()"></a><a name="installPlugin(br.dcoder.console.plugin.ConsolePlugin)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">installPlugin</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function installPlugin(plugin:<a href="../../../br/dcoder/console/plugin/ConsolePlugin.html">ConsolePlugin</a>):void</code><p></p><p></p><p>
+		 Install a plugin.
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">plugin</span>:<a href="../../../br/dcoder/console/plugin/ConsolePlugin.html">ConsolePlugin</a></code> &mdash; <code>ConsolePlugin</code> child class instance
+		 </td></tr></table></p></div><a name="isMaximized()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">isMaximized</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function isMaximized():Boolean</code><p></p><p></p><p>
+		 Check if console component is maximized.
+		 </p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Boolean</code> &mdash; Return true if console is maximized. If is release mode, always return false.
+		 </td></tr></table></div><a name="isVisible()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">isVisible</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function isVisible():Boolean</code><p></p><p></p><p>
+		 Check if console component is visible.
+		 </p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Boolean</code> &mdash; Return true if console is visible. If running release mode returns always false;
+		 </td></tr></table></div><a name="maximize()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">maximize</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function maximize():void</code><p></p><p></p><p>
+		 Completely show console component (caption bar and text area content).
+		 If running release mode, does nothing. 
+		 </p></div><a name="minimize()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">minimize</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function minimize():void</code><p></p><p></p><p>
+		 Minimize console component, only caption bar remains visible.
+		 If running release mode, does nothing.
+		 </p></div><a name="println()"></a><a name="println(Object)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">println</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function println(info:Object):void</code><p></p><p></p><p>
+		 Print information in console text area plus "\n". This method throws <code>ConsoleEvent.OUTPUT</code>. If running release mode, the event will be thrown and
+		 <code>config.traceEcho</code>/<code>config.jsEcho</code> still work. 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">info</span>:Object</code> &mdash; Any information to be printed. If is null, "(null)" string is used.
+		 </td></tr></table></p><p><span class="label">See also</span></p><div class="seeAlso"><a href="ConsoleConfig.html" target="">ConsoleConfig</a><br/><a href="ConsoleEvent.html" target="">ConsoleEvent</a></div></div><a name="setAssetFactory()"></a><a name="setAssetFactory(br.dcoder.console.assets.AssetFactory)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">setAssetFactory</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function setAssetFactory(assetFactory:<a href="../../../br/dcoder/console/assets/AssetFactory.html">AssetFactory</a>):void</code><p></p><p></p><p>
+		 Set asset factory instance. <code>AssetFactory</code> class is used to defined how console graphical interface will render itself.
+		 This call will cause this instance to update the component graphical interface.
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">assetFactory</span>:<a href="../../../br/dcoder/console/assets/AssetFactory.html">AssetFactory</a></code> &mdash; New asset factory instance.
+		 </td></tr></table></p><p><span class="label">See also</span></p><div class="seeAlso"><a href="ConsoleCore.html#update()" target="">update()</a><br/><a href="../../../br/dcoder/console/assets/DefaultAssetFactory.html" target="">br.dcoder.console.assets.DefaultAssetFactory</a><br/><a href="../../../br/dcoder/console/assets/HerculesAssetFactory.html" target="">br.dcoder.console.assets.HerculesAssetFactory</a></div></div><a name="shortcut()"></a><a name="shortcut(Array,Boolean,Boolean,Boolean)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">shortcut</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function shortcut(shortcutKeys:Array, shortcutUseAlt:Boolean = false, shortcutUseCtrl:Boolean = true, shortcutUseShift:Boolean = false):void</code><p></p><p></p><p>
+		 Set show/hide shortcut. If this shortcut is already used by container application (Flash IDE, Web Browser, etc) or running release mode, console shortcut will never be triggered.
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">shortcutKeys</span>:Array</code> &mdash; An array with all keys that should be pressed to trigger shortcut. Each key is a one-character string. Example: [ "m" ].
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">shortcutUseAlt</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If true ALT key should be pressed to trigger shortcut.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">shortcutUseCtrl</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; If true CTRL key should be pressed to trigger shortcut.
+		 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">shortcutUseShift</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If true SHIFT key should be pressed to trigger shortcut.
+		 </td></tr></table></p></div><a name="show()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">show</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function show():void</code><p></p><p></p><p>
+		 Show console component and throws <code>ConsoleEvent.SHOW</code>. If running release mode, does nothing.
+		 </p><p><span class="label">See also</span></p><div class="seeAlso"><a href="ConsoleEvent.html" target="">ConsoleEvent</a></div></div><a name="toFront()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">toFront</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function toFront():void</code><p></p><p></p><p>
+		 Bring console to front of other display objects. This call don't change the order of the objects added to stage, making console component invisible to host application.
+		 </p></div><a name="update()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">update</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function update():void</code><p></p><p></p><p>
+		 Update console graphical interface, redrawing all components.
+		 It's automatically called when console area has changed or a new <code>AssetFactory</code> instance was set.
+		 If running release mode does nothing.
+		 </p><p><span class="label">See also</span></p><div class="seeAlso"><a href="ConsoleCore.html#area" target="">area</a><br/><a href="ConsoleCore.html#setAssetFactory()" target="">setAssetFactory()</a></div></div><br/><br/><hr><br/><p></p><center class="copyright"><footer></footer><br/>Tue Jul 31 2012, 06:01 PM -03:00  </center></div></body></html><!--<br/>Tue Jul 31 2012, 06:01 PM -03:00  -->

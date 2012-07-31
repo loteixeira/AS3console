@@ -34,16 +34,16 @@ package br.dcoder.console
 	 * AS3console component main class, where you can write/read data, throw/listen events, etc.
 	 * You can use AS3console through <code>Console</code> class, where a single instance may be accessed from any point of the code,
 	 * or creating an instance of <code>ConsoleCore</code> class. If you instantiate this class you must keep a reference to the object
-	 * and <code>cpln</code> don't work (this alias is tied to <code>Console</code> static instance).<br>
-	 * Using instances of this class instead of <code>Console</code> single instance allows you to manage several different consoles.<br><br>
-	 * <b>Console embed commands</b><br>
+	 * and <code>cpln</code> don't work (this alias is tied to <code>Console</code> static instance).<br/>
+	 * Using instances of this class instead of <code>Console</code> single instance allows you to manage several different consoles.<br/><br/>
+	 * <strong>Console embed commands: </strong><br/><br/>
 	 * There are some embed input commands that you can type in console window:
-	 * <li>alpha [value]: get console component alpha value, if value exists set console alpha.
-	 * <li>clear: clear console text area.
-	 * <li>hide: hide console window.
-	 * <li>mem: show memory used by the flash player.
-	 * <li>plugins: list installed plugins.
-	 * <li>version: print console version details.<br><br>
+	 * <li>alpha [value]: get console component alpha value, if value exists set console alpha.</li>
+	 * <li>clear: clear console text area.</li>
+	 * <li>hide: hide console window.</li>
+	 * <li>mem: show memory used by the flash player.</li>
+	 * <li>plugins: list installed plugins.</li>
+	 * <li>version: print console version details.</li><br/><br/>
 	 * Everytime text is inserted into console input field <code>ConsoleEvent.INPUT</code> event is thrown, if the text isn't a embed command.
 	 * @see Console
 	 * @see ConsoleEvent
@@ -79,8 +79,8 @@ package br.dcoder.console
 		/**
 		 * Create an instance of AS3console component. If parent is non-null the instance will have a graphical interface,
 		 * otherwise it runs in release mode (only throwing events and responding to <code>config.traceEcho</code> and <code>config.jsEcho</code>).
-		 * If <code>assetFactory</code> is null, a instance of <code>DefaultAssetFactory</code> is created.<br>
-		 * If you want a single instance through static <code>Console</code> class, see <code>Console.create()</code> method.<br>
+		 * If <code>assetFactory</code> is null, a instance of <code>DefaultAssetFactory</code> is created.<br/>
+		 * If you want a single instance through static <code>Console</code> class, see <code>Console.create()</code> method.<br/>
 		 * Note: parent object <b>MUST</b> be part of the display list in such way that parent.stage attribute is valid.
 		 * @param parent An instance of <code>DisplayObjectContainer</code> to add console component as child. If this value is null, console runs in release mode.
 		 * @param assetFactory Use to specify a non-default instance of <code>AssetFactory</code>.

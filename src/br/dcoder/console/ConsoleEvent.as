@@ -39,7 +39,7 @@ package br.dcoder.console
 		
 		/**
 		 * Creates an event object that contains information about console events.
-		 * @param type The type of console event. Possible values are: <code>ConsoleEvent.INPUT</code>, <codeConsoleEvent.OUTPUT</code>,
+		 * @param type The type of console event. Possible values are: <code>ConsoleEvent.INPUT</code>, <code>ConsoleEvent.OUTPUT</code>,
 		 * <code>ConsoleEvent.SHOW</code>, <code>ConsoleEvent.HIDE</code> or <code>ConsoleEvent.RESIZE</code>.
 		 * @param bubbles Determines whether the <code>Event</code> object participates in the bubbling phase of the event flow. 
 		 * @param cancelable Determines whether the <code>Event</code> object can be canceled.

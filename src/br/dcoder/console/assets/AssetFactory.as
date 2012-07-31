@@ -9,7 +9,7 @@ package br.dcoder.console.assets
 	import flash.display.Sprite;
 	
 	/**
-	 * Classes which implements <AssetFactory> interface are used to externalize AS3console graphical interface management.
+	 * Classes which implements <code>AssetFactory</code> interface are used to externalize AS3console graphical interface management.
 	 * Information of how console should redraw itself is contained within these instances.
 	 * @see br.dcoder.console.Console
 	 * @see br.dcoder.console.ConsoleCore
