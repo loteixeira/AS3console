@@ -464,7 +464,7 @@ package br.dcoder.console
 				trace(str);
 			
 			if (config.jsEcho && ExternalInterface.available)
-				ExternalInterface.call("console.log", "[AS3Console" + ConsoleConfig.VERSION + "] " + str);
+				ExternalInterface.call("console.log", "[AS3console" + ConsoleConfig.VERSION + "] " + str);
 			
 			eventDispatcher.dispatchEvent(new ConsoleEvent(ConsoleEvent.OUTPUT, false, false, str));
 			
@@ -480,10 +480,21 @@ package br.dcoder.console
 				
 				// bring to front if visible
 				if (isVisible())
-				{
 					toFront();
-				}
 			}
+		}
+
+		/**
+		 * Process data input. If isn't an embed command, <code>ConsoleEvent.INPUT</code> is thrown.
+		 * @param info Any information to be scanned. If is null, "(null)" string is used.
+		 * @see ConsoleEvent
+		 */
+		public function scan(info:Object):void
+		{
+			var str:String = StringUtil.check(info);
+
+			if (!handleEmbedCommands(str.split(" ")))
+				eventDispatcher.dispatchEvent(new ConsoleEvent(ConsoleEvent.INPUT, false, false,  str));
 		}
 		
 		/**
@@ -705,11 +716,7 @@ package br.dcoder.console
 		private function input(event:Event):void
 		{
 			println("> " + inputField.getText());
-			
-			if (!handleEmbedCommands(inputField.getText().split(" ")))
-			{
-				eventDispatcher.dispatchEvent(new ConsoleEvent(ConsoleEvent.INPUT, false, false,  inputField.getText()));
-			}
+			scan(inputField.getText());
 		}
 		
 		private function textScroll(event:Event):void
