@@ -16,7 +16,7 @@ package br.dcoder.console
 		/**
 		 * AS3console version.
 		 */
-		public static const VERSION:String = "0.5.1";
+		public static const VERSION:String = "0.5.2";
 		
 		private static const DEFAULT_MAX_CHARACTERS:uint = 100000;
 		private static const DEFAULT_MAX_LINE_LENGTH:uint = 1000;

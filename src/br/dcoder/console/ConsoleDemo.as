@@ -42,8 +42,6 @@ package br.dcoder.console
 			
 			Console.instance.getEventDispatcher().addEventListener(ConsoleEvent.INPUT, consoleInput);
 			Console.instance.area = new Rectangle(50, 50, 600, 400);
-			//Console.instance.draggable = false;
-			//Console.instance.resizable = false;
 
 			cpln("Starting AS3console Demo by Lucas Teixeira (Disturbed Coder)");
 			cpln("Project page: https://github.com/loteixeira/as3console");
@@ -78,7 +76,7 @@ package br.dcoder.console
 				cpln("AS3console demo commands:");
 				cpln("=========================");
 				cpln("- assetFactory [name]");
-				cpln("  Set console AssetFacotry if value is defined. Valid values are: default and hercules");
+				cpln("  Set console AssetFacotry if name is defined. Valid values are: default and hercules");
 				cpln("  Otherwise print current AssetFactory.");
 				cpln("");
 			}

@@ -12,10 +12,7 @@ package br.dcoder.console
 	import br.dcoder.console.assets.AssetFactory;
 	
 	import flash.display.Stage;
-	import flash.events.ContextMenuEvent;
 	import flash.events.IEventDispatcher;
-	import flash.ui.ContextMenu;
-	import flash.ui.ContextMenuItem;
 
 	/**
 	 * Wrapper of a single <code>ConsoleCore</code> instance, used to simplify logging process. You can use AS3console through this class,
@@ -44,7 +41,7 @@ package br.dcoder.console
 		{
 			if (_instance)
 				throw new Error("Create method should be called once");
-			
+
 			_instance = new ConsoleCore(stage, assetFactory, eventDispatcher);
 			return _instance;
 		}
