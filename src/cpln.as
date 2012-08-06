@@ -9,11 +9,11 @@ package
 	import br.dcoder.console.Console;
 
 	/**
-	 * Alias for Console.instance.println method.
-	 * @param info Any information to be printed. If is null, "(null)" string is used.
+	 * Alias for <code>Console.instance.println</code> method. If <code>Console.instance</code> isn't valid, do nothing.
+	 * @param info Any information to be printed. If is <code>null</code>, "(null)" string is used.
 	 */
 	public function cpln(info:Object):void
 	{
-		Console.instance.println(info);
+		!Console.instance || Console.instance.println(info);
 	}
 }
