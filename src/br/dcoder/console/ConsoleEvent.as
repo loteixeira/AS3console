@@ -60,5 +60,10 @@ package br.dcoder.console
 		{
 			return value;
 		}
+
+		public function set text(value:String):void
+		{
+			this.value = value;
+		}
 	}
 }

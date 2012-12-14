@@ -156,6 +156,24 @@ package br.dcoder.console
 			if (!release)
 				captionBar.draggable = _draggable;
 		}
+
+		/**
+		 * Defines whether console graphical component has a title bar.
+		 * If running release mode, this attribute is ignored.
+		 */
+		public function get titlebar():Boolean
+		{
+			return release ? false : captionBar.visible;
+		}
+
+		public function set titlebar(_titlebar:Boolean):void
+		{
+			if (!release)
+			{
+				captionBar.visible = _titlebar;
+				update();
+			}
+		}
 		
 		/**
 		 * Console position and dimension represented by a <code>Rectangle</code> object.
@@ -255,7 +273,7 @@ package br.dcoder.console
 			if (!release)
 			{
 				// draw background
-				content.y = assetFactory.getButtonContainerSize();
+				content.y = captionBar.visible ? assetFactory.getButtonContainerSize() : 0;
 				content.graphics.clear();
 				content.graphics.lineStyle(1, assetFactory.getButtonForegroundColor());
 				content.graphics.beginFill(assetFactory.getBackgroundColor());
@@ -267,11 +285,14 @@ package br.dcoder.console
 				container.y = rect.top;
 				
 				// caption bar
-				captionBar.rect.x = 0;
-				captionBar.rect.y = 0;
-				captionBar.rect.width = rect.width;
-				captionBar.rect.height = assetFactory.getButtonContainerSize();
-				captionBar.update();
+				if (captionBar.visible)
+				{
+					captionBar.rect.x = 0;
+					captionBar.rect.y = 0;
+					captionBar.rect.width = rect.width;
+					captionBar.rect.height = assetFactory.getButtonContainerSize();
+					captionBar.update();
+				}
 				
 				// text area
 				textArea.rect.x = 1;
@@ -493,7 +514,7 @@ package br.dcoder.console
 		{
 			var str:String = StringUtil.check(info);
 
-			if (!handleEmbedCommands(str.split(" ")))
+			if (!config.embedCommands || (config.embedCommands && !handleEmbedCommands(str.split(" "))))
 				eventDispatcher.dispatchEvent(new ConsoleEvent(ConsoleEvent.INPUT, false, false,  str));
 		}
 		

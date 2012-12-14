@@ -45,6 +45,16 @@ package br.dcoder.console.gui
 			textField.y = 2;
 			content.addChild(textField);
 		}
+
+		public function get visible():Boolean
+		{
+			return content.visible;
+		}
+		
+		public function set visible(_visible:Boolean):void
+		{
+			content.visible = _visible;
+		}
 		
 		public function get draggable():Boolean
 		{
