@@ -17,6 +17,8 @@ package br.dcoder.console
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
+
+	[SWF(width="800", height="600", backgroundColor="#FFFFFF", frameRate="30")]
 	
 	public class ConsoleDemo extends Sprite
 	{
