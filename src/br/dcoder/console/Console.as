@@ -11,7 +11,7 @@ package br.dcoder.console
 {
 	import br.dcoder.console.assets.AssetFactory;
 	
-	import flash.display.Stage;
+	import flash.display.DisplayObjectContainer;
 	import flash.events.IEventDispatcher;
 
 	/**
@@ -37,12 +37,12 @@ package br.dcoder.console
 		 * @see br.dcoder.console.assets.AssetFactory
 		 * @see br.dcoder.console.assets.DefaultAssetFactory
 		 */
-		public static function create(stage:Stage = null, assetFactory:AssetFactory = null, eventDispatcher:IEventDispatcher = null):ConsoleCore
+		public static function create(parent:DisplayObjectContainer = null, assetFactory:AssetFactory = null, eventDispatcher:IEventDispatcher = null):ConsoleCore
 		{
 			if (_instance)
 				throw new Error("Create method should be called once");
 
-			_instance = new ConsoleCore(stage, assetFactory, eventDispatcher);
+			_instance = new ConsoleCore(parent, assetFactory, eventDispatcher);
 			return _instance;
 		}
 		

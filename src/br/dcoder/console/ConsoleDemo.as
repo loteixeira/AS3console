@@ -26,19 +26,9 @@ package br.dcoder.console
 		
 		public function ConsoleDemo()
 		{
-			addEventListener(Event.ADDED_TO_STAGE, addedToStage);
-		}
-		
-		private function addedToStage(event:Event):void
-		{
-			removeEventListener(Event.ADDED_TO_STAGE, addedToStage);
-			
-			stage.align = StageAlign.TOP_LEFT;
-			stage.scaleMode = StageScaleMode.NO_SCALE;
-			
 			assetFactoryName = "default";
 			
-			Console.create(stage);
+			Console.create(this);
 			Console.instance.installPlugin(new CodeEval(this));
 			Console.instance.installPlugin(new LocalClient());
 			
@@ -51,6 +41,15 @@ package br.dcoder.console
 			cpln("Press Ctrl+M to show/hide console component.");
 			cpln("Press up/down arrow to navigate through input history.");
 			cpln("");
+
+			addEventListener(Event.ADDED_TO_STAGE, addedToStage);
+		}
+		
+		private function addedToStage(event:Event):void
+		{
+			removeEventListener(Event.ADDED_TO_STAGE, addedToStage);			
+			stage.align = StageAlign.TOP_LEFT;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
 		}
 		
 		private function consoleInput(event:ConsoleEvent):void

@@ -21,6 +21,8 @@ package br.dcoder.console
 	
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
+	import flash.display.Stage;
+	import flash.events.ContextMenuEvent;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
@@ -28,6 +30,8 @@ package br.dcoder.console
 	import flash.external.ExternalInterface;
 	import flash.geom.Rectangle;
 	import flash.system.System;
+	import flash.ui.ContextMenu;
+	import flash.ui.ContextMenuItem;
 	import flash.utils.getTimer;
 
 	/**
@@ -100,7 +104,13 @@ package br.dcoder.console
 			rect = new Rectangle(50, 50, 250, 250);
 			plugins = [];
 			
-			init();
+			if (parent)
+			{
+				if (parent.stage)
+					init(null);
+				else
+					parent.addEventListener(Event.ADDED_TO_STAGE, init);
+			}
 		}
 		
 		//
@@ -371,6 +381,17 @@ package br.dcoder.console
 				container.visible = false;
 			}
 		}
+
+		/**
+		 * Invert console visibility. If visible, hide it. If hidden, show it.
+		 */
+		public function invertVisibility():void
+		{
+			if (isVisible())
+				hide();
+			else
+				show();
+		}
 		
 		/**
 		 * Check if console component is visible.
@@ -541,76 +562,97 @@ package br.dcoder.console
 		//
 		// private methods
 		//
-		private function init():void
+		private function init(e:Event):void
 		{
-			if (!release)
+			if (e)
+				parent.removeEventListener(Event.ADDED_TO_STAGE, init);
+
+			// do we need a new asset factory?
+			if (!assetFactory)
+				assetFactory = new DefaultAssetFactory();
+				
+			// console container
+			container = new Sprite();
+			parent.addChild(container);
+				
+			// caption bar
+			captionBar = new CaptionBar(config, assetFactory);
+			captionBar.text = "AS3console" + ConsoleConfig.VERSION;
+			container.addChild(captionBar.getContent());
+				
+			captionBar.addEventListener(CaptionBar.START_DRAG_EVENT, startDrag);
+			captionBar.addEventListener(CaptionBar.STOP_DRAG_EVENT, stopDrag);
+				
+			// content
+			content = new Sprite();
+			content.y = assetFactory.getButtonContainerSize();
+			container.addChild(content);
+				
+			// text area
+			textArea = new TextArea(config, assetFactory);
+			content.addChild(textArea.getContent());
+				
+			textArea.addEventListener(TextArea.SCROLL_EVENT, textScroll);
+				
+			// input field
+			inputField = new InputField(config, assetFactory);
+			content.addChild(inputField.getContent());
+				
+			inputField.addEventListener(InputField.INPUT_EVENT, input);
+				
+			// scroll bars
+			hScrollBar = new ScrollBar(config, assetFactory, ScrollBar.HORIZONTAL, 250);
+			hScrollBar.setMaxValue(0);
+			content.addChild(hScrollBar.getContent());
+			
+			hScrollBar.addEventListener(Event.CHANGE, hScrollBarChange);
+				
+			vScrollBar = new ScrollBar(config, assetFactory, ScrollBar.VERTICAL, 250);
+			vScrollBar.setMaxValue(0);
+			content.addChild(vScrollBar.getContent());
+			
+			vScrollBar.addEventListener(Event.CHANGE, vScrollBarChange);
+				
+			// resize area
+			resizeArea = new ResizeArea(config, assetFactory);
+			content.addChild(resizeArea.getContent());
+				
+			resizeArea.addEventListener(ResizeArea.RESIZE_EVENT, resize);
+			resizeArea.addEventListener(ResizeArea.RESIZE_STOP_EVENT, resizeStop);
+				
+			// shortcut
+			shortcutKeys = [ "m" ];
+			shortcutStates = [ false ];
+			shortcutUseAlt = false;
+			shortcutUseCtrl = true;
+			shortcutUseShift = false;
+				
+			// stage events
+			parent.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			parent.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+				
+			// update component
+			alpha = DEFAULT_ALPHA;
+			update();
+
+			// create context menu item
+			if (!(parent is Stage))
 			{
-				if (!assetFactory)
-					assetFactory = new DefaultAssetFactory();
-				
-				container = new Sprite();
-				parent.addChild(container);
-				
-				// caption bar
-				captionBar = new CaptionBar(config, assetFactory);
-				captionBar.text = "AS3console" + ConsoleConfig.VERSION;
-				container.addChild(captionBar.getContent());
-				
-				captionBar.addEventListener(CaptionBar.START_DRAG_EVENT, startDrag);
-				captionBar.addEventListener(CaptionBar.STOP_DRAG_EVENT, stopDrag);
-				
-				// content
-				content = new Sprite();
-				content.y = assetFactory.getButtonContainerSize();
-				container.addChild(content);
-				
-				// text area
-				textArea = new TextArea(config, assetFactory);
-				content.addChild(textArea.getContent());
-				
-				textArea.addEventListener(TextArea.SCROLL_EVENT, textScroll);
-				
-				// input field
-				inputField = new InputField(config, assetFactory);
-				content.addChild(inputField.getContent());
-				
-				inputField.addEventListener(InputField.INPUT_EVENT, input);
-				
-				// scroll bars
-				hScrollBar = new ScrollBar(config, assetFactory, ScrollBar.HORIZONTAL, 250);
-				hScrollBar.setMaxValue(0);
-				content.addChild(hScrollBar.getContent());
-				
-				hScrollBar.addEventListener(Event.CHANGE, hScrollBarChange);
-				
-				vScrollBar = new ScrollBar(config, assetFactory, ScrollBar.VERTICAL, 250);
-				vScrollBar.setMaxValue(0);
-				content.addChild(vScrollBar.getContent());
-				
-				vScrollBar.addEventListener(Event.CHANGE, vScrollBarChange);
-				
-				// resize area
-				resizeArea = new ResizeArea(config, assetFactory);
-				content.addChild(resizeArea.getContent());
-				
-				resizeArea.addEventListener(ResizeArea.RESIZE_EVENT, resize);
-				resizeArea.addEventListener(ResizeArea.RESIZE_STOP_EVENT, resizeStop);
-				
-				// shortcut
-				shortcutKeys = [ "m" ];
-				shortcutStates = [ false ];
-				shortcutUseAlt = false;
-				shortcutUseCtrl = true;
-				shortcutUseShift = false;
-				
-				// stage events
-				parent.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-				parent.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
-				
-				// update component
-				alpha = DEFAULT_ALPHA;
-				update();
+				var contextMenu:ContextMenu = new ContextMenu();
+				var contextMenuItem:ContextMenuItem = new ContextMenuItem("AS3console" + ConsoleConfig.VERSION);
+				contextMenuItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, contextMenuItemClick);
+				contextMenu.customItems.push(contextMenuItem);
+				parent.contextMenu = contextMenu;
 			}
+			else
+			{
+				println("WARNING: can't create context menu item in stage");
+			}
+		}
+
+		private function contextMenuItemClick(e:ContextMenuEvent):void
+		{
+			invertVisibility();
 		}
 		
 		private function handleEmbedCommands(params:Array):Boolean
@@ -795,10 +837,7 @@ package br.dcoder.console
 				triggerShortcut = false;
 			
 			if (triggerShortcut) {
-				if (isVisible())
-					hide();
-				else
-					show();
+				invertVisibility();
 			}
 		}
 		
