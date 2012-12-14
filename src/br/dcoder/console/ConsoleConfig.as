@@ -14,9 +14,17 @@ package br.dcoder.console
 	public class ConsoleConfig
 	{
 		/**
-		 * AS3console version.
+		 * Version major value.
 		 */
-		public static const VERSION:String = "0.5.2";
+		public static const VERSION_MAJOR:uint = 0;
+		/**
+		 * Version minor value.
+		 */
+		public static const VERSION_MINOR:uint = 6;
+		/**
+		 * Version revision value.
+		 */
+		public static const VERSION_REVISION:uint = 0;
 		
 		private static const DEFAULT_MAX_CHARACTERS:uint = 100000;
 		private static const DEFAULT_MAX_LINE_LENGTH:uint = 1000;
@@ -24,6 +32,16 @@ package br.dcoder.console
 		private static const DEFAULT_PRINT_TIMER:Boolean = false;
 		private static const DEFAULT_TRACE_ECHO:Boolean = true;
 		private static const DEFAULT_JS_ECHO:Boolean = false;
+		private static const DEFAULT_EMBED_COMMANDS:Boolean = true;
+
+		/**
+		 * AS3console version.
+		 * @return Version as string
+		 */
+		public static function get VERSION():String
+		{
+			return VERSION_MAJOR + "." + VERSION_MINOR + "." + VERSION_REVISION;
+		}
 		
 		/**
 		 * Max characters stored in <code>ConsoleCore</code> text area. Default value is 100000.
@@ -50,18 +68,9 @@ package br.dcoder.console
 		 * Print console output in javascript console window. Default value is false.
 		 */
 		public var jsEcho:Boolean = DEFAULT_JS_ECHO;
-		
 		/**
-		 * Create a <code>ConsoleConfig</code> instance.
+		 * Enable/disable console embed input commands.
 		 */
-		public function ConsoleConfig()
-		{
-			maxCharacters = DEFAULT_MAX_CHARACTERS;
-			maxLineLength = DEFAULT_MAX_LINE_LENGTH;
-			maxInputHistory = DEFAULT_MAX_INPUT_HISTORY;
-			printTimer = DEFAULT_PRINT_TIMER;
-			traceEcho = DEFAULT_TRACE_ECHO;
-			jsEcho = DEFAULT_JS_ECHO;
-		}
+		public var embedCommands:Boolean = DEFAULT_EMBED_COMMANDS;
 	}
 }
