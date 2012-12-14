@@ -101,7 +101,7 @@ package br.dcoder.console
 			this.eventDispatcher = eventDispatcher || new EventDispatcher();
 			
 			_config = new ConsoleConfig();
-			rect = new Rectangle(50, 50, 250, 250);
+			rect = new Rectangle(50, 50, 400, 400);
 			plugins = [];
 			
 			if (parent)
