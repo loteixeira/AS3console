@@ -76,6 +76,9 @@ package br.dcoder.console
 		
 		private var shortcutKeys:Array, shortcutStates:Array;
 		private var shortcutUseAlt:Boolean, shortcutUseCtrl:Boolean, shortcutUseShift:Boolean;
+
+		private var buffering:Boolean;
+		private var buffer:Array;
 		
 		//
 		// constructor
@@ -101,8 +104,11 @@ package br.dcoder.console
 			this.eventDispatcher = eventDispatcher || new EventDispatcher();
 			
 			_config = new ConsoleConfig();
-			rect = new Rectangle(50, 50, 400, 400);
+			rect = new Rectangle(50, 50, 500, 400);
 			plugins = [];
+
+			buffering = true;
+			buffer = [];
 			
 			if (parent)
 			{
@@ -495,6 +501,13 @@ package br.dcoder.console
 		 */
 		public function println(info:Object):void
 		{
+			// if we're buffering save data to print later
+			if (buffering)
+			{
+				buffer.push(info);
+				return;
+			}
+
 			// build string
 			var str:String = StringUtil.check(info);
 			
@@ -647,6 +660,17 @@ package br.dcoder.console
 			else
 			{
 				println("WARNING: can't create context menu item in stage");
+			}
+
+			// write buffered data
+			if (buffering)
+			{
+				buffering = false;
+
+				for (var i:uint = 0; i < buffer.length; i++)
+					println(buffer[i]);
+			
+				buffer = null;
 			}
 		}
 

@@ -29,11 +29,7 @@ package br.dcoder.console
 			assetFactoryName = "default";
 			
 			Console.create(this);
-			Console.instance.installPlugin(new CodeEval(this));
-			Console.instance.installPlugin(new LocalClient());
-			
 			Console.instance.getEventDispatcher().addEventListener(ConsoleEvent.INPUT, consoleInput);
-			Console.instance.area = new Rectangle(50, 50, 600, 400);
 
 			cpln("Starting AS3console Demo by Lucas Teixeira (Disturbed Coder)");
 			cpln("Project page: https://github.com/loteixeira/as3console");
