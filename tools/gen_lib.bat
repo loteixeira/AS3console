@@ -1,1 +1,1 @@
-compc -library-path+=lib/ -include-sources=src/ -output=bin/as3console.swc
+compc -debug=false -library-path+=lib/ -include-sources=src/ -output=bin/as3console.swc
