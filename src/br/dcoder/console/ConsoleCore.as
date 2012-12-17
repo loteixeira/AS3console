@@ -501,7 +501,7 @@ package br.dcoder.console
 		 */
 		public function println(info:Object):void
 		{
-			// if we're buffering save data to print later
+			// if we're buffering, save data to print later
 			if (buffering)
 			{
 				buffer.push(info);
@@ -659,7 +659,7 @@ package br.dcoder.console
 			}
 			else
 			{
-				println("WARNING: can't create context menu item in stage");
+				println("WARNING: can't create context menu in stage");
 			}
 
 			// write buffered data
