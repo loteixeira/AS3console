@@ -1,1 +1,0 @@
-FlashPlayerDebugger.exe bin/as3console-demo.swf
