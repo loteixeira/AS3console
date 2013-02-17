@@ -1,6 +1,6 @@
-# AS3console0.6.0
+# AS3console0.6.1
 AS3console is a component designed to manage input/output for Actionscript3 (Flash, Flex and AIR). It's a generic logging system, where you can use the same interface
-for several IO streams (trace, js console.log, server communication) including a simple GUI accessible from anywhere (available through flash right click menu or shortcut Ctrl+M).
+for several IO streams (trace, js console.log, server communication, etc) including a simple GUI accessible from anywhere (available through flash right click menu or shortcut Ctrl+M).
 
 **Download the last tag:** https://github.com/loteixeira/AS3console/archive/v0.6.0.zip <br>
 **Online demo:** http://disturbedcoder.com/files/as3console/as3console-demo.swf <br>
