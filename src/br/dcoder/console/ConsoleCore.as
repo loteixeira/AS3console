@@ -9,30 +9,18 @@
 
 package br.dcoder.console
 {
-	import br.dcoder.console.assets.AssetFactory;
-	import br.dcoder.console.assets.DefaultAssetFactory;
-	import br.dcoder.console.gui.CaptionBar;
-	import br.dcoder.console.gui.InputField;
-	import br.dcoder.console.gui.ResizeArea;
-	import br.dcoder.console.gui.ScrollBar;
-	import br.dcoder.console.gui.TextArea;
-	import br.dcoder.console.plugin.ConsolePlugin;
-	import br.dcoder.console.util.StringUtil;
+	import br.dcoder.console.assets.*;
+	import br.dcoder.console.gui.*;
+	import br.dcoder.console.plugin.*;
+	import br.dcoder.console.util.*;
 	
-	import flash.display.DisplayObjectContainer;
-	import flash.display.Sprite;
-	import flash.display.Stage;
-	import flash.events.ContextMenuEvent;
-	import flash.events.Event;
-	import flash.events.EventDispatcher;
-	import flash.events.IEventDispatcher;
-	import flash.events.KeyboardEvent;
-	import flash.external.ExternalInterface;
-	import flash.geom.Rectangle;
-	import flash.system.System;
-	import flash.ui.ContextMenu;
-	import flash.ui.ContextMenuItem;
-	import flash.utils.getTimer;
+	import flash.display.*;
+	import flash.events.*;
+	import flash.external.*;
+	import flash.geom.*;
+	import flash.system.*;
+	import flash.ui.*;
+	import flash.utils.*;
 
 	/**
 	 * AS3console component main class, where you can write/read data, throw/listen events, etc.
@@ -513,10 +501,10 @@ package br.dcoder.console
 			
 			if (config.printTimer)
 				str = "[" + getTimer() + "] " + str;
-			
+
 			// throw events
 			if (config.traceEcho)
-				trace(str);
+				getDefinitionByName("trace")(str);
 			
 			if (config.jsEcho && ExternalInterface.available)
 				ExternalInterface.call("console.log", "[AS3console" + ConsoleConfig.VERSION + "] " + str);

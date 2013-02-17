@@ -19,13 +19,7 @@ package br.dcoder.console
 		private var intervalId:int;
 
 		public function ConsoleDemo()
-		{
-			// stage stuff
-			if (stage)
-				addedToStage(null);
-			else
-				addEventListener(Event.ADDED_TO_STAGE, addedToStage);
-			
+		{			
 			// create console singleton instance
 			Console.create(this);
 			// listen for input events
@@ -44,6 +38,12 @@ package br.dcoder.console
 
 			// used for drawing
 			intervalId = -1;
+
+			// stage stuff
+			if (stage)
+				addedToStage(null);
+			else
+				addEventListener(Event.ADDED_TO_STAGE, addedToStage);
 		}
 
 		private function addedToStage(e:Event):void
@@ -53,6 +53,8 @@ package br.dcoder.console
 
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
+
+
 		}
 
 		private function consoleInput(e:ConsoleEvent):void

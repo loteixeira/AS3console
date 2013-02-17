@@ -1,5 +1,5 @@
 # WINDOWS WORK-AROUND (don't ask me)
-# if you're not using windows you may comment the line below
+# if you're not using windows you can comment the line below
 SHELL=c:/windows/system32/cmd.exe
 
 # external applications
@@ -19,7 +19,7 @@ DEMO_FLAGS=-static-link-runtime-shared-libraries=true
 
 # library stuff
 LIB_BIN=bin/as3console.swc
-LIB_FLAGS=-debug=false
+LIB_FLAGS=-debug=true
 
 # documentation stuff
 DOC_TITLE=AS3console
@@ -31,7 +31,7 @@ DOC_FLAGS=-warnings=false -library-path ./lib/EvalES4.swc -doc-sources src/cpln.
 all: demo library documentation
 
 demo:
-	$(SWF_COM) $(DEMO_FLAGS) -source-path+=$(SOURCE_PATH) -library-path+=$(LIBS_PATH) -output=$(DEMO_BIN) -- $(DEMO_MAIN)
+	$(SWF_COM) $(DEMO_FLAGS) -source-path+=$(SOURCE_PATH) -output=$(DEMO_BIN) -- $(DEMO_MAIN)
 
 documentation:
 	$(RM) doc/*
