@@ -10,7 +10,6 @@ RM=rm -rf
 
 # project paths
 SOURCE_PATH=src/
-LIBS_PATH=lib/
 
 # demo stuff
 DEMO_BIN=bin/as3console-demo.swf
@@ -38,4 +37,4 @@ documentation:
 	$(ASDOC) $(DOC_FLAGS) -doc-sources $(SOURCE_PATH) -main-title $(DOC_TITLE) -output $(DOC_OUTPUT) $(DOC_EXCLUDE)
 
 library:
-	$(SWC_COM) $(LIB_FLAGS) -library-path+=$(LIBS_PATH) -include-sources=$(SOURCE_PATH) -output=$(LIB_BIN)
+	$(SWC_COM) $(LIB_FLAGS) -include-sources=$(SOURCE_PATH) -output=$(LIB_BIN)
