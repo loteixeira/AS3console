@@ -24,7 +24,7 @@ LIB_FLAGS=-debug=true
 DOC_TITLE=AS3console
 DOC_OUTPUT=./doc/
 DOC_EXCLUDE=-exclude-classes br.dcoder.console.ConsoleDemo br.dcoder.console.ConsoleLocalServer br.dcoder.console.gui.CaptionBar br.dcoder.console.gui.GUIBaseElement br.dcoder.console.gui.InputField br.dcoder.console.gui.ResizeArea br.dcoder.console.gui.ScrollBar br.dcoder.console.gui.TextArea br.dcoder.console.util.StringUtil
-DOC_FLAGS=-warnings=false -library-path ./lib/EvalES4.swc -doc-sources src/cpln.as
+DOC_FLAGS=-warnings=false -doc-sources src/cpln.as
 
 
 all: demo library documentation
