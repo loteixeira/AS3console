@@ -24,7 +24,7 @@ package br.dcoder.console
 		/**
 		 * Version revision value.
 		 */
-		public static const VERSION_REVISION:uint = 1;
+		public static const VERSION_REVISION:uint = 2;
 
 		/**
 		 * AS3console version.
