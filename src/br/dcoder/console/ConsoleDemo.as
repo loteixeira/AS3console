@@ -10,7 +10,6 @@ package br.dcoder.console
 	
 	import flash.display.*;
 	import flash.events.*;
-	import flash.geom.*;
 	import flash.utils.*;
 
 	[SWF(width="800", height="600", backgroundColor="#FFFFFF", frameRate="30")]
@@ -54,8 +53,6 @@ package br.dcoder.console
 
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
-
-			Console.instance.area = new Rectangle(0, 0, stage.stageWidth, stage.stageHeight);
 		}
 
 		private function consoleInput(e:ConsoleEvent):void
