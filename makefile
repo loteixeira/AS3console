@@ -14,11 +14,11 @@ SOURCE_PATH=src/
 # demo stuff
 DEMO_BIN=bin/as3console-demo.swf
 DEMO_MAIN=src/br/dcoder/console/ConsoleDemo.as
-DEMO_FLAGS=-static-link-runtime-shared-libraries=true
+DEMO_FLAGS=-debug=false -static-link-runtime-shared-libraries=true
 
 # library stuff
 LIB_BIN=bin/as3console.swc
-LIB_FLAGS=-debug=true
+LIB_FLAGS=-debug=false
 
 # documentation stuff
 DOC_TITLE=AS3console
