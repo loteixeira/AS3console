@@ -281,7 +281,7 @@ package br.dcoder.console
 				content.graphics.clear();
 				content.graphics.lineStyle(1, assetFactory.getButtonForegroundColor());
 				content.graphics.beginFill(assetFactory.getBackgroundColor());
-				content.graphics.drawRect(0, 0, rect.width - 1, rect.height - assetFactory.getButtonContainerSize() - 1);
+				content.graphics.drawRect(0, 0, rect.width - 1, rect.height - 1 - (captionBar.visible ? assetFactory.getButtonContainerSize() : 0));
 				content.graphics.endFill();
 				
 				// container
@@ -302,20 +302,20 @@ package br.dcoder.console
 				textArea.rect.x = 1;
 				textArea.rect.y = 1;
 				textArea.rect.width = rect.width - assetFactory.getButtonContainerSize() - 1;
-				textArea.rect.height = rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize() - inputField.getMinimumHeight() - 1;
+				textArea.rect.height = rect.height - assetFactory.getButtonContainerSize() - inputField.getMinimumHeight() - 1 - (captionBar.visible ? assetFactory.getButtonContainerSize() : 0);
 				textArea.scrollV = textArea.maxScrollV;
 				textArea.update();
 				
 				// input field
 				inputField.rect.x = 1;
-				inputField.rect.y = rect.height - assetFactory.getButtonContainerSize() * 2 - inputField.getMinimumHeight();
+				inputField.rect.y = rect.height - assetFactory.getButtonContainerSize() - inputField.getMinimumHeight() - (captionBar.visible ? assetFactory.getButtonContainerSize() : 0);
 				inputField.rect.width = rect.width - assetFactory.getButtonContainerSize();
 				inputField.rect.height = inputField.getMinimumHeight();
 				inputField.update();
 				
 				// horizontal scroll bar
 				hScrollBar.rect.x = 0;
-				hScrollBar.rect.y = rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize() - 1;
+				hScrollBar.rect.y = rect.height - assetFactory.getButtonContainerSize() - 1 - (captionBar.visible ? assetFactory.getButtonContainerSize() : 0);
 				hScrollBar.rect.width = 0; // value ignored
 				hScrollBar.rect.height = 0; // value ignored
 				hScrollBar.setLength(rect.width - assetFactory.getButtonContainerSize() - 1);
@@ -330,7 +330,7 @@ package br.dcoder.console
 				vScrollBar.rect.y = 0;
 				vScrollBar.rect.width = 0; // value ignored
 				vScrollBar.rect.height = 0; // value ignored 
-				vScrollBar.setLength(rect.height - assetFactory.getButtonContainerSize() - assetFactory.getButtonContainerSize() - 1);
+				vScrollBar.setLength(rect.height - assetFactory.getButtonContainerSize() - 1 - (captionBar.visible ? assetFactory.getButtonContainerSize() : 0));
 				vScrollBar.setMaxValue(textArea.maxScrollV == 0 ? 0 : textArea.maxScrollV - 1);
 				vScrollBar.update();
 				
