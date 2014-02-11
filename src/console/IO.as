@@ -9,6 +9,7 @@ package console
 	{
 		internal static const READ_EVENT:String = "readEvent";
 		
+		protected var _opened:Boolean = false;
 		protected var _input:IDataInput;
 		protected var _output:IDataOutput;
 		
@@ -29,6 +30,11 @@ package console
 			return "Empty IO";
 		}
 		
+		public function get opened():Boolean
+		{
+			return _opened;
+		}
+		
 		public function get input():IDataInput
 		{
 			return _input;
@@ -42,6 +48,14 @@ package console
 		//
 		// public interface
 		//
+		public function open():void
+		{
+		}
+		
+		public function close():void
+		{
+		}
+		
 		public function flush():void
 		{
 		}

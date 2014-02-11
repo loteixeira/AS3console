@@ -33,6 +33,7 @@ package console
 		{
 			ios.push(io);
 			io.addEventListener(IO.READ_EVENT, onRead);
+			io.open();
 		}
 		
 		public function disconnect(io:IO):void
@@ -43,6 +44,7 @@ package console
 			{
 				if (ios[i] == io)
 				{
+					io.close();
 					io.removeEventListener(IO.READ_EVENT, onRead);
 					ios.splice(i, 1);
 					break;
