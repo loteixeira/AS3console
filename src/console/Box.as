@@ -52,7 +52,7 @@ package console
 			}
 		}
 
-		public function write(obj:Object):void
+		public function writeln(obj:Object):void
 		{
 			var l:uint = ios.length;
 			var str:String = object2String(obj);
