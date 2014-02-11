@@ -6,7 +6,7 @@ package console
 		public static const MINOR:uint = 0;
 		public static const REVISION:uint = 0;
 
-		public static function get VERSION():String
+		public static function get FULL():String
 		{
 			return MAJOR + "." + MINOR + "." + REVISION;
 		}
