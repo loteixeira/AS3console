@@ -3,6 +3,7 @@ package console
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
+	import flash.utils.IDataInput;
 
 	public class Box
 	{
@@ -79,7 +80,8 @@ package console
 		private function onRead(e:Event):void
 		{
 			var io:IO = e.target as IO;
-			var data:String = io.input.readUTFBytes(io.input.bytesAvailable);
+			var input:IDataInput = io.input;
+			var data:String = input.readUTFBytes(input.bytesAvailable);
 		}
 	}
 }
